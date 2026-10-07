@@ -1081,7 +1081,7 @@ const BDEFS=(w,u,sh)=>{sh=sh||BSH[w.shape]||BSH.robot;const b=w.col,hi=shade(b,.
  +`<filter id="${u}z" x="-30%" y="-300%" width="160%" height="700%"><feGaussianBlur stdDeviation="3.2"/></filter>`
  +`<clipPath id="${u}cb"><rect x="44" y="142" width="82" height="62" rx="${sh[2]}"/></clipPath>`
  +`<clipPath id="${u}cs"><rect x="46" y="54" width="78" height="64" rx="${sh[1]}"/></clipPath></defs>`};
-const BP=(w,u)=>{const hc=w.hatc,hd=shade(hc,-.2),oc=w.outc,U=k=>`url(#${u}${k})`;
+let BP=(w,u)=>{const hc=w.hatc,hd=shade(hc,-.2),oc=w.outc,U=k=>`url(#${u}${k})`;
  const hat={none:'',
  cap:`<ellipse cx="85" cy="52" rx="64" ry="11" fill="#000" opacity=".2"/><ellipse cx="85" cy="48" rx="66" ry="12" fill="${U('td')}"/><ellipse cx="85" cy="45" rx="60" ry="9" fill="${shade(hc,.12)}" opacity=".35"/><path d="M48 46Q48 8 85 8Q122 8 122 46Z" fill="${U('t')}"/><path d="M48 38Q85 52 122 38L122 46Q85 60 48 46Z" fill="#a24fb4"/><path d="M48 38Q85 52 122 38" stroke="#e3a8ee" stroke-width="1.4" fill="none" opacity=".8"/><path d="M60 33Q63 17 80 12" stroke="#fff" stroke-opacity=".5" stroke-width="3.2" fill="none" stroke-linecap="round"/>`,
  top:`<ellipse cx="85" cy="50" rx="58" ry="9" fill="#000" opacity=".22"/><ellipse cx="85" cy="46" rx="58" ry="9" fill="${U('x')}"/><rect x="58" y="-8" width="54" height="52" rx="5" fill="${U('xh')}"/><rect x="58" y="30" width="54" height="10" fill="${U('t')}"/><ellipse cx="85" cy="-8" rx="27" ry="4.5" fill="#4a4a5c"/><path d="M66 -2V26" stroke="#fff" stroke-opacity=".28" stroke-width="3" stroke-linecap="round"/>`,
@@ -1103,7 +1103,7 @@ const BP=(w,u)=>{const hc=w.hatc,hd=shade(hc,-.2),oc=w.outc,U=k=>`url(#${u}${k})
  const cape=`<path d="M46 146L18 236Q85 254 152 236L124 146Z" fill="${U('p')}" stroke="#6e231d" stroke-width="2"/><path d="M52 160L34 226" stroke="#fff" stroke-opacity=".18" stroke-width="5" stroke-linecap="round"/>`;
  const antenna=`<rect x="83" y="-18" width="4" height="26" rx="2" fill="#aab6da"/><circle cx="85" cy="-21" r="6.5" fill="${U('o')}" stroke="#fff" stroke-width="1.4"/><circle cx="83" cy="-23" r="2" fill="#fff" opacity=".7"/>`;
  return{hat,glasses,neck,outfit,cape,antenna}};
-const BOTX=(w,c)=>{const u='bm'+(++BU)+'_',U=k=>`url(#${u}${k})`,sh=BSH[w.shape]||BSH.robot,P=BP(w,u),b=w.col,hi=shade(b,.4),lo=shade(b,-.32),dk=shade(b,-.58),z=Math.max(.6,Math.min(1.6,+w.size||1));
+let BOTX=(w,c)=>{const u='bm'+(++BU)+'_',U=k=>`url(#${u}${k})`,sh=BSH[w.shape]||BSH.robot,P=BP(w,u),b=w.col,hi=shade(b,.4),lo=shade(b,-.32),dk=shade(b,-.58),z=Math.max(.6,Math.min(1.6,+w.size||1));
  const led=(x,y,c)=>`<rect x="${x}" y="${y}" width="5" height="4" rx="1" fill="${c}"/>`;
  const glove=(cx,cy)=>'';
  return`<svg class="bot ${c||''}" viewBox="0 0 170 250" width="${Math.round(104*z)}" height="${Math.round(153*z)}" style="overflow:visible" aria-hidden="true">`+BDEFS(w,u,sh)
@@ -1147,7 +1147,7 @@ const BOTX=(w,c)=>{const u='bm'+(++BU)+'_',U=k=>`url(#${u}${k})`,sh=BSH[w.shape]
  +P.glasses[w.glasses]+P.neck[w.neck]+(P.hat[w.hat]===undefined?P.hat.cap:P.hat[w.hat])+(w.antenna?P.antenna:'')+`</svg>`};
 const BOT=c=>BOTX(BW(),c);
 /* miniaturas de accesorios para el vestuario */
-const BTH=(t,k)=>{const w=BW(),u='bt'+(++BU)+'_',U=x=>`url(#${u}${x})`;
+let BTH=(t,k)=>{const w=BW(),u='bt'+(++BU)+'_',U=x=>`url(#${u}${x})`;
  if(k==='none'||k===false)return`<svg viewBox="0 0 24 24" width="30" height="30"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.8" opacity=".55"/><path d="M6.5 17.5l11-11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" opacity=".55"/></svg>`;
  const P=BP(w,u),vb={hat:'14 -14 142 78',glasses:'48 62 74 36',neck:'44 124 82 56',outfit:'40 138 90 68',cape:'8 140 154 118',antenna:'62 -32 46 46'}[t];
  let body='';if(t=='hat')body=P.hat[k];else if(t=='glasses')body=P.glasses[k];else if(t=='neck')body=P.neck[k];else if(t=='outfit')body=`<rect x="44" y="142" width="82" height="62" rx="${(BSH[w.shape]||BSH.robot)[2]}" fill="${U('b')}"/>`+P.outfit[k];else if(t=='cape')body=P.cape;else body=P.antenna;
@@ -1442,4 +1442,172 @@ TB.emo=(c,H,N,CH)=>`<p class="mu">Son los botones de reacción que aparecen dura
 /* con la sesión cerrada, ningún atajo de teclado actúa sobre la app */
 document.addEventListener('keydown',e=>{if(!document.body.classList.contains('locked'))return;const fc=/INPUT|SELECT|TEXTAREA/.test(e.target.tagName);if(!fc||e.ctrlKey||e.metaKey)e.stopPropagation()},true);
 G.boot();
+
+/* ===== v17: vestuario ampliado + Decoraciones y temáticas 3D (parche aditivo) ===== */
+(()=>{
+const sh=shade;
+/* ---------- 1. accesorios nuevos (sombreros, lentes, cuello, ropa) ---------- */
+const oBP=BP;
+BP=(w,u)=>{const P=oBP(w,u),hc=w.hatc,oc=w.outc,cl=`clip-path="url(#${u}cb)"`;
+ const fl=Array.from({length:7},(_,i)=>{const x=50+i*11.7,y=48-Math.sin(i/6*Math.PI)*18,c=['#ff6fa5','#ffd23f','#ff9a3c','#c77dff','#ff6fa5','#ffd23f','#ff9a3c'][i];return `<circle cx="${x}" cy="${y}" r="7" fill="${c}"/><circle cx="${x}" cy="${y}" r="2.6" fill="#fff" opacity=".6"/>`}).join('');
+ const pe=Array.from({length:9},(_,i)=>`<circle cx="${56+i*7.25}" cy="${136+Math.sin(i/8*Math.PI)*24}" r="4.2" fill="#fdf6ee" stroke="#cfc2b0" stroke-width=".8"/>`).join('');
+ const le=Array.from({length:8},(_,i)=>`<circle cx="${57+i*8}" cy="${136+Math.sin(i/7*Math.PI)*22}" r="6" fill="${['#ff6fa5','#ffd23f','#ff9a3c','#c77dff'][i%4]}"/><circle cx="${57+i*8}" cy="${136+Math.sin(i/7*Math.PI)*22}" r="2" fill="#fff" opacity=".7"/>`).join('');
+ Object.assign(P.hat,{
+  witch:`<ellipse cx="85" cy="50" rx="64" ry="10" fill="#1d1230"/><path d="M60 48Q70 20 80 -6Q84 -16 92 -12Q98 10 112 48Z" fill="${sh(hc,-.45)}"/><rect x="63" y="34" width="46" height="10" fill="#e6a23c" transform="rotate(-4 85 39)"/><rect x="80" y="33" width="12" height="12" rx="2" fill="none" stroke="#fff3b0" stroke-width="2.5" transform="rotate(-4 85 39)"/>`,
+  santa:`<path d="M52 46Q54 6 96 6Q120 6 124 30Q130 34 122 44Z" fill="#d4231f"/><path d="M60 30Q70 12 94 10" stroke="#fff" stroke-opacity=".35" stroke-width="3" fill="none" stroke-linecap="round"/><rect x="46" y="38" width="80" height="14" rx="7" fill="#fff"/><circle cx="124" cy="30" r="9" fill="#fff"/>`,
+  party:`<path d="M85 -12L60 48H110Z" fill="${hc}"/><path d="M76 14L94 14M70 30L100 30" stroke="#fff" stroke-width="5" opacity=".7"/><circle cx="85" cy="-14" r="6" fill="#ffd23f"/><ellipse cx="85" cy="49" rx="25" ry="4" fill="${sh(hc,-.3)}"/>`,
+  beanie:`<path d="M48 48Q48 10 85 10Q122 10 122 48Z" fill="${hc}"/><rect x="46" y="38" width="78" height="14" rx="6" fill="${sh(hc,-.25)}"/><path d="M58 38V52M70 38V52M82 38V52M94 38V52M106 38V52M118 38V52" stroke="#000" stroke-opacity=".18" stroke-width="2"/><circle cx="85" cy="8" r="9" fill="#fff"/>`,
+  charro:`<ellipse cx="85" cy="52" rx="78" ry="11" fill="${sh(hc,-.3)}"/><ellipse cx="85" cy="48" rx="78" ry="11" fill="${hc}"/><path d="M60 46Q64 -2 85 -6Q106 -2 110 46Z" fill="${sh(hc,.1)}"/><path d="M62 40Q85 50 108 40V32Q85 42 62 32Z" fill="#e6c45a"/><circle cx="85" cy="36" r="3" fill="#d4231f"/><ellipse cx="85" cy="48" rx="70" ry="8" fill="none" stroke="#e6c45a" stroke-width="2" stroke-dasharray="3 4"/>`,
+  chef:`<rect x="58" y="22" width="54" height="26" fill="#fff" stroke="#dfe3f0"/><circle cx="62" cy="14" r="15" fill="#fff" stroke="#dfe3f0"/><circle cx="85" cy="6" r="18" fill="#fff" stroke="#dfe3f0"/><circle cx="108" cy="14" r="15" fill="#fff" stroke="#dfe3f0"/><rect x="56" y="40" width="58" height="9" rx="3" fill="#eef1fa"/>`,
+  flowers:`<path d="M48 46Q85 26 122 46" stroke="#3f9b4b" stroke-width="5" fill="none"/>`+fl,
+  pirate:`<path d="M34 50Q85 -12 136 50Q85 36 34 50Z" fill="#20202c"/><path d="M34 50Q85 36 136 50" stroke="#e6c45a" stroke-width="3" fill="none"/><circle cx="85" cy="22" r="7" fill="#f5f5f5"/><path d="M80 28h10M82 18l6 8M88 18l-6 8" stroke="#20202c" stroke-width="1.8"/>`,
+  ears:`<path d="M48 48L52 6L82 36Z" fill="${hc}"/><path d="M122 48L118 6L88 36Z" fill="${hc}"/><path d="M55 38L56 16L72 33Z" fill="#ffb3c7"/><path d="M115 38L114 16L98 33Z" fill="#ffb3c7"/>`});
+ Object.assign(P.glasses,{
+  heart:`<path transform="translate(68 80)" d="M0 9C-15 -2-14 -13-6 -13C-2 -13 0 -10 0 -9C0 -10 2 -13 6 -13C14 -13 15 -2 0 9Z" fill="#e0264f" stroke="#7a1030" stroke-width="2" opacity=".93"/><path transform="translate(102 80)" d="M0 9C-15 -2-14 -13-6 -13C-2 -13 0 -10 0 -9C0 -10 2 -13 6 -13C14 -13 15 -2 0 9Z" fill="#e0264f" stroke="#7a1030" stroke-width="2" opacity=".93"/><path d="M80 78h10" stroke="#7a1030" stroke-width="3"/>`,
+  star:`<polygon transform="translate(68 80)" points="0,-14 4,-4.5 13.4,-4 6,2.5 8.4,12 0,6.6 -8.4,12 -6,2.5 -13.4,-4 -4,-4.5" fill="#f5c542" stroke="#a97b0d" stroke-width="2"/><polygon transform="translate(102 80)" points="0,-14 4,-4.5 13.4,-4 6,2.5 8.4,12 0,6.6 -8.4,12 -6,2.5 -13.4,-4 -4,-4.5" fill="#f5c542" stroke="#a97b0d" stroke-width="2"/><path d="M82 78h6" stroke="#a97b0d" stroke-width="3"/>`,
+  nerd:`<rect x="51" y="68" width="34" height="25" rx="5" fill="rgba(180,210,255,.2)" stroke="#111" stroke-width="4"/><rect x="85" y="68" width="34" height="25" rx="5" fill="rgba(180,210,255,.2)" stroke="#111" stroke-width="4"/><path d="M85 76h0" stroke="#111" stroke-width="4"/><rect x="62" y="85" width="9" height="3" fill="#fff" opacity=".7" transform="rotate(-20 66 86)"/>`,
+  mask:`<path fill-rule="evenodd" d="M48 70Q85 58 122 70Q124 92 104 94Q94 94 85 86Q76 94 66 94Q46 92 48 70Z M56 80a12 9 0 1 0 24 0a12 9 0 1 0 -24 0Z M90 80a12 9 0 1 0 24 0a12 9 0 1 0 -24 0Z" fill="#d4231f" stroke="#7a1010" stroke-width="1.6"/>`,
+  d3:`<rect x="54" y="69" width="28" height="22" rx="4" fill="#ff3b3b" opacity=".75" stroke="#222" stroke-width="3.4"/><rect x="88" y="69" width="28" height="22" rx="4" fill="#2bc4ff" opacity=".75" stroke="#222" stroke-width="3.4"/><path d="M82 77h6" stroke="#222" stroke-width="3"/>`});
+ Object.assign(P.neck,{
+  tie:`<path d="M85 138l-8 8 8 30 8-30z" fill="${oc}"/><path d="M78 134h14l-3 9h-8z" fill="${sh(oc,-.3)}"/><path d="M82 150l3 20" stroke="#fff" stroke-opacity=".25" stroke-width="2"/>`,
+  chain:`<path d="M56 136Q85 178 114 136" stroke="#e6c45a" stroke-width="4" fill="none"/><path d="M56 136Q85 178 114 136" stroke="#fff" stroke-opacity=".6" stroke-width="1.2" fill="none" stroke-dasharray="2 4"/><circle cx="85" cy="166" r="8" fill="#e6c45a" stroke="#a97b0d" stroke-width="2"/><text x="85" y="170" font-size="11" text-anchor="middle" fill="#7a5a00" font-weight="700">$</text>`,
+  pearls:pe,
+  bandana:`<path d="M52 134H118L85 172Z" fill="${oc}"/><path d="M52 134H118" stroke="${sh(oc,-.3)}" stroke-width="4"/><circle cx="85" cy="150" r="2.5" fill="#fff"/><circle cx="72" cy="143" r="2" fill="#fff"/><circle cx="98" cy="143" r="2" fill="#fff"/>`,
+  lei:le,
+  bell:`<rect x="56" y="134" width="58" height="8" rx="4" fill="#d4231f"/><circle cx="85" cy="150" r="8" fill="#f5c542" stroke="#a97b0d" stroke-width="2"/><path d="M80 152h10" stroke="#a97b0d" stroke-width="2"/>`});
+ Object.assign(P.outfit,{
+  hoodie:`<g ${cl}><rect x="44" y="142" width="82" height="48" fill="${oc}"/><path d="M60 142Q85 166 110 142V150Q85 176 60 150Z" fill="${sh(oc,-.3)}"/><path d="M78 156V176M92 156V176" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><rect x="62" y="172" width="46" height="16" rx="6" fill="${sh(oc,-.18)}"/></g>`,
+  striped:`<g ${cl}><rect x="44" y="142" width="82" height="48" fill="${oc}"/>${[148,158,168,178,188].map(y=>`<rect x="44" y="${y}" width="82" height="4" fill="#fff" opacity=".8"/>`).join('')}</g>`,
+  overalls:`<g ${cl}><rect x="44" y="166" width="82" height="30" fill="${oc}"/><rect x="58" y="142" width="9" height="26" fill="${oc}"/><rect x="103" y="142" width="9" height="26" fill="${oc}"/><rect x="70" y="170" width="30" height="16" rx="3" fill="${sh(oc,-.2)}"/><circle cx="62" cy="168" r="3" fill="#e6c45a"/><circle cx="108" cy="168" r="3" fill="#e6c45a"/></g>`,
+  jersey:`<g ${cl}><rect x="44" y="142" width="82" height="48" fill="${oc}"/><path d="M68 142Q85 156 102 142" fill="#fff" opacity=".9"/><text x="85" y="180" font-size="26" font-weight="800" text-anchor="middle" fill="#fff" font-family="Arial,sans-serif">10</text><rect x="44" y="142" width="6" height="48" fill="#fff" opacity=".6"/><rect x="120" y="142" width="6" height="48" fill="#fff" opacity=".6"/></g>`,
+  hawaii:`<g ${cl}><rect x="44" y="142" width="82" height="48" fill="#39b6a5"/>${[[58,156],[84,152],[108,160],[70,174],[98,176],[56,184]].map(([x,y],i)=>`<circle cx="${x}" cy="${y}" r="5" fill="${['#ff6fa5','#ffd23f','#ff9a3c'][i%3]}"/><circle cx="${x}" cy="${y}" r="1.8" fill="#fff"/>`).join('')}<path d="M68 142L85 164L102 142" fill="#2a9486"/></g>`,
+  tux:`<g ${cl}><rect x="44" y="142" width="82" height="48" fill="#22222e"/><path d="M70 142H100L85 176Z" fill="#fff"/><circle cx="85" cy="166" r="1.8" fill="#22222e"/><circle cx="85" cy="174" r="1.8" fill="#22222e"/></g><path d="M85 152l-9 6 9 6 9-6z" fill="#d4231f"/>`});
+ return P};
+/* ---------- 2. pelo, rostro y extras (se dibujan sobre la mascota) ---------- */
+const DXE=w=>{const hc=w.hairc||'#3b2a20',hl=sh(hc,.3),bd='#3b2a20';
+ const hair={
+  curly:Array.from({length:8},(_,i)=>`<circle cx="${46+i*11.2}" cy="${i%2?46:41}" r="11" fill="${hc}"/>`).join('')+`<circle cx="36" cy="64" r="9" fill="${hc}"/><circle cx="134" cy="64" r="9" fill="${hc}"/><circle cx="62" cy="38" r="3" fill="${hl}"/><circle cx="104" cy="40" r="3" fill="${hl}"/>`,
+  mohawk:`<path d="M68 52L72 12L79 38L85 2L91 38L98 12L102 52Z" fill="${hc}"/><path d="M80 34L85 8" stroke="${hl}" stroke-width="2.4" stroke-linecap="round"/>`,
+  pigtails:`<path d="M38 60Q40 32 85 32Q130 32 132 60Q85 44 38 60Z" fill="${hc}"/><circle cx="26" cy="86" r="14" fill="${hc}"/><circle cx="144" cy="86" r="14" fill="${hc}"/><circle cx="34" cy="64" r="4.5" fill="#ff6fa5"/><circle cx="136" cy="64" r="4.5" fill="#ff6fa5"/>`,
+  bun:`<path d="M38 60Q40 32 85 32Q130 32 132 60Q85 44 38 60Z" fill="${hc}"/><circle cx="85" cy="22" r="15" fill="${hc}"/><rect x="72" y="32" width="26" height="5" rx="2" fill="#ff6fa5"/>`,
+  afro:`<path d="M28 76Q14 -6 85 -8Q156 -6 142 76Q134 42 124 52Q85 34 46 52Q36 42 28 76Z" fill="${hc}"/>`,
+  side:`<path d="M38 56Q40 22 92 26Q128 28 132 58Q98 38 62 48Q48 52 38 56Z" fill="${hc}"/><path d="M62 34Q90 16 122 36" stroke="${hl}" stroke-width="3" fill="none" stroke-linecap="round"/>`};
+ const face={
+  mustache:`<path d="M85 96Q76 88 66 94Q62 98 70 100Q78 98 85 100Q92 98 100 100Q108 98 104 94Q94 88 85 96Z" fill="#2a1c14"/>`,
+  beard:`<path d="M44 96Q46 132 85 136Q124 132 126 96Q116 112 85 112Q54 112 44 96Z" fill="${bd}"/>`,
+  goatee:`<path d="M74 110Q85 130 96 110Q85 116 74 110Z" fill="${bd}"/>`,
+  blush:`<circle cx="58" cy="97" r="8" fill="#ff5c8a" opacity=".45"/><circle cx="112" cy="97" r="8" fill="#ff5c8a" opacity=".45"/>`,
+  freckles:[[56,92],[62,96],[52,97],[114,92],[108,96],[118,97]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="1.6" fill="#8a5a3a"/>`).join(''),
+  fangs:`<path d="M74 100l4 11 4-11zM88 100l4 11 4-11z" fill="#fff" stroke="#999" stroke-width=".8"/>`,
+  skull:`<circle cx="68" cy="80" r="12" fill="none" stroke="#ff6fa5" stroke-width="3"/><circle cx="102" cy="80" r="12" fill="none" stroke="#ffd23f" stroke-width="3"/><circle cx="85" cy="62" r="4" fill="#ffd23f"/><circle cx="76" cy="60" r="2.4" fill="#ff6fa5"/><circle cx="94" cy="60" r="2.4" fill="#ff6fa5"/><path d="M72 100v9M80 100v9M88 100v9M96 100v9" stroke="#fff" stroke-width="2" stroke-linecap="round"/>`};
+ return{hair,face,
+  wings:`<path d="M44 150Q-12 112 -6 188Q20 168 44 180Z" fill="#fff" stroke="#cfd7ee" stroke-width="2"/><path d="M126 150Q182 112 176 188Q150 168 126 180Z" fill="#fff" stroke="#cfd7ee" stroke-width="2"/>`,
+  halo:`<ellipse cx="85" cy="24" rx="30" ry="8" fill="none" stroke="#ffd23f" stroke-width="5"/><ellipse cx="85" cy="24" rx="30" ry="8" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="1.5"/>`,
+  bag:`<path d="M150 150Q150 138 160 138Q170 138 170 150" stroke="#5a3a18" stroke-width="4" fill="none"/><rect x="142" y="150" width="34" height="30" rx="6" fill="#8b5a2b"/><rect x="142" y="158" width="34" height="8" fill="#6e431c"/><circle cx="159" cy="162" r="3" fill="#e6c45a"/>`,
+  balloon:`<path d="M152 140Q160 110 164 84" stroke="#999" stroke-width="1.5" fill="none"/><ellipse cx="164" cy="66" rx="14" ry="18" fill="#ff5c7a"/><path d="M164 84l-3 6h6z" fill="#ff5c7a"/><ellipse cx="158" cy="60" rx="3" ry="6" fill="#fff" opacity=".5"/>`}};
+/* opciones nuevas en el vestuario */
+VOPT.hat.push(['witch','Bruja'],['santa','Navideño'],['party','Fiesta'],['beanie','Gorro lana'],['charro','Charro'],['chef','Chef'],['flowers','Flores'],['pirate','Pirata'],['ears','Orejas']);
+VOPT.glasses.push(['heart','Corazón'],['star','Estrella'],['nerd','Nerd'],['mask','Antifaz'],['d3','3D']);
+VOPT.outfit.push(['hoodie','Sudadera'],['striped','Rayas'],['overalls','Peto'],['jersey','Jersey'],['hawaii','Hawaiana'],['tux','Smoking']);
+VOPT.neck.push(['tie','Corbata'],['chain','Cadena'],['pearls','Perlas'],['bandana','Pañuelo'],['lei','Collar flores'],['bell','Cascabel']);
+VOPT.hair=[['none','Sin pelo'],['curly','Rizos'],['mohawk','Mohicano'],['pigtails','Coletas'],['bun','Chongo'],['afro','Afro'],['side','Peinado']];
+VOPT.face=[['none','Ninguno'],['mustache','Bigote'],['beard','Barba'],['goatee','Perilla'],['blush','Rubor'],['freckles','Pecas'],['fangs','Colmillos'],['skull','Calavera']];
+VCATS.splice(2,0,['hair','Pelo']);VCATS.splice(4,0,['face','Rostro']);
+/* miniaturas de pelo y rostro */
+const oT=BTH;
+BTH=(t,k)=>{if(k==='none'||k===false||(t!='hair'&&t!='face'))return oT(t,k);
+ const w=Object.assign({},BW(),{[t]:k}),E=DXE(w);
+ return`<svg viewBox="22 -10 126 150" style="width:100%;height:100%;overflow:visible" aria-hidden="true"><rect x="38" y="46" width="94" height="92" rx="18" fill="${sh(w.col,.15)}"/><rect x="46" y="54" width="78" height="64" rx="10" fill="#1a2250"/><ellipse cx="68" cy="80" rx="5" ry="7.5" fill="#fff"/><ellipse cx="102" cy="80" rx="5" ry="7.5" fill="#fff"/><path d="M70 100q15 10 30 0" stroke="#fff" stroke-width="3" fill="none"/>${(E[t]||{})[k]||''}</svg>`};
+/* ---------- 3. dibujar lo nuevo sobre la mascota + vestir con la temática ---------- */
+const DX=()=>{const c=CF();c.deco=Object.assign({theme:'none',auto:false,dens:10,dress:true},c.deco||{});return c.deco};
+const DXauto=()=>{const n=new Date(),m=n.getMonth()+1,d=n.getDate();
+ if((m==10&&d>=26)||(m==11&&d<=5))return'muertos';if(m==12||(m==11&&d>=20)||(m==1&&d<=6))return'navidad';
+ return({2:'amor',3:'primavera',4:'primavera',5:'primavera',6:'verano',7:'verano',8:'verano',9:'patrias',10:'halloween'})[m]||'none'};
+const DXcur=()=>{const d=DX();return d.auto?DXauto():d.theme};
+const DXout=()=>{const d=DX();if(!d.dress)return{};const t=TH[DXcur()];return(t&&t.out)||{}};
+const oB=BOTX;
+BOTX=(w,c)=>{const th=DXout(),w2=Object.assign({},w);
+ for(const k in th)if(!w2[k]||w2[k]=='none')w2[k]=th[k];
+ let s=oB(w2,c);const m=/url\(#(bm\d+_)/.exec(s);if(!m)return s;
+ const u=m[1],E=DXE(w2),P=BP(w2,u),hat=w2.hat&&w2.hat!='none'?(P.hat[w2.hat]||''):'';
+ const back=w2.wings?E.wings:'';
+ let front=(E.hair[w2.hair]||'')+(E.face[w2.face]||'');
+ if(front&&hat)front+=hat;
+ front+=(w2.halo?E.halo:'')+(w2.bag?E.bag:'')+(w2.balloon?E.balloon:'');
+ if(back){const i=s.indexOf('</defs>');if(i>=0)s=s.slice(0,i+7)+back+s.slice(i+7);else s=s.replace(/(<svg[^>]*>)/,'$1'+back)}
+ const j=s.lastIndexOf('</svg>');return j<0?s:s.slice(0,j)+front+s.slice(j)};
+/* extras y color de pelo dentro de la pestaña Vestuario */
+const HC=['#3b2a20','#111111','#c98a3c','#e6c45a','#b4443c','#6b4ea3','#2e7d6b','#d6336c'];
+const oV=TB.ves;
+TB.ves=(c,H)=>{let h=oV(c,H);const w=BW(),t=TH[DXcur()],
+ note=(t&&DX().dress)?`<div class="note"><b>Temática activa: ${t.n}.</b> La mascota usa prendas de la temática en los espacios que dejes en «Ninguno». Para verla sin tema, desactiva «Vestir a la mascota» en Decoraciones y temáticas.</div>`:'';
+ if(VCAT=='extra'){const it=(k,ti,e)=>`<button class="vi ${w[k]?'on':''}" title="${ti}" aria-label="${ti}" onclick="WD('${k}',${!w[k]})"><span style="font-size:26px;line-height:1">${e}</span></button>`;
+  h=h.replace('</div></section>',it('wings','Alas','🪽')+it('halo','Aureola','😇')+it('bag','Bolso','👜')+it('balloon','Globo','🎈')+'</div></section>')}
+ if(VCAT=='hair'&&w.hair&&w.hair!='none'){h=h.replace('</section>',`<div class="vcol"><div class="vrow"><span>Color</span><div class="vsw">${HC.map(x=>`<button title="${x}" aria-label="${x}" onclick="WD('hairc','${x}')" class="${(w.hairc||HC[0])==x?'on':''}" style="background:${x}"></button>`).join('')}</div></div></div></section>`)}
+ return note+h};
+/* ---------- 4. Temáticas ---------- */
+const TH={
+ halloween:{n:'Halloween',ic:'🎃',when:'Octubre',c:['#2b1055','#ff7a18'],f:['🎃','👻','🦇','🕷️','🍬'],fly:['🦇','🦇','👻'],props:['🎃','⚰️','🕸️'],web:1,gar:['🕷️','🦇','🎃','🕷️','🦇','🎃'],out:{hat:'witch',face:'fangs'}},
+ muertos:{n:'Día de Muertos',ic:'💀',when:'1 y 2 de noviembre',c:['#4a1a6b','#ff9f1c'],f:['🌼','💀','🕯️','🌺','🦋'],fly:['🦋','🦋'],props:['🌼','💀','🕯️'],pic:['#ff4fa3','#2ec4d6','#ff9f1c','#9b5de5','#7bd96b'],out:{hat:'flowers',face:'skull'}},
+ navidad:{n:'Navidad',ic:'🎄',when:'Diciembre',c:['#0b3d2e','#c1121f'],f:['❄️','⭐','🎁','🔔','🍬'],props:['🎄','🎁','⛄'],lights:1,gar:['🔔','⭐','🎄','🔔','⭐','🎄'],out:{hat:'santa',neck:'scarf'}},
+ amor:{n:'San Valentín',ic:'💘',when:'Febrero',c:['#ff5f8f','#7b5cd6'],f:['💖','💘','🌹','💌','💕'],props:['🌹','💝','💐'],gar:['💗','💗','💗','💗','💗','💗'],out:{glasses:'heart',neck:'bow',face:'blush'}},
+ patrias:{n:'Fiestas Patrias',ic:'🇲🇽',when:'Septiembre',c:['#006847','#ce1126'],f:['🎉','🎊','🌮','🎺','🪅'],props:['🇲🇽','🪅','🌮'],pic:['#006847','#ffffff','#ce1126','#006847','#ffffff','#ce1126'],out:{hat:'charro',face:'mustache',neck:'bandana'}},
+ primavera:{n:'Primavera',ic:'🌸',when:'Marzo a mayo',c:['#43c59e','#ff8fb3'],f:['🌸','🌷','🦋','🐝','🌼'],fly:['🦋','🐝'],props:['🌷','🌻','🐝'],out:{hat:'flowers',balloon:true}},
+ verano:{n:'Verano',ic:'🏖️',when:'Junio a agosto',c:['#2f9bff','#ffb347'],f:['☀️','🍉','🐚','🌴','🍦'],props:['🌴','🏖️','🍉'],out:{glasses:'sun',neck:'lei',outfit:'hawaii'}},
+ fiesta:{n:'Cumpleaños',ic:'🎂',when:'Cuando quieras',c:['#7b5cd6','#ff5fa2'],f:['🎈','🎉','🎊','🎂','🎁'],props:['🎂','🎁','🎈'],gar:['🎈','🎉','🎈','🎊','🎈','🎉'],out:{hat:'party',balloon:true}}};
+const st=document.createElement('style');st.textContent=`
+#dcr{position:fixed;inset:0;pointer-events:none;z-index:12;perspective:900px;overflow:hidden}
+body.locked #dcr{display:none}
+#dcr .dxt{position:absolute;inset:0}
+#dcr .f{position:absolute;top:0;transform-style:preserve-3d;animation:dxf linear infinite;filter:drop-shadow(0 8px 6px rgba(0,0,0,.35))}
+@keyframes dxf{0%{transform:translate3d(0,-12vh,var(--z)) rotateY(0) rotateZ(-12deg)}50%{transform:translate3d(var(--dx),50vh,var(--z)) rotateY(180deg) rotateZ(12deg)}100%{transform:translate3d(0,112vh,var(--z)) rotateY(360deg) rotateZ(-12deg)}}
+#dcr .fly{animation-name:dxy}
+@keyframes dxy{0%{transform:translate3d(-10vw,var(--y),var(--z)) rotateY(0)}100%{transform:translate3d(110vw,calc(var(--y) + 12vh),var(--z)) rotateY(360deg)}}
+#dcr .pr{position:absolute;bottom:6px;font-size:84px;line-height:1;animation:dxb 4s ease-in-out infinite;filter:drop-shadow(0 14px 8px rgba(0,0,0,.4));transform-style:preserve-3d}
+@keyframes dxb{50%{transform:translateY(-10px) rotateY(18deg)}}
+#dcr .gar{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-around;font-size:30px}
+#dcr .gar span{display:inline-block;transform-origin:top center;animation:dxs 2.4s ease-in-out infinite;filter:drop-shadow(0 4px 3px rgba(0,0,0,.3))}
+@keyframes dxs{0%,100%{transform:rotate(-14deg)}50%{transform:rotate(14deg)}}
+#dcr .pic{position:absolute;top:0;left:0;right:0;display:flex}
+#dcr .pic i{flex:1;height:40px;clip-path:polygon(0 0,100% 0,100% 80%,90% 100%,80% 80%,70% 100%,60% 80%,50% 100%,40% 80%,30% 100%,20% 80%,10% 100%,0 80%);animation:dxs 3s ease-in-out infinite;transform-origin:top;opacity:.92}
+#dcr .lit{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-around;border-top:2px solid #0006}
+#dcr .lit i{width:11px;height:16px;border-radius:50% 50% 55% 55%;margin-top:2px;animation:dxl 1.6s ease-in-out infinite}
+@keyframes dxl{50%{opacity:.35;transform:scale(.85)}}
+#dcr .web{position:absolute;top:0;width:170px;height:170px;opacity:.6}
+@media (prefers-reduced-motion:reduce){#dcr .f,#dcr .pr,#dcr .gar span,#dcr .pic i,#dcr .lit i{animation:none}}
+.dxg{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin:12px 0}
+.dxc{position:relative;overflow:hidden;min-height:104px;border-radius:16px;border:3px solid transparent;color:#fff;text-align:left;padding:12px;cursor:pointer;font:inherit;transition:transform .2s,box-shadow .2s}
+.dxc:hover{transform:translateY(-4px) rotateX(5deg);box-shadow:0 14px 26px -12px #000a}
+.dxc.on{border-color:#fff;box-shadow:0 0 0 3px var(--ac,#2b4fb8),0 14px 26px -12px #000}
+.dxc b{display:block;font-size:15px}.dxc small{opacity:.9;font-size:12px}
+.dxc .dxe{position:absolute;right:6px;bottom:-4px;font-size:54px;animation:dxb 3s ease-in-out infinite}
+.dxc .dxk{position:absolute;top:8px;right:8px;background:#fff;color:#111;border-radius:99px;padding:2px 8px;font-size:11px;font-style:normal;font-weight:700}`;
+document.head.appendChild(st);
+const DXapply=()=>{let e=$('#dcr');if(!e){e=document.createElement('div');e.id='dcr';document.body.appendChild(e)}
+ const id=DXcur(),t=TH[id],d=DX();if(!t){e.innerHTML='';try{A.botDress()}catch(z){}return}
+ const R=(a,b)=>a+Math.random()*(b-a);
+ let h=`<div class="dxt" style="background:radial-gradient(120% 60% at 50% 0%,${t.c[0]}38,transparent 70%),radial-gradient(120% 60% at 50% 100%,${t.c[1]}38,transparent 70%)"></div>`;
+ if(t.pic)h+=`<div class="pic">${t.pic.map((c,i)=>`<i style="background:${c};animation-delay:${i*.3}s"></i>`).join('')}</div>`;
+ if(t.lights)h+=`<div class="lit">${Array.from({length:26},(_,i)=>`<i style="background:${['#ff3b3b','#ffd23f','#3bd16f','#3b9bff'][i%4]};box-shadow:0 0 10px ${['#ff3b3b','#ffd23f','#3bd16f','#3b9bff'][i%4]};animation-delay:${(i%5)*.3}s"></i>`).join('')}</div>`;
+ if(t.gar)h+=`<div class="gar" style="top:${t.lights?18:0}px">${t.gar.map((x,i)=>`<span style="animation-delay:${i*.4}s">${x}</span>`).join('')}</div>`;
+ if(t.web){const w=`<svg viewBox="0 0 170 170" fill="none" stroke="#fff" stroke-width="1.4"><path d="M0 0H165M0 0V165M0 0L150 55M0 0L115 115M0 0L55 150M45 0Q40 40 0 45M90 0Q78 78 0 90M135 0Q112 112 0 135"/></svg>`;h+=`<div class="web" style="left:0">${w}</div><div class="web" style="right:0;transform:scaleX(-1)">${w}</div>`}
+ const pp=[['left:170px'],['right:14px'],['right:130px']];(t.props||[]).forEach((x,i)=>h+=`<div class="pr" style="${pp[i][0]};animation-delay:${i*.7}s">${x}</div>`);
+ for(let i=0;i<d.dens;i++){const z=Math.round(R(-250,200));h+=`<div class="f" style="left:${R(0,95).toFixed(1)}vw;font-size:${Math.round(R(20,50))}px;opacity:${(.45+(z+250)/820).toFixed(2)};--z:${z}px;--dx:${Math.round(R(-60,60))}px;animation-duration:${R(10,22).toFixed(1)}s;animation-delay:-${R(0,18).toFixed(1)}s">${t.f[i%t.f.length]}</div>`}
+ (t.fly||[]).forEach((x,i)=>h+=`<div class="f fly" style="--y:${10+i*14}vh;--z:${Math.round(R(-100,150))}px;font-size:${30+i*8}px;animation-duration:${14+i*5}s;animation-delay:-${i*6}s">${x}</div>`);
+ e.innerHTML=h;try{A.botDress()}catch(z){}};
+window.DXC={set(id){const d=DX();d.auto=false;d.theme=id;save();DXapply();CT()},auto(v){DX().auto=v;save();DXapply();CT()},dress(v){DX().dress=v;save();try{A.botDress()}catch(z){}CT()},dens(v){DX().dens=v;save();DXapply()}};
+TABS.push(['dec','Decoraciones y temáticas']);
+ICO['Decoraciones y temáticas']=IC('<path d="M12 2l2.4 5 5.6.8-4 3.9.9 5.6L12 14.6 7.1 17.3 8 11.7 4 7.8 9.6 7z"/><path d="M5 21h14"/>');
+{const g=GRP.find(x=>x[0]=='Apariencia');if(g)g[1].push('Decoraciones y temáticas');else GRP.push(['Apariencia',['Decoraciones y temáticas']])}
+TDESC.dec='Decora todo el sistema por fechas festivas con adornos 3D y viste a la mascota.';
+TB.dec=(c,H)=>{const d=DX(),cur=DXcur();
+ const cards=Object.entries(TH).map(([id,t])=>`<button class="dxc ${cur==id?'on':''}" onclick="DXC.set('${id}')" style="background:linear-gradient(135deg,${t.c[0]},${t.c[1]})"><b>${t.n}</b><small>${t.when}</small><span class="dxe">${t.ic}</span>${cur==id?'<i class="dxk">Activa</i>':''}</button>`).join('');
+ return`<p class="mu">Elige una temática para decorar todo el sistema con adornos 3D animados. La mascota se viste sola con la temática y puedes cambiar a mano su vestuario en la pestaña Vestuario.</p><div class="dxg">${cards}</div>`
+ +`<label class="rlm"><span style="flex:1">Activar automáticamente según el mes${d.auto&&TH[cur]?' (hoy: '+TH[cur].n+')':''}</span><input type="checkbox" ${d.auto?'checked':''} onchange="DXC.auto(this.checked)"></label>`
+ +`<label class="rlm"><span style="flex:1">Vestir a la mascota con la temática</span><input type="checkbox" ${d.dress?'checked':''} onchange="DXC.dress(this.checked)"></label>`
+ +`<label class="rlm"><span style="flex:1">Cantidad de adornos flotantes</span><input type="range" min="0" max="30" value="${d.dens}" onchange="DXC.dens(+this.value)"></label>`
+ +`<div style="text-align:center;margin-top:10px">${BOT()}</div><div class="row" style="margin-top:10px"><button class="btn d" onclick="DXC.set('none')">Quitar decoración</button></div>`};
+DXapply();
+})();
+
 </script></body></html>
