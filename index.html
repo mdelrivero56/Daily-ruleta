@@ -1519,7 +1519,7 @@ BTH=(t,k)=>{if(k==='none'||k===false||(t!='hair'&&t!='face'))return oT(t,k);
  const w=Object.assign({},BW(),{[t]:k}),E=DXE(w);
  return`<svg viewBox="22 -10 126 150" style="width:100%;height:100%;overflow:visible" aria-hidden="true"><rect x="38" y="46" width="94" height="92" rx="18" fill="${sh(w.col,.15)}"/><rect x="46" y="54" width="78" height="64" rx="10" fill="#1a2250"/><ellipse cx="68" cy="80" rx="5" ry="7.5" fill="#fff"/><ellipse cx="102" cy="80" rx="5" ry="7.5" fill="#fff"/><path d="M70 100q15 10 30 0" stroke="#fff" stroke-width="3" fill="none"/>${(E[t]||{})[k]||''}</svg>`};
 /* ---------- 3. dibujar lo nuevo sobre la mascota + vestir con la temática ---------- */
-const DX=()=>{const c=CF();c.deco=Object.assign({theme:'none',auto:false,dens:10,dress:true},c.deco||{});return c.deco};
+const DX=()=>{const c=CF();c.deco=Object.assign({theme:'none',auto:false,dens:6,dress:true},c.deco||{});return c.deco};
 const DXauto=()=>{const n=new Date(),m=n.getMonth()+1,d=n.getDate();
  if((m==10&&d>=26)||(m==11&&d<=5))return'muertos';if(m==12||(m==11&&d>=20)||(m==1&&d<=6))return'navidad';
  return({2:'amor',3:'primavera',4:'primavera',5:'primavera',6:'verano',7:'verano',8:'verano',9:'patrias',10:'halloween'})[m]||'none'};
@@ -1547,34 +1547,34 @@ TB.ves=(c,H)=>{let h=oV(c,H);const w=BW(),t=TH[DXcur()],
  return note+h};
 /* ---------- 4. Temáticas ---------- */
 const TH={
- halloween:{n:'Halloween',ic:'🎃',when:'Octubre',c:['#2b1055','#ff7a18'],f:['🎃','👻','🦇','🕷️','🍬'],fly:['🦇','🦇','👻'],props:['🎃','⚰️','🕸️'],web:1,gar:['🕷️','🦇','🎃','🕷️','🦇','🎃'],out:{hat:'witch',face:'fangs'}},
- muertos:{n:'Día de Muertos',ic:'💀',when:'1 y 2 de noviembre',c:['#4a1a6b','#ff9f1c'],f:['🌼','💀','🕯️','🌺','🦋'],fly:['🦋','🦋'],props:['🌼','💀','🕯️'],pic:['#ff4fa3','#2ec4d6','#ff9f1c','#9b5de5','#7bd96b'],out:{hat:'flowers',face:'skull'}},
- navidad:{n:'Navidad',ic:'🎄',when:'Diciembre',c:['#0b3d2e','#c1121f'],f:['❄️','⭐','🎁','🔔','🍬'],props:['🎄','🎁','⛄'],lights:1,gar:['🔔','⭐','🎄','🔔','⭐','🎄'],out:{hat:'santa',neck:'scarf'}},
- amor:{n:'San Valentín',ic:'💘',when:'Febrero',c:['#ff5f8f','#7b5cd6'],f:['💖','💘','🌹','💌','💕'],props:['🌹','💝','💐'],gar:['💗','💗','💗','💗','💗','💗'],out:{glasses:'heart',neck:'bow',face:'blush'}},
- patrias:{n:'Fiestas Patrias',ic:'🇲🇽',when:'Septiembre',c:['#006847','#ce1126'],f:['🎉','🎊','🌮','🎺','🪅'],props:['🇲🇽','🪅','🌮'],pic:['#006847','#ffffff','#ce1126','#006847','#ffffff','#ce1126'],out:{hat:'charro',face:'mustache',neck:'bandana'}},
+ halloween:{n:'Halloween',ic:'🎃',when:'Octubre',c:['#2b1055','#ff7a18'],f:['🎃','👻','🦇','🕷️','🍬'],fly:['🦇','🦇','👻'],props:['🎃','⚰️','🕸️'],web:1,out:{hat:'witch',face:'fangs'}},
+ muertos:{n:'Día de Muertos',ic:'💀',when:'1 y 2 de noviembre',c:['#4a1a6b','#ff9f1c'],f:['🌼','💀','🕯️','🌺','🦋'],fly:['🦋','🦋'],props:['🌼','💀','🕯️'],sw:'pen',sc:['#ff4fa3','#2ec4d6','#ff9f1c','#9b5de5','#7bd96b'],out:{hat:'flowers',face:'skull'}},
+ navidad:{n:'Navidad',ic:'🎄',when:'Diciembre',c:['#0b3d2e','#c1121f'],f:['❄️','⭐','🎁','🔔','🍬'],props:['🎄','🎁','⛄'],sw:'lit',sc:['#ff3b3b','#ffd23f','#3bd16f','#3b9bff'],out:{hat:'santa',neck:'scarf'}},
+ amor:{n:'San Valentín',ic:'💘',when:'Febrero',c:['#ff5f8f','#7b5cd6'],f:['💖','💘','🌹','💌','💕'],props:['🌹','💝','💐'],sw:'pen',sc:['#ff5f8f','#ff9ec0','#ffffff','#ff5f8f'],out:{glasses:'heart',neck:'bow',face:'blush'}},
+ patrias:{n:'Fiestas Patrias',ic:'🇲🇽',when:'Septiembre',c:['#006847','#ce1126'],f:['🎉','🎊','🌮','🎺','🪅'],props:['🇲🇽','🪅','🌮'],sw:'pen',sc:['#006847','#ffffff','#ce1126'],out:{hat:'charro',face:'mustache',neck:'bandana'}},
  primavera:{n:'Primavera',ic:'🌸',when:'Marzo a mayo',c:['#43c59e','#ff8fb3'],f:['🌸','🌷','🦋','🐝','🌼'],fly:['🦋','🐝'],props:['🌷','🌻','🐝'],out:{hat:'flowers',balloon:true}},
  verano:{n:'Verano',ic:'🏖️',when:'Junio a agosto',c:['#2f9bff','#ffb347'],f:['☀️','🍉','🐚','🌴','🍦'],props:['🌴','🏖️','🍉'],out:{glasses:'sun',neck:'lei',outfit:'hawaii'}},
- fiesta:{n:'Cumpleaños',ic:'🎂',when:'Cuando quieras',c:['#7b5cd6','#ff5fa2'],f:['🎈','🎉','🎊','🎂','🎁'],props:['🎂','🎁','🎈'],gar:['🎈','🎉','🎈','🎊','🎈','🎉'],out:{hat:'party',balloon:true}}};
+ fiesta:{n:'Cumpleaños',ic:'🎂',when:'Cuando quieras',c:['#7b5cd6','#ff5fa2'],f:['🎈','🎉','🎊','🎂','🎁'],props:['🎂','🎁','🎈'],sw:'pen',sc:['#7b5cd6','#ff5fa2','#ffd23f','#2bc4ff'],out:{hat:'party',balloon:true}}};
 const st=document.createElement('style');st.textContent=`
-#dcr{position:fixed;inset:0;pointer-events:none;z-index:12;perspective:900px;overflow:hidden}
+#dcr{position:fixed;inset:0;pointer-events:none;z-index:12;perspective:1000px;overflow:hidden}
 body.locked #dcr{display:none}
-#dcr .dxt{position:absolute;inset:0}
-#dcr .f{position:absolute;top:0;transform-style:preserve-3d;animation:dxf linear infinite;filter:drop-shadow(0 8px 6px rgba(0,0,0,.35))}
-@keyframes dxf{0%{transform:translate3d(0,-12vh,var(--z)) rotateY(0) rotateZ(-12deg)}50%{transform:translate3d(var(--dx),50vh,var(--z)) rotateY(180deg) rotateZ(12deg)}100%{transform:translate3d(0,112vh,var(--z)) rotateY(360deg) rotateZ(-12deg)}}
-#dcr .fly{animation-name:dxy}
-@keyframes dxy{0%{transform:translate3d(-10vw,var(--y),var(--z)) rotateY(0)}100%{transform:translate3d(110vw,calc(var(--y) + 12vh),var(--z)) rotateY(360deg)}}
-#dcr .pr{position:absolute;bottom:6px;font-size:84px;line-height:1;animation:dxb 4s ease-in-out infinite;filter:drop-shadow(0 14px 8px rgba(0,0,0,.4));transform-style:preserve-3d}
-@keyframes dxb{50%{transform:translateY(-10px) rotateY(18deg)}}
-#dcr .gar{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-around;font-size:30px}
-#dcr .gar span{display:inline-block;transform-origin:top center;animation:dxs 2.4s ease-in-out infinite;filter:drop-shadow(0 4px 3px rgba(0,0,0,.3))}
-@keyframes dxs{0%,100%{transform:rotate(-14deg)}50%{transform:rotate(14deg)}}
-#dcr .pic{position:absolute;top:0;left:0;right:0;display:flex}
-#dcr .pic i{flex:1;height:40px;clip-path:polygon(0 0,100% 0,100% 80%,90% 100%,80% 80%,70% 100%,60% 80%,50% 100%,40% 80%,30% 100%,20% 80%,10% 100%,0 80%);animation:dxs 3s ease-in-out infinite;transform-origin:top;opacity:.92}
-#dcr .lit{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-around;border-top:2px solid #0006}
-#dcr .lit i{width:11px;height:16px;border-radius:50% 50% 55% 55%;margin-top:2px;animation:dxl 1.6s ease-in-out infinite}
-@keyframes dxl{50%{opacity:.35;transform:scale(.85)}}
-#dcr .web{position:absolute;top:0;width:170px;height:170px;opacity:.6}
-@media (prefers-reduced-motion:reduce){#dcr .f,#dcr .pr,#dcr .gar span,#dcr .pic i,#dcr .lit i{animation:none}}
+#dcr .gl{position:absolute;width:44vmin;height:44vmin;border-radius:50%;filter:blur(46px);opacity:.38}
+#dcr .cc{position:absolute;width:200px;height:210px;transform-style:preserve-3d}
+#dcr .cc.tl{top:0;left:0;transform-origin:0 0}
+#dcr .cc.tr{top:0;right:0;transform-origin:100% 0}
+#dcr .cc.br{bottom:0;right:0;transform-origin:100% 100%}
+#dcr .cc.bl{bottom:0;left:130px;transform-origin:0 100%}
+@media (max-width:700px){#dcr .cc{scale:.6}#dcr .cc.bl{display:none}}
+#dcr .it{position:absolute;line-height:1;animation:dxb 6s ease-in-out infinite;transform-style:preserve-3d;filter:drop-shadow(0 8px 6px rgba(0,0,0,.2)) drop-shadow(0 1px 1px rgba(0,0,0,.2))}
+#dcr .it::before{content:'';position:absolute;inset:-22%;border-radius:50%;background:radial-gradient(circle at 30% 24%,rgba(255,255,255,.55),transparent 52%),var(--o);box-shadow:inset -5px -7px 12px rgba(0,0,0,.14),0 12px 22px -10px rgba(0,0,0,.35);transform:translateZ(-18px);z-index:-1}
+#dcr .pt{position:absolute;line-height:1;animation:dxb 7s ease-in-out infinite;filter:drop-shadow(0 4px 3px rgba(0,0,0,.22))}
+@keyframes dxb{50%{transform:translateY(-8px) rotateY(16deg) rotateX(5deg)}}
+#dcr .sw{position:absolute;top:0;width:200px;height:84px;overflow:visible}
+#dcr .sw.r{right:0;transform:scaleX(-1)}
+#dcr .sw .bu{animation:dxl 1.8s ease-in-out infinite}
+@keyframes dxl{50%{opacity:.4}}
+#dcr .web{position:absolute;top:0;width:120px;height:120px;opacity:.32}
+@media (prefers-reduced-motion:reduce){#dcr .it,#dcr .pt,#dcr .sw .bu{animation:none}}
 .dxg{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin:12px 0}
 .dxc{position:relative;overflow:hidden;min-height:104px;border-radius:16px;border:3px solid transparent;color:#fff;text-align:left;padding:12px;cursor:pointer;font:inherit;transition:transform .2s,box-shadow .2s}
 .dxc:hover{transform:translateY(-4px) rotateX(5deg);box-shadow:0 14px 26px -12px #000a}
@@ -1585,15 +1585,24 @@ body.locked #dcr{display:none}
 document.head.appendChild(st);
 const DXapply=()=>{let e=$('#dcr');if(!e){e=document.createElement('div');e.id='dcr';document.body.appendChild(e)}
  const id=DXcur(),t=TH[id],d=DX();if(!t){e.innerHTML='';try{A.botDress()}catch(z){}return}
- const R=(a,b)=>a+Math.random()*(b-a);
- let h=`<div class="dxt" style="background:radial-gradient(120% 60% at 50% 0%,${t.c[0]}38,transparent 70%),radial-gradient(120% 60% at 50% 100%,${t.c[1]}38,transparent 70%)"></div>`;
- if(t.pic)h+=`<div class="pic">${t.pic.map((c,i)=>`<i style="background:${c};animation-delay:${i*.3}s"></i>`).join('')}</div>`;
- if(t.lights)h+=`<div class="lit">${Array.from({length:26},(_,i)=>`<i style="background:${['#ff3b3b','#ffd23f','#3bd16f','#3b9bff'][i%4]};box-shadow:0 0 10px ${['#ff3b3b','#ffd23f','#3bd16f','#3b9bff'][i%4]};animation-delay:${(i%5)*.3}s"></i>`).join('')}</div>`;
- if(t.gar)h+=`<div class="gar" style="top:${t.lights?18:0}px">${t.gar.map((x,i)=>`<span style="animation-delay:${i*.4}s">${x}</span>`).join('')}</div>`;
- if(t.web){const w=`<svg viewBox="0 0 170 170" fill="none" stroke="#fff" stroke-width="1.4"><path d="M0 0H165M0 0V165M0 0L150 55M0 0L115 115M0 0L55 150M45 0Q40 40 0 45M90 0Q78 78 0 90M135 0Q112 112 0 135"/></svg>`;h+=`<div class="web" style="left:0">${w}</div><div class="web" style="right:0;transform:scaleX(-1)">${w}</div>`}
- const pp=[['left:170px'],['right:14px'],['right:130px']];(t.props||[]).forEach((x,i)=>h+=`<div class="pr" style="${pp[i][0]};animation-delay:${i*.7}s">${x}</div>`);
- for(let i=0;i<d.dens;i++){const z=Math.round(R(-250,200));h+=`<div class="f" style="left:${R(0,95).toFixed(1)}vw;font-size:${Math.round(R(20,50))}px;opacity:${(.45+(z+250)/820).toFixed(2)};--z:${z}px;--dx:${Math.round(R(-60,60))}px;animation-duration:${R(10,22).toFixed(1)}s;animation-delay:-${R(0,18).toFixed(1)}s">${t.f[i%t.f.length]}</div>`}
- (t.fly||[]).forEach((x,i)=>h+=`<div class="f fly" style="--y:${10+i*14}vh;--z:${Math.round(R(-100,150))}px;font-size:${30+i*8}px;animation-duration:${14+i*5}s;animation-delay:-${i*6}s">${x}</div>`);
+ const R=(a,b)=>a+Math.random()*(b-a),o=t.c[0]+'3a',o2=t.c[1]+'3a',cs=t.sc||[t.c[0],t.c[1],'#ffffff'];
+ let h=`<div class="gl" style="left:-14vmin;top:-14vmin;background:${t.c[0]}"></div><div class="gl" style="right:-14vmin;top:-14vmin;background:${t.c[1]}"></div><div class="gl" style="right:-14vmin;bottom:-14vmin;background:${t.c[0]}"></div>`;
+ /* guirnalda sutil que sale de cada esquina superior */
+ if(t.sw){const pts=Array.from({length:6},(_,i)=>{const k=(i+1)/7,x=200*k,y=4*(1-k)*(1-k)+2*70*(1-k)*k+4*k*k,c=cs[i%cs.length];
+   return t.sw=='lit'?`<circle class="bu" cx="${x.toFixed(1)}" cy="${(y+4).toFixed(1)}" r="4.5" fill="${c}" style="filter:drop-shadow(0 0 5px ${c});animation-delay:${i*.25}s"/>`
+    :`<path d="M${(x-7).toFixed(1)} ${y.toFixed(1)}L${(x+7).toFixed(1)} ${y.toFixed(1)}L${x.toFixed(1)} ${(y+17).toFixed(1)}Z" fill="${c}" opacity=".92"/>`}).join('');
+  const sv=`<path d="M0 4Q100 70 200 4" fill="none" stroke="rgba(120,120,140,.55)" stroke-width="1.5"/>${pts}`;
+  h+=`<svg class="sw" viewBox="0 0 200 84">${sv}</svg><svg class="sw r" viewBox="0 0 200 84">${sv}</svg>`}
+ if(t.web){const w=`<svg viewBox="0 0 170 170" fill="none" stroke="#fff" stroke-width="1.6"><path d="M0 0H165M0 0V165M0 0L150 55M0 0L115 115M0 0L55 150M45 0Q40 40 0 45M90 0Q78 78 0 90M135 0Q112 112 0 135"/></svg>`;h+=`<div class="web" style="left:0">${w}</div><div class="web" style="right:0;transform:scaleX(-1)">${w}</div>`}
+ /* racimos 3D en las esquinas */
+ const top=t.sw||t.web?44:6;
+ ['tl','tr','br','bl'].forEach((k,i)=>{const r=k[1]=='r',b=k[0]=='b',H=r?'right':'left',V=b?'bottom':'top',v0=b?8:top;
+  const big=t.props[i%t.props.length],mid=t.f[(i+1)%t.f.length],sm=t.f[(i+3)%t.f.length],O=i%2?o2:o,it=(em,s,a,bb,dl)=>`<div class="it" style="${H}:${a}px;${V}:${bb}px;font-size:${s}px;--o:${O};animation-delay:${dl}s">${em}</div>`;
+  h+=`<div class="cc ${k}">`+(k=='bl'?'':it(big,46,16,v0+4,i*.5))+it(mid,28,k=='bl'?10:78,v0+(b?10:30),i*.5+.8)+it(sm,20,k=='bl'?64:40,v0+(b?62:84),i*.5+1.6)+`</div>`});
+ /* detalles flotantes: solo en las esquinas y muy discretos */
+ const n=Math.min(d.dens,14);
+ for(let i=0;i<n;i++){const r=i%2,b=(i>>1)%2,H=r?'right':'left',V=b?'bottom':'top',ex=b?(i%4==3?0:0):0;
+  h+=`<div class="pt" style="${H}:${R(1,15).toFixed(1)}vw;${V}:${R(b?6:11,b?24:30).toFixed(1)}vh;font-size:${Math.round(R(12,22))}px;opacity:${R(.4,.75).toFixed(2)};animation-delay:-${R(0,7).toFixed(1)}s;animation-duration:${R(6,10).toFixed(1)}s">${t.f[i%t.f.length]}</div>`}
  e.innerHTML=h;try{A.botDress()}catch(z){}};
 window.DXC={set(id){const d=DX();d.auto=false;d.theme=id;save();DXapply();CT()},auto(v){DX().auto=v;save();DXapply();CT()},dress(v){DX().dress=v;save();try{A.botDress()}catch(z){}CT()},dens(v){DX().dens=v;save();DXapply()}};
 TABS.push(['dec','Decoraciones y temáticas']);
@@ -1605,9 +1614,44 @@ TB.dec=(c,H)=>{const d=DX(),cur=DXcur();
  return`<p class="mu">Elige una temática para decorar todo el sistema con adornos 3D animados. La mascota se viste sola con la temática y puedes cambiar a mano su vestuario en la pestaña Vestuario.</p><div class="dxg">${cards}</div>`
  +`<label class="rlm"><span style="flex:1">Activar automáticamente según el mes${d.auto&&TH[cur]?' (hoy: '+TH[cur].n+')':''}</span><input type="checkbox" ${d.auto?'checked':''} onchange="DXC.auto(this.checked)"></label>`
  +`<label class="rlm"><span style="flex:1">Vestir a la mascota con la temática</span><input type="checkbox" ${d.dress?'checked':''} onchange="DXC.dress(this.checked)"></label>`
- +`<label class="rlm"><span style="flex:1">Cantidad de adornos flotantes</span><input type="range" min="0" max="30" value="${d.dens}" onchange="DXC.dens(+this.value)"></label>`
+ +`<label class="rlm"><span style="flex:1">Detalles flotantes en las esquinas</span><input type="range" min="0" max="14" value="${d.dens}" onchange="DXC.dens(+this.value)"></label>`
  +`<div style="text-align:center;margin-top:10px">${BOT()}</div><div class="row" style="margin-top:10px"><button class="btn d" onclick="DXC.set('none')">Quitar decoración</button></div>`};
 DXapply();
+})();
+
+
+/* ===== v18: «Robar el punto» en el reto de atención (parche aditivo) ===== */
+(()=>{
+const SC=()=>{const c=CF();c.stl=Object.assign({on:true,sec:10},c.stl||{});return c.stl};
+let X=null;
+const nm=m=>m?(m.s||m.name):'';
+const pool=()=>{if(!X)return[];const d=S.rl.teams[DEPTS[RLD]];return rlAll().filter(m=>m.on&&m.id!=X.sp&&m.id!=X.pk&&!X.tried.includes(m.id)&&d.some(z=>z.id==m.id))};
+const panel=()=>{const e=$('#rla');if(!e||!X)return;const p=pool(),pk=rlM(X.pk);
+ if(!p.length){e.innerHTML='<div class="att"><div class="who">🥷 Nadie robó el punto</div><div class="mu">Sin punto esta vez. ¡A escuchar con atención!</div></div>';X=null;return}
+ e.innerHTML=`<div class="att"><div class="mu">${esc(nm(pk))} no recordó…</div><div class="who">🥷 ¡Se puede robar el punto!</div>${X.q?`<div class="q">${esc(X.q)}</div>`:''}<div class="mu" style="margin:6px 0">¿Quién sabe la respuesta?</div><div>${p.map(m=>`<button class="btn mini" onclick="STL.go('${m.id}')">${esc(nm(m))}</button>`).join(' ')}</div><div id="rlt2"></div><div class="row" style="justify-content:center;margin-top:8px"><button class="btn" onclick="STL.rand()">🎲 Elegir al azar</button><button class="btn" onclick="A.rlTimer2(${SC().sec})">⏱ ${SC().sec} s</button><button class="btn" onclick="STL.none()">Nadie lo sabe</button></div></div>`};
+window.STL={
+ go(id){if(!X)return;clearInterval(RLTM);X.cur=id;const m=rlM(id),e=$('#rla');if(!e)return;
+  e.innerHTML=`<div class="att"><div class="mu">Intenta robar el punto</div><div class="who">${esc(nm(m))}</div>${X.q?`<div class="q">${esc(X.q)}</div>`:''}<div id="rlt2"></div><div class="row" style="justify-content:center"><button class="btn" onclick="A.rlTimer2(${SC().sec})">⏱ ${SC().sec} s</button><button class="btn p" onclick="STL.ok()">Acertó: roba el punto</button><button class="btn" onclick="STL.bad()">Falló</button></div></div>`},
+ rand(){const p=pool();if(!p.length)return;const e=$('#rla');let n=0;const iv=setInterval(()=>{if(!$('#rla')){clearInterval(iv);return}e.innerHTML=`<div class="att"><div class="mu">Eligiendo quién intenta robar…</div><div class="who">${esc(nm(p[rnd(p.length)]))}</div></div>`;beep(300+n*25,.03,.04);if(++n>=12){clearInterval(iv);STL.go(p[rnd(p.length)].id)}},90)},
+ ok(){if(!X||!X.cur)return;const id=X.cur;X=null;S.rl.steal=S.rl.steal||{};S.rl.steal[id]=(S.rl.steal[id]||0)+1;save();A.rlScore(id,1);
+  const e=$('#rla'),m=rlM(id),n=S.rl.steal[id];if(e)e.innerHTML=`<div class="att"><div class="who">🥷 ¡${esc(nm(m))} robó el punto!</div><div class="mu">+1 punto · ${n} robo${n>1?'s':''} en total</div></div>`},
+ bad(){if(!X)return;clearInterval(RLTM);X.tried.push(X.cur);X.cur=null;beep(220,.3,.06,'sawtooth');panel()},
+ none(){clearInterval(RLTM);X=null;const e=$('#rla');if(e)e.innerHTML='<div class="att"><div class="who">🥷 Nadie robó el punto</div><div class="mu">Sin punto esta vez. ¡A escuchar con atención!</div></div>'}};
+window.STLC=(k,v)=>{SC()[k]=v;save()};
+const oAtt=A.rlAtt;
+A.rlAtt=function(id){X={sp:id,tried:[]};return oAtt.apply(this,arguments)};
+const oS=A.rlScore;
+A.rlScore=function(id,ok){
+ if(!ok&&X&&!X.pk&&SC().on){X.pk=id;const q=$('#rla .q');X.q=q?q.textContent:'';
+  if(pool().length){clearInterval(RLTM);beep(220,.3,.06,'sawtooth');panel();try{A.botReact(0,'¡Se puede robar el punto!')}catch(z){}return}
+  X=null}
+ return oS.apply(this,arguments)};
+/* opciones en Ajustes > Preguntas */
+const oCT=CT;
+CT=function(){oCT.apply(this,arguments);if(typeof CTAB=='undefined'||CTAB!='qs')return;const o=$('#cfgov'),c=o&&o.querySelector('.cfgc');if(!c||c.querySelector('.stlcfg'))return;
+ const d=document.createElement('div');d.className='cfgcard stlcfg';d.style.marginTop='14px';
+ d.innerHTML=`<h3 style="font-size:14px;margin:0 0 6px">🥷 Robar el punto</h3><p class="mu">Cuando alguien no recuerde la respuesta en el reto de atención, el resto del equipo puede intentar robar el punto.</p><label class="rlm"><span style="flex:1">Activar «Robar el punto»</span><input type="checkbox" ${SC().on?'checked':''} onchange="STLC('on',this.checked)"></label><label class="rlm"><span style="flex:1">Segundos para responder</span><input type="number" min="3" max="60" value="${SC().sec}" style="width:70px" onchange="STLC('sec',Math.max(3,Math.min(60,+this.value||10)))"></label>`;
+ c.appendChild(d)};
 })();
 
 </script></body></html>
