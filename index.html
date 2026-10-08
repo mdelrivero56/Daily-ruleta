@@ -1498,7 +1498,7 @@ const DXE=w=>{const hc=w.hairc||'#3b2a20',hl=sh(hc,.3),bd='#3b2a20';
   goatee:`<path d="M74 110Q85 130 96 110Q85 116 74 110Z" fill="${bd}"/>`,
   blush:`<circle cx="58" cy="97" r="8" fill="#ff5c8a" opacity=".45"/><circle cx="112" cy="97" r="8" fill="#ff5c8a" opacity=".45"/>`,
   freckles:[[56,92],[62,96],[52,97],[114,92],[108,96],[118,97]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="1.6" fill="#8a5a3a"/>`).join(''),
-  bolt:`<path d="M90 54L78 76H87L81 96L98 70H89Z" fill="#ff4d4d" stroke="#8a1010" stroke-width="1.4"/>`,
+  bolt:`<path d="M89 55.5L82 64H87L83.5 71L93 61H88Z" fill="#ff4d4d" stroke="#8a1010" stroke-width="1.4"/>`,
   fangs:`<path d="M74 100l4 11 4-11zM88 100l4 11 4-11z" fill="#fff" stroke="#999" stroke-width=".8"/>`,
   skull:`<circle cx="68" cy="80" r="12" fill="none" stroke="#ff6fa5" stroke-width="3"/><circle cx="102" cy="80" r="12" fill="none" stroke="#ffd23f" stroke-width="3"/><circle cx="85" cy="62" r="4" fill="#ffd23f"/><circle cx="76" cy="60" r="2.4" fill="#ff6fa5"/><circle cx="94" cy="60" r="2.4" fill="#ff6fa5"/><path d="M72 100v9M80 100v9M88 100v9M96 100v9" stroke="#fff" stroke-width="2" stroke-linecap="round"/>`};
  return{hair,face,
@@ -1665,7 +1665,7 @@ header.top .logo{overflow:hidden}.wmk{overflow:hidden}.wmk b{overflow:hidden;tex
 #rlp{transform-box:fill-box;transform-origin:50% 6%;filter:drop-shadow(0 4px 3px rgba(0,0,0,.5))}
 @keyframes flick{0%{transform:rotate(-20deg)}65%{transform:rotate(3deg)}100%{transform:rotate(0)}}
 #rlsvg{filter:drop-shadow(0 18px 20px rgba(8,14,40,.5)) drop-shadow(0 2px 2px rgba(0,0,0,.4))}
-.vpre{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px}.vpre .btn{font-size:13px}
+.vpre{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 14px;padding-bottom:12px;border-bottom:1px solid var(--bd)}.vpre .btn{font-size:13px}
 @media (max-width:700px){#dcr .v9b{height:13vh}}`;
 document.head.appendChild(css);
 /* ---- decoración reutilizable ---- */
@@ -1726,18 +1726,19 @@ BP=(w,u)=>{const p=oBP2(w,u),hc=w.hatc,oc=w.outc,cl=`clip-path="url(#${u}cb)"`;
  tiara:`<path d="M56 50L62 26L74 40L85 16L96 40L108 26L114 50Z" fill="#cfefff" stroke="#6ab7e6" stroke-width="2.5"/><circle cx="85" cy="22" r="4.5" fill="#fff"/><circle cx="62" cy="30" r="3" fill="#7fd0ff"/><circle cx="108" cy="30" r="3" fill="#7fd0ff"/>`,
  hood:`<path d="M32 104Q26 18 85 14Q144 18 138 104Q134 60 85 54Q36 60 32 104Z" fill="${hc}"/><path d="M40 70Q85 40 130 70" stroke="#000" stroke-opacity=".2" stroke-width="3" fill="none"/>`});
  Object.assign(p.glasses,{visor:`<rect x="46" y="68" width="78" height="24" rx="12" fill="#2bc4ff" opacity=".6" stroke="#0a2a4a" stroke-width="3.4"/><path d="M56 75h34" stroke="#fff" stroke-opacity=".8" stroke-width="3" stroke-linecap="round"/>`});
- Object.assign(p.neck,{hscarf:`<rect x="50" y="132" width="70" height="15" rx="7" fill="${oc}"/>${[62,76,90,104].map(x=>`<rect x="${x}" y="132" width="5" height="15" fill="#ffd23f"/>`).join('')}<rect x="98" y="140" width="15" height="42" rx="3" fill="${oc}"/><path d="M98 154h15M98 168h15" stroke="#ffd23f" stroke-width="5"/>`});
+ Object.assign(p.neck,{hscarf:`<rect x="56" y="136" width="58" height="13" rx="6.5" fill="#b3202a"/>${[66,78,90,102].map(x=>`<rect x="${x}" y="136" width="5" height="13" fill="#f2b632"/>`).join('')}<rect x="96" y="144" width="14" height="34" rx="3" fill="#b3202a"/><path d="M96 156h14M96 168h14" stroke="#f2b632" stroke-width="4.5"/>`});
  Object.assign(p.outfit,{
  robe:`<g ${cl}><rect x="38" y="142" width="94" height="52" fill="${oc}"/><path d="M56 142L85 176L114 142V152L85 188L56 152Z" fill="${sh(oc,-.3)}"/><path d="M85 176V194" stroke="${sh(oc,-.45)}" stroke-width="3"/></g>`,
  astrosuit:`<g ${cl}><rect x="44" y="142" width="82" height="48" fill="#eef1f8"/><rect x="44" y="142" width="82" height="6" fill="#d6dbe8"/><rect x="62" y="156" width="46" height="22" rx="5" fill="#cfd6e6"/><circle cx="72" cy="167" r="4" fill="#ff5a4f"/><circle cx="85" cy="167" r="4" fill="#4fa8ff"/><rect x="95" y="164" width="8" height="6" fill="#6b7694"/></g>`,
  hero:`<g ${cl}><rect x="44" y="142" width="82" height="48" fill="${oc}"/><path d="M85 150l16 9-16 24-16-24z" fill="#ffd23f" stroke="#a97b0d" stroke-width="2"/><rect x="44" y="184" width="82" height="6" fill="#ffd23f"/></g>`,
  queen:`<g ${cl}><path d="M44 142H126L138 194H32Z" fill="#9bd7ff"/><path d="M62 142L85 162L108 142" fill="#e8f7ff"/>${stars}</g>`});
+ if(!p.__fit){p.__fit=1;for(const k in p.hat){if(k=='none'||k=='astro'||k=='hood')continue;const v=p.hat[k];if(v&&typeof v=='string')p.hat[k]=`<g transform="translate(0 -5)">${v}</g>`}}
  return p};
 const FB=window.DXE;
 /* looks de película rápidos */
-const LK=[['Aprendiz de magia',{hat:'wizard',hatc:'#2a2f6e',glasses:'round',outfit:'robe',outc:'#7a1230',neck:'hscarf',face:'bolt'}],['Astronauta',{hat:'astro',glasses:'none',outfit:'astrosuit',neck:'none',face:'none'}],['Superhéroe',{hat:'none',glasses:'mask',outfit:'hero',outc:'#c1121f',neck:'none',cape:true}],['Reina de hielo',{hat:'tiara',glasses:'none',outfit:'queen',neck:'none',cape:true}],['Ninja',{hat:'hood',hatc:'#1b1b26',glasses:'visor',outfit:'hoodie',outc:'#262636',neck:'bandana'}]];
+const LK=[['Aprendiz de magia',{hat:'wizard',hatc:'#2a2f6e',glasses:'round',outfit:'robe',outc:'#1f2a5a',neck:'hscarf',face:'bolt'}],['Astronauta',{hat:'astro',glasses:'none',outfit:'astrosuit',neck:'none',face:'none'}],['Superhéroe',{hat:'none',glasses:'mask',outfit:'hero',outc:'#c1121f',neck:'none',cape:true}],['Reina de hielo',{hat:'tiara',glasses:'none',outfit:'queen',neck:'none',cape:true}],['Ninja',{hat:'hood',hatc:'#1b1b26',glasses:'visor',outfit:'hoodie',outc:'#262636',neck:'bandana'}]];
 window.V19.look=i=>{const b=Object.assign({},BW(),{hat:'none',glasses:'none',outfit:'none',neck:'none',face:'none',cape:false},LK[i][1]);CF().botw=b;save();A.botDress();CT()};
-const oV9=TB.ves;TB.ves=(c,H)=>{let h=oV9(c,H);return h.replace('<section',`<div class="vpre">${LK.map((l,i)=>`<button class="btn" onclick="V19.look(${i})">🎬 ${l[0]}</button>`).join('')}</div><section`)};
+const oV9=TB.ves;TB.ves=(c,H)=>{let h=oV9(c,H);return h.replace('<div class="vg">',`<div class="vpre">${LK.map((l,i)=>`<button class="btn" onclick="V19.look(${i})">🎬 ${l[0]}</button>`).join('')}</div><div class="vg">`)};
 /* ---- voz: se carga antes de hablar y también habla al empezar el giro ---- */
 {const o=A.speak;A.speak=function(t,f){try{if(window.speechSynthesis&&!VOICES.length)loadV()}catch(e){}return o.call(this,t,f)};
  const om=A.mas;A.mas=function(e,n){try{if(e=='idle'&&RLBUSY)return}catch(z){}const r=om.apply(this,arguments);if(e=='spin'){const b=$('#mb');b&&A.speak(b.textContent)}return r}}
@@ -1954,6 +1955,7 @@ input:focus,select:focus,textarea:focus{outline:0;border-color:var(--pr);box-sha
 .dxc.on{border-color:#fff!important;box-shadow:0 0 0 3px var(--pr),0 14px 28px -12px rgba(0,0,0,.6)!important}
 .vpre .btn{border-radius:99px}
 .dxc small,.dxc>small{color:#fff!important}
+.vcat .ci{display:grid;place-items:center;width:44px;height:36px;margin:0 auto;overflow:hidden}.vcat .ci svg{width:auto!important;height:100%!important;max-width:44px;overflow:hidden!important}
 header.top .hctl{flex:none!important}header.top .hctl>*{flex:none}header.top .hctl .btn{white-space:nowrap}
 header.top nav{flex:0 1 auto!important;min-width:0}
 @media (max-width:1280px){header.top .clk,header.top .svt{display:none}}
