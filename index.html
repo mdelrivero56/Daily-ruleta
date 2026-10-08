@@ -626,7 +626,7 @@ function ruleta(){const d=DEPTS[RLD],tm=S.rl.teams[d],on=tm.filter(m=>m.on),sa=3
  <p class="mu" style="margin:6px 0 10px">1) Elige el equipo · 2) Marca a quien esté presente · 3) Gira (botón central, «Girar» o barra espaciadora) · 4) Registra la nota y los puntos.</p>
  <div class="row" style="margin-bottom:12px">${DEPTS.map((x,i)=>`<button class="btn ${i==RLD?'p':''}" onclick="A.rlDept(${i})">${esc(x)} <span class="ch n">${S.rl.teams[x].filter(m=>m.on).length}/${S.rl.teams[x].length}</span></button>`).join('')}<button class="btn mini" onclick="A.eq()">Editar equipos</button></div>
  <div class="rlgrid">
- <div class="rlmain"><div id="whw" style="position:relative;max-width:var(--rw,430px);margin:auto"><svg id="rlsvg" class="rlidle" viewBox="0 -20 300 320" style="width:100%;display:block"><defs><radialGradient id="wsh" cx="50%" cy="42%" r="60%"><stop offset="0" stop-color="#fff" stop-opacity=".24"/><stop offset=".55" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".3"/></radialGradient><linearGradient id="wgd" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f6e08a"/><stop offset=".5" stop-color="#c9a227"/><stop offset="1" stop-color="#8a6d12"/></linearGradient><radialGradient id="whb" cx="40%" cy="35%"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#d3d9e8"/></radialGradient></defs><circle cx="150" cy="150" r="149" fill="url(#wgd)"/><circle cx="150" cy="150" r="145" fill="#0f1f4d"/><circle cx="150" cy="150" r="141.5" fill="none" stroke="url(#wgd)" stroke-width="1"/>${CF().rlLights?BULBS:''}<g id="rlg" style="transform-origin:150px 150px;transform:rotate(${RLROT}deg)">${sl||'<circle cx="150" cy="150" r="140" fill="var(--in)"/><text x="150" y="150" text-anchor="middle" fill="var(--mu)">Sin personas presentes</text>'}</g><circle cx="150" cy="150" r="140" fill="url(#wsh)" pointer-events="none"/><g id="rlhub" style="cursor:pointer" onclick="A.spin()"><circle cx="150" cy="150" r="32" fill="url(#whb)" stroke="url(#wgd)" stroke-width="4"/><text x="150" y="150" text-anchor="middle" dominant-baseline="middle" font-size="11" font-weight="800" fill="#0f1f4d">GIRAR</text></g><polygon id="rlp" points="138,-16 162,-16 150,16" fill="url(#wgd)" stroke="#fff" stroke-width="2"/></svg><canvas id="rlc" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none"></canvas></div>
+ <div class="rlmain"><div id="whw" style="position:relative;max-width:var(--rw,430px);margin:auto"><svg id="rlsvg" class="rlidle" viewBox="0 -20 300 320" style="width:100%;display:block"><defs><radialGradient id="wsh" cx="50%" cy="42%" r="60%"><stop offset="0" stop-color="#fff" stop-opacity=".24"/><stop offset=".55" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".3"/></radialGradient><linearGradient id="wgd" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f6e08a"/><stop offset=".5" stop-color="#c9a227"/><stop offset="1" stop-color="#8a6d12"/></linearGradient><radialGradient id="whb" cx="40%" cy="35%"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#d3d9e8"/></radialGradient></defs><circle cx="150" cy="150" r="149" fill="url(#wgd)"/><circle cx="150" cy="150" r="146" fill="none" stroke="#fff" stroke-opacity=".55"/><circle cx="150" cy="150" r="145" fill="#0f1f4d"/><circle cx="150" cy="150" r="143" fill="none" stroke="#000" stroke-opacity=".4" stroke-width="3"/><circle cx="150" cy="150" r="141.5" fill="none" stroke="url(#wgd)" stroke-width="1"/>${CF().rlLights?BULBS:''}<g id="rlg" style="transform-origin:150px 150px;transform:rotate(${RLROT}deg)">${sl||'<circle cx="150" cy="150" r="140" fill="var(--in)"/><text x="150" y="150" text-anchor="middle" fill="var(--mu)">Sin personas presentes</text>'}</g><circle cx="150" cy="150" r="140" fill="url(#wsh)" pointer-events="none"/><path d="M40 112A120 120 0 0 1 190 32" stroke="#fff" stroke-opacity=".3" stroke-width="10" fill="none" stroke-linecap="round" pointer-events="none"/><g id="rlhub" style="cursor:pointer" onclick="A.spin()"><circle cx="150" cy="150" r="32" fill="url(#whb)" stroke="url(#wgd)" stroke-width="4"/><text x="150" y="150" text-anchor="middle" dominant-baseline="middle" font-size="11" font-weight="800" fill="#0f1f4d">GIRAR</text></g><path id="rlp" d="M136-14H164Q164 2 150 22Q136 2 136-14Z" fill="url(#wgd)" stroke="#fff" stroke-width="2"/></svg><canvas id="rlc" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none"></canvas></div>
   <div id="rlw" style="min-height:70px;text-align:center;margin:10px 0;font-size:16px">${lh?`Último: ${esc(lh.f)} → <b>${esc(lh.name)}</b>`:'Presiona Girar'}</div>
   <div class="ctl"><div class="ctl-t">Opciones del giro</div><div class="row"><label>Para<select id="rlf"><option value="DQ" ${CF().qdef=='DQ'?'selected':''}>Daily + pregunta aleatoria</option><option value="Daily" ${CF().qdef=='Daily'?'selected':''}>Solo Daily</option></select></label><label>Fuerza<input id="rlz" type="range" min="1" max="3" value="${CF().rlFz}" style="width:90px"></label><label>Cronómetro<select id="rlauto">${tmOpts()}</select></label></div>
   <div class="row c" style="margin-top:10px"><button class="btn big" id="rls" onclick="A.spin()">Girar</button><button class="btn" onclick="A.rlOrder()">Orden completo</button><button class="btn" onclick="A.fin()">Finalizar Daily</button></div><div class="row c" style="margin-top:8px"><button class="btn mini" onclick="A.rlShuffle()">Mezclar posiciones</button><button class="btn mini" onclick="A.respin()">Repetir último giro</button><button class="btn mini" onclick="A.rlUndo()">↶ Deshacer giro</button><button class="btn mini" onclick="A.tab('l')">Ver registro</button><button class="btn mini" onclick="A.rlCopy()">Copiar resumen</button><button class="btn mini" onclick="A.rlSnd(this)">${SND?'Sonido activado':'Sonido apagado'}</button></div></div>
@@ -706,7 +706,7 @@ const A={
   const finish=()=>{RLBUSY=0;MU.k=1;A.mas('win',w.name);RLROT=(start+delta)%360;g.style.transform=`rotate(${RLROT}deg)`;r.done[d].push(w.id);RLEND=!!r.norep&&t.length>1&&t.every(m=>r.done[d].includes(m.id));r.hist.push({date:today(),dept:d,name:w.name,f,t:new Date().toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'})});r.hist=r.hist.slice(-3000);save();
    const e=$('#rlw');if(!e)return;sv.classList.add('rlidle');$('#rls').disabled=false;g.querySelectorAll('.sl').forEach(q=>{q.classList.remove('hot');if(+q.dataset.i!=i0)q.classList.add('dim')});
    e.innerHTML=`<div class="rlwin" style="--c:${RLC[i0%RLC.length]}"><div class="av">${esc(ini(w.name))}</div><div><small class="mu">${nr}${esc(f)}</small><div class="nm">${esc(w.name)}</div><small class="mu">${esc(w.role)}</small></div></div><div class="row" style="justify-content:center;margin-top:8px">${tmBtns()}</div><div id="rlt" style="margin-top:8px"></div><div class="row" style="justify-content:center;margin-top:8px"><button class="btn p" onclick="A.rlAtt('${w.id}')">Reto de atención</button><button class="btn" onclick="A.rlScore('${w.id}',1)">Acertó (+1)</button><button class="btn" onclick="A.respin()">Volver a girar</button></div><div id="rla"></div>`;
-   RLRES=1;A.stp();$('#rll').innerHTML=rlList();$('#rlh').innerHTML=rlHist();A.rlStats();confetti();[523,659,784,1047].forEach((n,k)=>setTimeout(()=>beep(n,.18,.07,'triangle'),k*110));if(CF().rlBig)A.rlBig(w,f,RLC[i0%RLC.length],nr);else{A.speak(sayName(w));A.rlClose()}};
+   RLRES=1;A.stp();$('#rll').innerHTML=rlList();$('#rlh').innerHTML=rlHist();A.rlStats();confetti();[523,659,784,1047].forEach((n,k)=>setTimeout(()=>beep(n,.18,.07,'triangle'),k*110));if(CF().rlBig)A.rlBig(w,f,RLC[i0%RLC.length],nr);else{A.speak(((CF().vPre||'')+' '+sayName(w)).trim());A.rlClose()}};
   const step=now=>{if(!$('#rlg')){RLBUSY=0;return}const k=Math.min(1,(now-t0)/dur),ang=start+delta*(1-Math.pow(1-k,4)),idx=Math.floor(((360-ang%360)%360)/sa)%t.length;RLROT=ang;g.style.transform=`rotate(${ang}deg)`;
    if(idx!=last){last=idx;if(CF().rlTick)beep(380+(idx%6)*45,.03,.05);pt.style.animation='none';pt.getBoundingClientRect();pt.style.animation='flick .12s ease-out';g.querySelectorAll('.sl.hot').forEach(q=>q.classList.remove('hot'));const q=g.querySelector(`.sl[data-i="${idx}"]`);q&&q.classList.add('hot');const e=$('#rlw');if(e)e.innerHTML=`<span class="rlflick">${esc(t[idx].name)}</span>`}
    k<1?requestAnimationFrame(step):finish()};
@@ -1129,10 +1129,10 @@ let BOTX=(w,c)=>{const u='bm'+(++BU)+'_',U=k=>`url(#${u}${k})`,sh=BSH[w.shape]||
  +`<ellipse cx="28.5" cy="208" rx="3.4" ry="4.8" fill="${U('g')}" stroke="#c9bea8" stroke-width=".8"/><ellipse cx="34" cy="210" rx="3.4" ry="5" fill="${U('g')}" stroke="#c9bea8" stroke-width=".8"/><ellipse cx="39.5" cy="208" rx="3.4" ry="4.8" fill="${U('g')}" stroke="#c9bea8" stroke-width=".8"/>`
  +`<rect x="24" y="190" width="20" height="17" rx="8" fill="${U('g')}" stroke="#c9bea8" stroke-width=".9"/><ellipse cx="44" cy="197" rx="3.2" ry="5.6" transform="rotate(-18 44 197)" fill="${U('g')}" stroke="#c9bea8" stroke-width=".8"/><path d="M28 195Q34 192 40 195" stroke="#fff" stroke-opacity=".8" stroke-width="2" fill="none" stroke-linecap="round"/></g>`
  /* brazo derecho + mano con el pulgar arriba */
- +`<path d="M127 154L146 146" stroke="${lo}" stroke-width="15" stroke-linecap="round"/><path d="M127 154L146 146" stroke="${b}" stroke-width="11" stroke-linecap="round"/><path d="M127 151L145 143.5" stroke="${hi}" stroke-opacity=".7" stroke-width="3" stroke-linecap="round"/><circle cx="127" cy="154" r="8" fill="${U('b')}" stroke="${hi}" stroke-opacity=".4"/>`
+ +`<g class="armr"><path d="M127 154L146 146" stroke="${lo}" stroke-width="15" stroke-linecap="round"/><path d="M127 154L146 146" stroke="${b}" stroke-width="11" stroke-linecap="round"/><path d="M127 151L145 143.5" stroke="${hi}" stroke-opacity=".7" stroke-width="3" stroke-linecap="round"/><circle cx="127" cy="154" r="8" fill="${U('b')}" stroke="${hi}" stroke-opacity=".4"/>`
  +`<g class="hand"><rect x="146" y="96" width="12" height="32" rx="6" transform="rotate(-6 152 112)" fill="${U('g')}" stroke="#c9bea8" stroke-width=".9"/><path d="M149 103q3-3 6-1" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" opacity=".85"/>`
  +`<rect x="139" y="119" width="27" height="24" rx="9" fill="${U('g')}" stroke="#c9bea8" stroke-width=".9"/><path d="M142.5 125.5h19M142.5 131h19M142.5 136.5h19" stroke="#b5a78d" stroke-width="1.2" stroke-linecap="round"/><ellipse cx="146" cy="124" rx="3" ry="1.8" fill="#fff" opacity=".7"/>`
- +`<rect x="141" y="141" width="24" height="8" rx="3" fill="${dk}"/><rect x="141" y="141" width="24" height="2" rx="1" fill="#fff" opacity=".2"/></g>`
+ +`<rect x="141" y="141" width="24" height="8" rx="3" fill="${dk}"/><rect x="141" y="141" width="24" height="2" rx="1" fill="#fff" opacity=".2"/></g></g>`
  /* cabeza */
  +`<rect x="31" y="74" width="9" height="32" rx="4" fill="${U('l')}"/><rect x="130" y="74" width="9" height="32" rx="4" fill="${U('l')}"/>`
  +`<rect x="38" y="46" width="94" height="92" rx="${sh[0]}" fill="${U('r')}"/><rect x="38" y="46" width="94" height="92" rx="${sh[0]}" fill="${U('sd')}" opacity=".7"/><rect x="39" y="47" width="92" height="90" rx="${Math.max(1,sh[0]-1)}" fill="none" stroke="#fff" stroke-opacity=".28" stroke-width="1.5"/>`
@@ -1498,6 +1498,7 @@ const DXE=w=>{const hc=w.hairc||'#3b2a20',hl=sh(hc,.3),bd='#3b2a20';
   goatee:`<path d="M74 110Q85 130 96 110Q85 116 74 110Z" fill="${bd}"/>`,
   blush:`<circle cx="58" cy="97" r="8" fill="#ff5c8a" opacity=".45"/><circle cx="112" cy="97" r="8" fill="#ff5c8a" opacity=".45"/>`,
   freckles:[[56,92],[62,96],[52,97],[114,92],[108,96],[118,97]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="1.6" fill="#8a5a3a"/>`).join(''),
+  bolt:`<path d="M90 54L78 76H87L81 96L98 70H89Z" fill="#ff4d4d" stroke="#8a1010" stroke-width="1.4"/>`,
   fangs:`<path d="M74 100l4 11 4-11zM88 100l4 11 4-11z" fill="#fff" stroke="#999" stroke-width=".8"/>`,
   skull:`<circle cx="68" cy="80" r="12" fill="none" stroke="#ff6fa5" stroke-width="3"/><circle cx="102" cy="80" r="12" fill="none" stroke="#ffd23f" stroke-width="3"/><circle cx="85" cy="62" r="4" fill="#ffd23f"/><circle cx="76" cy="60" r="2.4" fill="#ff6fa5"/><circle cx="94" cy="60" r="2.4" fill="#ff6fa5"/><path d="M72 100v9M80 100v9M88 100v9M96 100v9" stroke="#fff" stroke-width="2" stroke-linecap="round"/>`};
  return{hair,face,
@@ -1584,7 +1585,8 @@ body.locked #dcr{display:none}
 .dxc .dxk{position:absolute;top:8px;right:8px;background:#fff;color:#111;border-radius:99px;padding:2px 8px;font-size:11px;font-style:normal;font-weight:700}`;
 document.head.appendChild(st);
 const DXapply=()=>{let e=$('#dcr');if(!e){e=document.createElement('div');e.id='dcr';document.body.appendChild(e)}
- const id=DXcur(),t=TH[id],d=DX();if(!t){e.innerHTML='';try{A.botDress()}catch(z){}return}
+ const id=DXcur(),t=TH[id],d=DX();if(!t){document.body.classList.remove('dxon');e.innerHTML='';try{A.botDress()}catch(z){}return}
+ if(window.V19){const sc=V19.scene(id,t);if(sc){e.innerHTML=sc;try{A.botDress()}catch(z){}return}}
  const R=(a,b)=>a+Math.random()*(b-a),o=t.c[0]+'3a',o2=t.c[1]+'3a',cs=t.sc||[t.c[0],t.c[1],'#ffffff'];
  let h=`<div class="gl" style="left:-14vmin;top:-14vmin;background:${t.c[0]}"></div><div class="gl" style="right:-14vmin;top:-14vmin;background:${t.c[1]}"></div><div class="gl" style="right:-14vmin;bottom:-14vmin;background:${t.c[0]}"></div>`;
  /* guirnalda sutil que sale de cada esquina superior */
@@ -1620,6 +1622,122 @@ DXapply();
 })();
 
 
+
+/* ===== v19: temáticas de escena, vestuario de película, mascota/puntero/voz corregidos ===== */
+(()=>{
+const sh=shade,R=(a,b)=>a+Math.random()*(b-a),P=(n,f)=>Array.from({length:n},(_,i)=>f(i)).join('');
+const css=document.createElement('style');css.textContent=`
+body.dxon{padding-bottom:14vh}
+#dcr .v9s{position:absolute;left:0;width:100%;display:block;overflow:visible}
+#dcr .v9t{top:48px;height:15vh}#dcr .v9b{bottom:0;height:20vh}
+#dcr .v9g{position:absolute;inset:0;opacity:.2}
+#dcr .v9f{position:absolute;top:-6vh;border-radius:50%;animation:v9f linear infinite}
+#dcr .v9r{position:absolute;bottom:-8vh;animation:v9r linear infinite}
+@keyframes v9f{to{transform:translate3d(var(--dx,30px),112vh,0) rotate(var(--r,360deg))}}
+@keyframes v9r{to{transform:translate3d(var(--dx,30px),-115vh,0) rotate(var(--r,30deg))}}
+.v9sw{transform-box:fill-box;transform-origin:50% 0;animation:v9sw 3.4s ease-in-out infinite}@keyframes v9sw{50%{transform:rotate(5deg)}}
+.v9bl{animation:v9bl 1.5s ease-in-out infinite alternate}@keyframes v9bl{to{opacity:.35}}
+.v9fl{transform-box:fill-box;transform-origin:50% 100%;animation:v9fl .2s steps(2) infinite alternate}@keyframes v9fl{to{transform:scale(.88,1.14)}}
+.v9fy{position:absolute;animation:v9fy 16s linear infinite}@keyframes v9fy{from{transform:translateX(-12vw)}to{transform:translateX(112vw)}}
+.v9bt{transform-box:fill-box;transform-origin:50% 50%;animation:v9bt .3s ease-in-out infinite alternate}@keyframes v9bt{to{transform:scaleX(.4)}}
+.v9sp{transform-box:fill-box;transform-origin:50% 50%;animation:v9sp 3.6s ease-out infinite}@keyframes v9sp{from{transform:scale(.15);opacity:1}to{transform:scale(1.3);opacity:0}}
+.v9wv{animation:v9wv 7s ease-in-out infinite alternate}@keyframes v9wv{to{transform:translateX(-90px)}}
+.v9fo{position:absolute;bottom:-2vh;animation:v9fo 6s ease-in-out infinite alternate;filter:drop-shadow(0 10px 8px rgba(0,0,0,.25))}@keyframes v9fo{to{transform:translateY(-2.5vh) rotate(3deg)}}
+.v9sn{transform-box:fill-box;transform-origin:50% 50%;animation:kspin 40s linear infinite}
+/* mascota: movimientos suaves, brazo unido al cuerpo */
+#mas.spin #bot .bot{animation:v9ch .8s ease-in-out infinite}
+#mas.win #bot .bot,#bot .bot.ok{animation:v9jp .7s cubic-bezier(.3,.7,.4,1) 3}
+#bot .bot.bad{animation:v9no .5s ease-in-out 3}
+@keyframes v9ch{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-6px) rotate(2deg)}}
+@keyframes v9jp{0%,100%{transform:translateY(0)}40%{transform:translateY(-20px)}}
+@keyframes v9no{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+#bot .armr{transform-box:view-box;transform-origin:127px 154px}
+#mas.spin #bot .armr,#mas.win #bot .armr{animation:v9ar .45s ease-in-out infinite alternate}
+@keyframes v9ar{from{transform:rotate(-6deg)}to{transform:rotate(-24deg)}}
+/* puntero con pivote correcto y ruleta con relieve */
+#rlp{transform-box:fill-box;transform-origin:50% 6%;filter:drop-shadow(0 4px 3px rgba(0,0,0,.5))}
+@keyframes flick{0%{transform:rotate(-20deg)}65%{transform:rotate(3deg)}100%{transform:rotate(0)}}
+#rlsvg{filter:drop-shadow(0 18px 20px rgba(8,14,40,.5)) drop-shadow(0 2px 2px rgba(0,0,0,.4))}
+.vpre{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px}.vpre .btn{font-size:13px}
+@media (max-width:700px){#dcr .v9b{height:13vh}}`;
+document.head.appendChild(css);
+/* ---- decoración reutilizable ---- */
+const fw=(x,y,r,a,b,n=12)=>`<g transform="translate(${x} ${y})">${P(n,i=>`<ellipse cy="${-r*.55}" rx="${r*.3}" ry="${r*.5}" transform="rotate(${i*360/n})" fill="${i%2?a:b}"/>`)}<circle r="${r*.28}" fill="${b}"/><circle r="${r*.12}" cx="-2" cy="-2" fill="#fff" opacity=".35"/></g>`;
+const heart=(c,s)=>`<svg viewBox="0 0 24 24" width="${s}" height="${s}"><path d="M12 21.5C3 14 1 9.5 1 6.8A5.4 5.4 0 0 1 12 5a5.4 5.4 0 0 1 11 1.8C23 9.5 21 14 12 21.5Z" fill="${c}"/><ellipse cx="7" cy="7" rx="2.4" ry="1.6" fill="#fff" opacity=".45" transform="rotate(-30 7 7)"/></svg>`;
+const flag=(x,c,i)=>`<g class="v9sw" style="animation-delay:-${(i*.37).toFixed(2)}s"><path fill-rule="evenodd" fill="${c}" d="M${x} 0h70v92l-35 16-35-16ZM${x+35} 22l11 13-11 13-11-13ZM${x+14} 62h12v12H${x+14}ZM${x+44} 62h12v12H${x+44}Z"/></g>`;
+const banner=cs=>`<path d="M-20 4Q800 56 1620 4" stroke="#6b5b4b" stroke-width="3" fill="none"/>`+P(17,i=>{const x=i*94,y=4+Math.sin(i/16*Math.PI)*0+ (48*Math.sin(i/16*Math.PI)*.0);return `<g transform="translate(0 ${(46*Math.sin(i/16*Math.PI)).toFixed(1)})">${flag(x,cs[i%cs.length],i)}</g>`});
+const fall=(n,cols,sz)=>P(n,i=>`<i class="v9f" style="left:${R(0,100).toFixed(1)}%;width:${(R(...sz)).toFixed(1)}px;height:${(R(...sz)).toFixed(1)}px;background:${cols[i%cols.length]};animation-duration:${R(9,19).toFixed(1)}s;animation-delay:-${R(0,19).toFixed(1)}s;--dx:${R(-60,60).toFixed(0)}px"></i>`);
+const petals=(n,cols)=>P(n,i=>`<i class="v9f" style="left:${R(0,100).toFixed(1)}%;width:${R(8,14).toFixed(0)}px;height:${R(5,9).toFixed(0)}px;border-radius:80% 0 80% 0;background:${cols[i%cols.length]};animation-duration:${R(10,18).toFixed(1)}s;animation-delay:-${R(0,18).toFixed(1)}s;--dx:${R(-120,120).toFixed(0)}px;--r:${R(300,900).toFixed(0)}deg"></i>`);
+const rise=(n,f)=>P(n,i=>`<div class="v9r" style="left:${R(2,96).toFixed(1)}%;animation-duration:${R(11,20).toFixed(1)}s;animation-delay:-${R(0,20).toFixed(1)}s;--dx:${R(-50,50).toFixed(0)}px;opacity:${R(.4,.85).toFixed(2)}">${f(i)}</div>`);
+const bat=(top,dl,s)=>`<svg class="v9fy" style="top:${top}vh;width:${s}px;animation-delay:-${dl}s;animation-duration:${R(13,20).toFixed(0)}s" viewBox="0 0 40 20"><path class="v9bt" d="M20 10Q14 0 0 4Q8 8 8 16Q14 10 20 14Q26 10 32 16Q32 8 40 4Q26 0 20 10Z" fill="#0d0716"/></svg>`;
+const pump=(x,y,s)=>`<g transform="translate(${x} ${y}) scale(${s})"><ellipse rx="46" ry="38" fill="url(#hp)"/><path d="M-22-34Q-32 0-22 34M22-34Q32 0 22 34M0-38V38" stroke="#b34400" stroke-width="3" fill="none" opacity=".55"/><rect x="-5" y="-52" width="10" height="17" rx="3" fill="#4a7a2a"/><path class="v9bl" fill="#fff3b0" d="M-28-8L-14-22L-8-6ZM28-8L14-22L8-6ZM-22 12Q0 32 22 12L11 9L0 17L-11 9Z"/></g>`;
+const cand=(x,y)=>`<g transform="translate(${x} ${y})"><circle cy="-20" r="46" fill="#ffb347" opacity=".22" class="v9bl"/><rect x="-9" y="-6" width="18" height="46" rx="3" fill="#fff4dc"/><rect x="-9" y="-6" width="6" height="46" rx="3" fill="#e9d9b8"/><path class="v9fl" d="M0-34Q9-20 0-8Q-9-20 0-34Z" fill="#ffcf5a"/></g>`;
+const ball=(c,x,sd,dl)=>`<svg class="v9fo" style="${sd}:${x}vw;height:30vh;animation-delay:-${dl}s" viewBox="0 0 60 150"><defs><radialGradient id="b${c.slice(1)}" cx=".35" cy=".3"><stop offset="0" stop-color="#fff" stop-opacity=".85"/><stop offset=".25" stop-color="${c}"/><stop offset="1" stop-color="${sh(c,-.35)}"/></radialGradient></defs><path d="M30 78Q22 110 32 150" stroke="#8a8aa0" fill="none"/><path d="M30 76l-5 7h10z" fill="${sh(c,-.3)}"/><ellipse cx="30" cy="40" rx="26" ry="35" fill="url(#b${c.slice(1)})"/></svg>`;
+const butter=(top,dl,c)=>`<svg class="v9fy" style="top:${top}vh;width:34px;animation-delay:-${dl}s;animation-duration:22s" viewBox="0 0 40 30"><g class="v9bt"><path d="M20 15Q8-4 2 6Q0 18 18 17ZM20 15Q32-4 38 6Q40 18 22 17Z" fill="${c}"/><path d="M20 16Q10 30 6 24Q8 18 19 17ZM20 16Q30 30 34 24Q32 18 21 17Z" fill="${sh(c,-.2)}"/></g><rect x="19" y="8" width="2" height="14" rx="1" fill="#3a2a20"/></svg>`;
+const web=s=>`<g stroke="#fff" stroke-opacity=".5" stroke-width="1.6" fill="none" transform="${s}"><path d="M0 0H190M0 0V190M0 0L170 62M0 0L130 130M0 0L62 170M52 0Q46 46 0 52M104 0Q90 90 0 104M156 0Q130 130 0 156"/></g>`;
+const defs=`<defs><radialGradient id="hp" cx=".35" cy=".3"><stop offset="0" stop-color="#ffc66b"/><stop offset=".55" stop-color="#ff7a18"/><stop offset="1" stop-color="#a63d00"/></radialGradient><linearGradient id="gsn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#cfe3ff"/></linearGradient><linearGradient id="gsw" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3fc8ff"/><stop offset="1" stop-color="#0a6ecf"/></linearGradient></defs>`;
+const tree=(x,h,s)=>`<g transform="translate(${x} ${300}) scale(${s})"><rect x="-8" y="-30" width="16" height="30" fill="#4a2e1a"/>${[0,1,2].map(i=>`<path d="M${-70+i*14} ${-30-i*52}L0 ${-110-i*52}L${70-i*14} ${-30-i*52}Z" fill="${['#0f5a3a','#13734a','#198a58'][i]}"/><path d="M${-70+i*14} ${-30-i*52}Q0 ${-50-i*52} ${70-i*14} ${-30-i*52}L${50-i*14} ${-40-i*52}Q0 ${-60-i*52} ${-50+i*14} ${-40-i*52}Z" fill="#fff" opacity=".92"/>`).join('')}<path d="M0-258l5 12 13 1-10 9 3 13-11-7-11 7 3-13-10-9 13-1Z" fill="#ffd23f"/></g>`;
+const SC={
+halloween:{top:`<circle cx="1400" cy="86" r="120" fill="#fff3c4" opacity=".16"/><circle cx="1400" cy="86" r="62" fill="#fff3c4"/><circle cx="1384" cy="74" r="10" fill="#e7d79b"/><circle cx="1418" cy="104" r="14" fill="#e7d79b"/><circle cx="1410" cy="64" r="6" fill="#e7d79b"/>${web('translate(0 0)')}${web('translate(1600 0) scale(-1 1)')}`,
+ bot:`<path d="M0 240Q300 190 600 232T1200 222T1600 205V300H0Z" fill="#1d1030"/><g fill="#150b24"><rect x="1070" y="120" width="150" height="120"/><polygon points="1050,125 1145,48 1240,125"/><rect x="1205" y="78" width="40" height="160"/><polygon points="1198,84 1225,32 1252,84"/></g><g fill="#ffb347" class="v9bl"><rect x="1095" y="152" width="22" height="32"/><rect x="1142" y="152" width="22" height="32"/><rect x="1213" y="118" width="18" height="26"/></g><path d="M130 300V160M130 215L76 165M130 195L180 148M130 255L86 222M520 300V210M520 245L486 214M520 232L556 204" stroke="#150b24" stroke-width="11" fill="none" stroke-linecap="round"/><g fill="#271a3d"><path d="M330 300V245Q330 222 352 222T374 245V300Z"/><path d="M410 300V258Q410 240 428 240T446 258V300Z"/><path d="M820 300V250Q820 228 842 228T864 250V300Z"/></g><path d="M0 285H1600V300H0Z" fill="#0d0716"/>${pump(70,262,1.05)}${pump(1530,264,1.25)}${pump(1390,284,.7)}<ellipse cx="800" cy="292" rx="520" ry="14" fill="#fff" opacity=".07" class="v9bl"/>`,
+ fx:bat(14,0,46)+bat(26,6,34)+bat(9,11,40)+petals(0,[]),g:['#2b1055','#ff7a18']},
+muertos:{top:banner(['#ff4fa3','#ff9f1c','#2ec4d6','#9b5de5','#7bd96b','#ffd23f']),
+ bot:`<path d="M0 262Q400 240 800 262T1600 256V300H0Z" fill="#3a1450"/>${P(26,i=>fw(30+i*62+R(-8,8),R(268,288),R(20,32),'#ff9f1c','#ffc93c'))}${P(10,i=>fw(60+i*160,262,22,'#ff6b1a','#ffb02e'))}${cand(250,262)}${cand(560,262)}${cand(1040,262)}${cand(1350,262)}`,
+ fx:petals(26,['#ff9f1c','#ffc93c','#ff6b1a']),g:['#4a1a6b','#ff9f1c']},
+navidad:{top:`<path d="${'M0 10'+P(8,k=>`Q${k*200+100} 70 ${k*200+200} 10`)}" stroke="#0e3b2c" stroke-width="3" fill="none"/>`+P(8,k=>[[50,32.5],[100,40],[150,32.5]].map(([dx,y],j)=>{const c=['#ff3b3b','#ffd23f','#3bd16f','#3b9bff'][(k*3+j)%4];return `<g class="v9bl" style="animation-delay:-${((k*3+j)*.31).toFixed(2)}s"><ellipse cx="${k*200+dx}" cy="${y+8}" rx="7" ry="10" fill="${c}" style="filter:drop-shadow(0 0 7px ${c})"/><ellipse cx="${k*200+dx-2}" cy="${y+4}" rx="2" ry="3" fill="#fff" opacity=".7"/></g>`}).join(''))+[[90,0],[1510,0]].map(([x],i)=>`<g class="v9sw"><path d="M${x} 0V${70+i*20}" stroke="#bbb"/><circle cx="${x}" cy="${96+i*20}" r="24" fill="${i?'#2f6fe0':'#d4231f'}"/><circle cx="${x-8}" cy="${88+i*20}" r="8" fill="#fff" opacity=".5"/><rect x="${x-6}" y="${68+i*20}" width="12" height="8" fill="#e6c45a"/></g>`).join(''),
+ bot:`<path d="M0 255Q300 215 620 250T1250 240T1600 235V300H0Z" fill="url(#gsn)"/>${tree(120,0,.62)}${tree(250,0,.42)}${tree(1330,0,.7)}${tree(1480,0,.46)}<path d="M0 280Q400 262 800 282T1600 276V300H0Z" fill="#fff"/>`,
+ fx:fall(50,['#fff','#eaf3ff'],[3,8]),g:['#0b3d2e','#c1121f']},
+amor:{top:P(9,i=>`<g class="v9sw" style="animation-delay:-${i*.4}s"><path d="M${i*200+60} 0V${40+(i%3)*14}" stroke="#d63a6a" stroke-opacity=".7"/><g transform="translate(${i*200+36} ${38+(i%3)*14})"><path d="M24 44C6 28 2 18 2 12A11 11 0 0 1 24 10A11 11 0 0 1 46 12C46 18 42 28 24 44Z" fill="${['#ff5f8f','#e0264f','#ff9ec0'][i%3]}"/><ellipse cx="14" cy="14" rx="5" ry="3" fill="#fff" opacity=".45" transform="rotate(-30 14 14)"/></g></g>`),
+ bot:`<path d="M0 262Q400 236 800 262T1600 254V300H0Z" fill="#c2366b" opacity=".85"/>${P(9,i=>fw(60+i*190,274,26,'#e0264f','#ff5f8f',10))}`,
+ fx:rise(16,i=>heart(['#ff5f8f','#e0264f','#ff9ec0','#c77dff'][i%4],R(18,42))),g:['#ff5f8f','#7b5cd6']},
+patrias:{top:banner(['#006847','#ffffff','#ce1126']),
+ bot:`<path d="M0 262Q400 238 800 262T1600 256V300H0Z" fill="#006847"/><path d="M0 276Q400 252 800 276T1600 270V300H0Z" fill="#fff"/><path d="M0 288Q400 266 800 288T1600 284V300H0Z" fill="#ce1126"/>`,
+ fx:P(3,i=>`<svg style="position:absolute;top:${14+i*9}vh;${i%2?'right':'left'}:${6+i*10}vw;width:150px;overflow:visible" viewBox="-60 -60 120 120"><g class="v9sp" style="animation-delay:-${i*1.1}s;transform-origin:center">${P(16,k=>`<path d="M0 -10L0 -${44+k%3*8}" stroke="${['#ffd23f','#ce1126','#fff','#2ec47a'][k%4]}" stroke-width="3" stroke-linecap="round" transform="rotate(${k*22.5})"/>`)}</g></svg>`)+fall(26,['#006847','#fff','#ce1126'],[5,10]),g:['#006847','#ce1126']},
+primavera:{top:`<path d="M0 0Q150 20 260 110M0 40Q80 60 120 110" stroke="#6b4a2e" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M1600 0Q1450 20 1340 110M1600 40Q1520 60 1480 110" stroke="#6b4a2e" stroke-width="8" fill="none" stroke-linecap="round"/>${P(14,i=>`<circle cx="${i<7?40+i*34:1560-(i-7)*34}" cy="${30+(i%4)*22}" r="${R(9,15).toFixed(0)}" fill="${['#ffb3c7','#ff8fb3','#fff'][i%3]}"/>`)}`,
+ bot:`<path d="M0 250Q400 214 800 250T1600 240V300H0Z" fill="#4fb36b"/><path d="M0 276Q400 252 800 276T1600 270V300H0Z" fill="#2f9457"/>${P(30,i=>{const x=20+i*54+R(-10,10),y=R(262,290);return `<path d="M${x} ${y}V300" stroke="#2f7d46" stroke-width="3"/>`+fw(x,y,R(12,20),['#ff8fb3','#ffd23f','#fff','#c77dff'][i%4],'#ffd23f',8)})}`,
+ fx:butter(30,0,'#ffb347')+butter(46,8,'#c77dff')+petals(18,['#ffb3c7','#fff','#ff8fb3']),g:['#43c59e','#ff8fb3']},
+verano:{top:`<g class="v9sn"><g stroke="#ffd23f" stroke-width="7" stroke-linecap="round" transform="translate(1440 84)">${P(14,i=>`<path d="M0 -62V-86" transform="rotate(${i*25.7})"/>`)}</g></g><circle cx="1440" cy="84" r="50" fill="#ffd23f"/><circle cx="1426" cy="70" r="16" fill="#fff" opacity=".35"/>`,
+ bot:`<rect y="282" width="1600" height="18" fill="#f2d49b"/><g class="v9wv"><path d="M-100 252Q0 232 100 252T300 252T500 252T700 252T900 252T1100 252T1300 252T1500 252T1700 252V300H-100Z" fill="url(#gsw)" opacity=".92"/><path d="M-100 270Q0 252 100 270T300 270T500 270T700 270T900 270T1100 270T1300 270T1500 270T1700 270V300H-100Z" fill="#fff" opacity=".35"/></g><path d="M150 300Q170 220 230 130" stroke="#7a5230" stroke-width="14" fill="none"/>${P(6,i=>`<ellipse cx="230" cy="130" rx="62" ry="12" fill="#2f9457" transform="rotate(${-150+i*52} 230 130) translate(52 0)"/>`)}<circle cx="226" cy="140" r="8" fill="#5a3a18"/>`,
+ fx:rise(12,i=>`<svg width="${R(10,22).toFixed(0)}" height="${R(10,22).toFixed(0)}" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" fill="#fff" fill-opacity=".25" stroke="#fff" stroke-width="1.5"/><circle cx="7" cy="7" r="2" fill="#fff"/></svg>`),g:['#2f9bff','#ffb347']},
+fiesta:{top:`<path d="M-20 6Q800 70 1620 6" stroke="#8a7a9a" stroke-width="2" fill="none"/>${P(24,i=>{const x=i*70,y=6+64*Math.sin(i/23*Math.PI)*.0+ (64*(1-Math.pow(2*i/23-1,2)));return `<path class="v9sw" style="animation-delay:-${i*.2}s" d="M${x-24} ${y.toFixed(1)}h48l-24 46Z" fill="${['#ff5fa2','#ffd23f','#2bc4ff','#7b5cd6','#7bd96b'][i%5]}"/>`})}`,
+ bot:`<path d="M0 270Q400 252 800 270T1600 264V300H0Z" fill="#7b5cd6" opacity=".55"/>`,
+ fx:ball('#ff5fa2',2,'left',0)+ball('#2bc4ff',8,'left',2)+ball('#ffd23f',14,'left',4)+ball('#7b5cd6',3,'right',1)+ball('#7bd96b',9,'right',3)+ball('#ff9a3c',15,'right',5)+fall(46,['#ff5fa2','#ffd23f','#2bc4ff','#7b5cd6','#7bd96b'],[5,9]),g:['#7b5cd6','#ff5fa2']}};
+window.V19={scene(id,t){const s=SC[id];if(!s)return null;document.body.classList.add('dxon');
+ return `<svg width="0" height="0" style="position:absolute">${defs}</svg><div class="v9g" style="background:linear-gradient(180deg,${s.g[1]},transparent 30%,transparent 65%,${s.g[0]})"></div><svg class="v9s v9t" viewBox="0 0 1600 160" preserveAspectRatio="xMidYMin slice">${s.top}</svg><svg class="v9s v9b" viewBox="0 0 1600 300" preserveAspectRatio="xMidYMax slice">${s.bot}</svg>${s.fx||''}`}};
+/* ---- vestuario de película (versiones genéricas, sin marcas) ---- */
+VOPT.hat.push(['wizard','Mago'],['astro','Astronauta'],['tiara','Tiara de hielo'],['hood','Capucha']);
+VOPT.glasses.push(['visor','Visor']);
+VOPT.outfit.push(['robe','Túnica mágica'],['astrosuit','Traje espacial'],['hero','Superhéroe'],['queen','Vestido de hielo']);
+VOPT.neck.push(['hscarf','Bufanda de colegio']);
+VOPT.face.push(['bolt','Rayo']);
+const oBP2=BP;
+BP=(w,u)=>{const p=oBP2(w,u),hc=w.hatc,oc=w.outc,cl=`clip-path="url(#${u}cb)"`;
+ const stars=[[70,166],[96,176],[108,158],[60,184],[88,152]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="2.2" fill="#fff"/>`).join('');
+ Object.assign(p.hat,{
+ wizard:`<ellipse cx="85" cy="50" rx="60" ry="9" fill="${sh(hc,-.4)}"/><path d="M58 48Q66 14 76 -16Q84 -30 98 -24Q94 8 114 48Z" fill="${hc}"/><path d="M60 40Q85 50 112 40V32Q85 42 60 32Z" fill="#e6c45a"/><path d="M84 8l2 5 5 .5-4 3 1 5-4-3-4 3 1-5-4-3 5-.5Z" fill="#ffd23f"/><circle cx="96" cy="-4" r="2" fill="#ffd23f"/>`,
+ astro:`<path d="M34 100Q30 34 85 30Q140 34 136 100Q136 138 85 140Q34 138 34 100Z" fill="rgba(190,225,255,.2)" stroke="#e9eef7" stroke-width="7"/><path d="M52 62Q70 46 98 50" stroke="#fff" stroke-opacity=".75" stroke-width="5" fill="none" stroke-linecap="round"/><rect x="40" y="130" width="90" height="12" rx="6" fill="#d6dbe8"/><rect x="118" y="20" width="4" height="22" fill="#9aa3b8"/><circle cx="120" cy="18" r="4" fill="#ff5a4f"/>`,
+ tiara:`<path d="M56 50L62 26L74 40L85 16L96 40L108 26L114 50Z" fill="#cfefff" stroke="#6ab7e6" stroke-width="2.5"/><circle cx="85" cy="22" r="4.5" fill="#fff"/><circle cx="62" cy="30" r="3" fill="#7fd0ff"/><circle cx="108" cy="30" r="3" fill="#7fd0ff"/>`,
+ hood:`<path d="M32 104Q26 18 85 14Q144 18 138 104Q134 60 85 54Q36 60 32 104Z" fill="${hc}"/><path d="M40 70Q85 40 130 70" stroke="#000" stroke-opacity=".2" stroke-width="3" fill="none"/>`});
+ Object.assign(p.glasses,{visor:`<rect x="46" y="68" width="78" height="24" rx="12" fill="#2bc4ff" opacity=".6" stroke="#0a2a4a" stroke-width="3.4"/><path d="M56 75h34" stroke="#fff" stroke-opacity=".8" stroke-width="3" stroke-linecap="round"/>`});
+ Object.assign(p.neck,{hscarf:`<rect x="50" y="132" width="70" height="15" rx="7" fill="${oc}"/>${[62,76,90,104].map(x=>`<rect x="${x}" y="132" width="5" height="15" fill="#ffd23f"/>`).join('')}<rect x="98" y="140" width="15" height="42" rx="3" fill="${oc}"/><path d="M98 154h15M98 168h15" stroke="#ffd23f" stroke-width="5"/>`});
+ Object.assign(p.outfit,{
+ robe:`<g ${cl}><rect x="38" y="142" width="94" height="52" fill="${oc}"/><path d="M56 142L85 176L114 142V152L85 188L56 152Z" fill="${sh(oc,-.3)}"/><path d="M85 176V194" stroke="${sh(oc,-.45)}" stroke-width="3"/></g>`,
+ astrosuit:`<g ${cl}><rect x="44" y="142" width="82" height="48" fill="#eef1f8"/><rect x="44" y="142" width="82" height="6" fill="#d6dbe8"/><rect x="62" y="156" width="46" height="22" rx="5" fill="#cfd6e6"/><circle cx="72" cy="167" r="4" fill="#ff5a4f"/><circle cx="85" cy="167" r="4" fill="#4fa8ff"/><rect x="95" y="164" width="8" height="6" fill="#6b7694"/></g>`,
+ hero:`<g ${cl}><rect x="44" y="142" width="82" height="48" fill="${oc}"/><path d="M85 150l16 9-16 24-16-24z" fill="#ffd23f" stroke="#a97b0d" stroke-width="2"/><rect x="44" y="184" width="82" height="6" fill="#ffd23f"/></g>`,
+ queen:`<g ${cl}><path d="M44 142H126L138 194H32Z" fill="#9bd7ff"/><path d="M62 142L85 162L108 142" fill="#e8f7ff"/>${stars}</g>`});
+ return p};
+const FB=window.DXE;
+/* looks de película rápidos */
+const LK=[['Aprendiz de magia',{hat:'wizard',hatc:'#2a2f6e',glasses:'round',outfit:'robe',outc:'#7a1230',neck:'hscarf',face:'bolt'}],['Astronauta',{hat:'astro',glasses:'none',outfit:'astrosuit',neck:'none',face:'none'}],['Superhéroe',{hat:'none',glasses:'mask',outfit:'hero',outc:'#c1121f',neck:'none',cape:true}],['Reina de hielo',{hat:'tiara',glasses:'none',outfit:'queen',neck:'none',cape:true}],['Ninja',{hat:'hood',hatc:'#1b1b26',glasses:'visor',outfit:'hoodie',outc:'#262636',neck:'bandana'}]];
+window.V19.look=i=>{const b=Object.assign({},BW(),{hat:'none',glasses:'none',outfit:'none',neck:'none',face:'none',cape:false},LK[i][1]);CF().botw=b;save();A.botDress();CT()};
+const oV9=TB.ves;TB.ves=(c,H)=>{let h=oV9(c,H);return h.replace('<section',`<div class="vpre">${LK.map((l,i)=>`<button class="btn" onclick="V19.look(${i})">🎬 ${l[0]}</button>`).join('')}</div><section`)};
+/* ---- voz: se carga antes de hablar y también habla al empezar el giro ---- */
+{const o=A.speak;A.speak=function(t,f){try{if(window.speechSynthesis&&!VOICES.length)loadV()}catch(e){}return o.call(this,t,f)};
+ const om=A.mas;A.mas=function(e,n){try{if(e=='idle'&&RLBUSY)return}catch(z){}const r=om.apply(this,arguments);if(e=='spin'){const b=$('#mb');b&&A.speak(b.textContent)}return r}}
+try{DXC.dens((CF().deco&&CF().deco.dens)||6)}catch(e){}
+})();
+
+
 /* ===== v18: «Robar el punto» en el reto de atención (parche aditivo) ===== */
 (()=>{
 const SC=()=>{const c=CF();c.stl=Object.assign({on:true,sec:10},c.stl||{});return c.stl};
@@ -1652,6 +1770,116 @@ CT=function(){oCT.apply(this,arguments);if(typeof CTAB=='undefined'||CTAB!='qs')
  const d=document.createElement('div');d.className='cfgcard stlcfg';d.style.marginTop='14px';
  d.innerHTML=`<h3 style="font-size:14px;margin:0 0 6px">🥷 Robar el punto</h3><p class="mu">Cuando alguien no recuerde la respuesta en el reto de atención, el resto del equipo puede intentar robar el punto.</p><label class="rlm"><span style="flex:1">Activar «Robar el punto»</span><input type="checkbox" ${SC().on?'checked':''} onchange="STLC('on',this.checked)"></label><label class="rlm"><span style="flex:1">Segundos para responder</span><input type="number" min="3" max="60" value="${SC().sec}" style="width:70px" onchange="STLC('sec',Math.max(3,Math.min(60,+this.value||10)))"></label>`;
  c.appendChild(d)};
+})();
+
+
+/* ===== v19: Panel de pruebas QA (datos aislados + pruebas automáticas) ===== */
+(()=>{
+const QA=window.QA={on:false,real:null,mode:'copy',err:[],log:[],res:[],reg:[],busy:0,v:'v19'};
+const $$=s=>[...document.querySelectorAll(s)],wait=ms=>new Promise(r=>setTimeout(r,ms)),
+ until=async(f,ms=4000)=>{const t=Date.now();while(Date.now()-t<ms){const v=f();if(v)return v;await wait(60)}return null},
+ now=()=>new Date().toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit',second:'2-digit'}),
+ tx=s=>(document.querySelector(s)||{}).textContent||'',
+ bb=(s,re)=>$$(s).find(b=>re.test(b.getAttribute('onclick')||''));
+const L=m=>{QA.log.unshift(now()+' · '+m);QA.log.length=Math.min(QA.log.length,14);const e=$('#labl');if(e)e.innerHTML=QA.log.map(x=>'<div>'+esc(x)+'</div>').join('')};
+/* monitor de errores */
+const E=m=>{QA.err.unshift(now()+' · '+m);QA.err.length=Math.min(QA.err.length,20);QA.ui()};
+addEventListener('error',e=>E((e.message||'Error')+(e.lineno?' (línea '+e.lineno+')':'')));
+addEventListener('unhandledrejection',e=>E('Promesa rechazada: '+String((e.reason&&e.reason.message)||e.reason)));
+/* aislamiento: en modo QA nada se escribe en los datos reales */
+const oSet=Storage.prototype.setItem;
+Storage.prototype.setItem=function(k,v){if(QA.on&&k===K)return;return oSet.apply(this,arguments)};
+const setS=o=>{o=JSON.parse(JSON.stringify(o));const rl=o.rl||{};delete o.rl;Object.keys(S).forEach(k=>{if(k!='rl')delete S[k]});Object.assign(S,o);if(!S.rl||typeof S.rl!='object')S.rl={};Object.keys(S.rl).forEach(k=>delete S.rl[k]);Object.assign(S.rl,rl)};
+const refresh=()=>{try{applyCfg()}catch(z){}try{A.botDress()}catch(z){}try{DXC.dens((CF().deco||{}).dens??6)}catch(z){}try{R()}catch(z){}try{typeof hdrRef=='function'&&hdrRef()}catch(z){}};
+const NAMES=['Ana Torres','Luis Pérez','María López','Carlos Ruiz','Sofía Díaz','Jorge Mena','Paola Ríos','Diego Salas'];
+const sample=()=>NAMES.map(n=>({id:uid(),name:n,s:n.split(' ')[0],role:'Prueba QA',on:true}));
+const banner=()=>{let b=$('#qab');if(!QA.on){b&&b.remove();document.body.classList.remove('qaon');return}
+ if(!b){b=document.createElement('div');b.id='qab';document.body.appendChild(b)}document.body.classList.add('qaon');
+ b.innerHTML='🧪 <b>MODO QA</b> · tus datos reales están protegidos <button onclick="QA.exit()">Salir y descartar</button>'};
+QA.enter=mode=>{mode=mode||QA.mode;if(!QA.on)QA.real=JSON.stringify(S);QA.mode=mode;const o=JSON.parse(QA.real);
+ if(mode=='sample'){DEPTS.forEach(d=>{o.rl.teams[d]=sample();o.rl.done[d]=[]});o.rl.hist=[];o.rl.score={};o.rl.steal={}}
+ setS(o);QA.on=true;banner();refresh();L('Modo QA activado ('+(mode=='sample'?'datos de ejemplo':'copia de tus datos')+')');QA.ui()};
+QA.exit=()=>{if(!QA.on)return;setS(JSON.parse(QA.real));QA.on=false;QA.real=null;banner();refresh();L('Saliste del modo QA: tus datos reales siguen intactos');QA.ui()};
+QA.do=i=>{const r=QA.reg[i];if(!r)return;if(r.q&&!QA.on){QA.enter('copy');L('Entré a modo QA para proteger tus datos')}
+ try{const v=r.fn();if(v&&v.then)v.catch(e=>{L('❌ '+r.lg+': '+e.message);E(e.message)})}catch(e){L('❌ '+r.lg+': '+e.message);E(e.message)}L(r.lg)};
+/* utilidades de escenario */
+const present=()=>S.rl.teams[DEPTS[RLD]].filter(m=>m.on);
+const ensure=n=>{const t=S.rl.teams[DEPTS[RLD]];sample().forEach(m=>{if(present().length<n)t.push(m)})};
+const prepWinner=m=>{const wv=$('#welov');wv&&wv.remove();if(typeof VW!='undefined'&&VW!='r')A.tab('r');const e=$('#rlw');if(!e)throw new Error('No se encontró la vista de la ruleta');
+ e.innerHTML=`<div class="rlwin" style="--c:#2b4fb8"><div class="av">${esc(ini(m.name))}</div><div><small class="mu">Daily · simulacro</small><div class="nm">${esc(m.name)}</div><small class="mu">${esc(m.role||'')}</small></div></div><div class="row" style="justify-content:center;margin-top:8px"><button class="btn p" onclick="A.rlAtt('${m.id}')">Reto de atención</button><button class="btn" onclick="A.rlScore('${m.id}',1)">Acertó (+1)</button></div><div id="rla"></div>`;
+ e.scrollIntoView({behavior:'smooth',block:'center'})};
+const attention=()=>{ensure(3);const m=present()[0];prepWinner(m);A.rlAtt(m.id);return m};
+const stealDemo=async()=>{attention();const b=await until(()=>bb('#rla button',/rlScore\('[^']+',0\)/));if(!b)throw new Error('No apareció «No recordó»');b.click()};
+/* pruebas automáticas */
+const ok=(c,m)=>{if(!c)throw new Error(m)};
+const startFlow=async(re)=>{ensure(3);const sp=present()[0];prepWinner(sp);A.rlAtt(sp.id);const b=await until(()=>bb('#rla button',re));ok(b,'El reto de atención no mostró sus botones');return{sp,b}};
+const TESTS=[
+ ['Almacenamiento del navegador',()=>{oSet.call(localStorage,'qa-test','1');ok(localStorage.getItem('qa-test')=='1','No se pudo guardar');localStorage.removeItem('qa-test')}],
+ ['Estructura de datos (equipos, puntos, historial)',()=>{ok(S&&S.rl,'Falta S.rl');DEPTS.forEach(d=>ok(Array.isArray(S.rl.teams[d]),'Equipo sin lista: '+d));ok(Array.isArray(S.rl.hist),'Historial inválido');ok(S.rl.score&&typeof S.rl.score=='object','Puntos inválidos')}],
+ ['Configuración (CF)',()=>{const c=CF();ok(c&&typeof c=='object','CF() inválido');ok(Array.isArray(c.qs),'Faltan preguntas');ok(Array.isArray(c.att),'Faltan retos de atención')}],
+ ['Vista de la ruleta se dibuja',()=>{ensure(3);A.tab('r');ok($('#rlw')&&$('#rlg'),'Faltan elementos de la ruleta')}],
+ ['Marcador y estadísticas',()=>{ok(typeof rlBoard()=='string','Marcador inválido');ok(typeof statsCard()=='string','Estadísticas inválidas')}],
+ ['Mascota se dibuja',()=>{ok(/<svg/.test(BOT()),'BOT() no devolvió SVG');ok($('#bot svg'),'La mascota no está en pantalla')}],
+ ['Vestuario: todas las prendas se dibujan',()=>{let n=0;for(const k in VOPT)VOPT[k].forEach(([v])=>{const a=BTH(k,v),b=BOTX(Object.assign({},BW(),{[k]:v}));ok(/<svg/.test(a)&&/<svg/.test(b),'Falla '+k+':'+v);n++});ok(n>30,'Pocas prendas ('+n+')')}],
+ ['Temáticas: las 8 decoran el sistema',async()=>{for(const id of ['halloween','muertos','navidad','amor','patrias','primavera','verano','fiesta']){DXC.set(id);await wait(30);ok($('#dcr')&&$('#dcr').children.length>2,'Tema sin adornos: '+id);ok(/<svg/.test(BOT()),'Mascota falla con '+id)}DXC.set('none');ok(!$('#dcr').children.length,'No se quitó la decoración')}],
+ ['Reto de atención: flujo normal (acierta)',async()=>{const{b}=await startFlow(/rlScore\('[^']+',1\)/);const id=/rlScore\('([^']+)',1\)/.exec(b.getAttribute('onclick'))[1],a=S.rl.score[id]||0;b.click();await wait(80);ok((S.rl.score[id]||0)==a+1,'No sumó el punto')}],
+ ['Robar el punto: aparece al fallar',async()=>{const{sp,b}=await startFlow(/rlScore\('[^']+',0\)/);const pk=/rlScore\('([^']+)',0\)/.exec(b.getAttribute('onclick'))[1];b.click();await wait(120);
+   ok(/robar el punto/i.test(tx('#rla')),'No apareció la pantalla de robo');const c=$$('#rla button').filter(x=>/STL\.go\('/.test(x.getAttribute('onclick')||''));ok(c.length>0,'Sin candidatos para robar');
+   ok(!c.some(x=>x.getAttribute('onclick').includes("'"+pk+"'")),'Quien falló aparece como candidato');ok(!c.some(x=>x.getAttribute('onclick').includes("'"+sp.id+"'")),'Quien habló aparece como candidato')}],
+ ['Robar el punto: roba y suma +1',async()=>{const{b}=await startFlow(/rlScore\('[^']+',0\)/);b.click();await wait(120);const c=$$('#rla button').find(x=>/STL\.go\('/.test(x.getAttribute('onclick')||''));ok(c,'Sin candidatos');
+   const th=/STL\.go\('([^']+)'\)/.exec(c.getAttribute('onclick'))[1],a=S.rl.score[th]||0,s0=(S.rl.steal||{})[th]||0;c.click();await wait(60);ok(/Intenta robar/i.test(tx('#rla')),'No abrió el intento de robo');
+   bb('#rla button',/STL\.ok/).click();await wait(120);ok((S.rl.score[th]||0)==a+1,'No sumó el punto robado');ok(((S.rl.steal||{})[th]||0)==s0+1,'No contó el robo');ok(/robó el punto/i.test(tx('#rla')),'Sin mensaje de robo')}],
+ ['Robar el punto: falla y pasa al siguiente / nadie',async()=>{const{b}=await startFlow(/rlScore\('[^']+',0\)/);b.click();await wait(120);const f=()=>$$('#rla button').filter(x=>/STL\.go\('/.test(x.getAttribute('onclick')||''));const n=f().length;ok(n>=2,'Se necesitan 2+ candidatos');
+   f()[0].click();await wait(60);bb('#rla button',/STL\.bad/).click();await wait(80);ok(f().length==n-1,'No quitó al que falló');bb('#rla button',/STL\.none/).click();await wait(60);ok(/Nadie robó/i.test(tx('#rla')),'No cerró sin ganador')}],
+ ['Robar el punto: se puede desactivar',async()=>{const c=CF();c.stl=Object.assign({on:true,sec:10},c.stl||{},{on:false});const{b}=await startFlow(/rlScore\('[^']+',0\)/);b.click();await wait(100);
+   ok(!/robar el punto/i.test(tx('#rla')),'Apareció el robo estando desactivado');ok(/Sin punto/i.test(tx('#rla')),'No mostró «Sin punto»');c.stl.on=true}],
+ ['Ruleta: gira y registra el sorteo',async()=>{ensure(3);A.tab('r');await wait(150);const n=S.rl.hist.length;A.spin();const done=await until(()=>!RLBUSY&&S.rl.hist.length>n,16000);
+   try{A.rlClose(1)}catch(z){}try{speechSynthesis.cancel()}catch(z){}if(!done){RLBUSY=0}ok(done,'El giro no terminó en 16 s')}],
+ ['Respaldo: S se serializa sin pérdida',()=>{const j=JSON.stringify(S),o=JSON.parse(j);ok(Object.keys(o.rl.teams).length==DEPTS.length,'Equipos distintos tras serializar')}],
+ ['Funciones clave existen',()=>{const m=[];[['A.spin',A.spin],['A.fin',A.fin],['A.rlAtt',A.rlAtt],['A.rlScore',A.rlScore],['A.botReact',A.botReact],['A.speak',A.speak],['A.cfg',A.cfg],['DXC.set',window.DXC&&DXC.set],['STL.go',window.STL&&STL.go],['CT',CT],['R',R],['save',save]].forEach(([n,f])=>{if(typeof f!='function')m.push(n)});ok(!m.length,'Faltan: '+m.join(', '))}]];
+QA.runAll=async()=>{if(QA.busy)return;QA.busy=1;QA.res=[];QA.ui();const snap=JSON.stringify(S),was=QA.on,m=SND,e0=QA.err.length;if(!QA.on)QA.enter('copy');SND=false;
+ for(const[n,f]of TESTS){const t=performance.now();let r;try{await f();r={n,ok:1}}catch(e){r={n,ok:0,m:e.message}}r.ms=Math.round(performance.now()-t);QA.res.push(r);QA.ui();
+  $$('.botpop').forEach(x=>x.remove());const q=$('#rlov');q&&q.remove()}
+ const ne=QA.err.length-e0;QA.res.push({n:'Sin errores de JavaScript durante las pruebas',ok:ne<=0?1:0,m:ne>0?ne+' error(es): '+QA.err.slice(0,ne).join(' | '):'',ms:0});
+ SND=m;if(was){setS(JSON.parse(snap));refresh()}else QA.exit();QA.busy=0;QA.ui();const p=QA.res.filter(x=>x.ok).length;L('Pruebas automáticas: '+p+'/'+QA.res.length+' correctas')};
+QA.report=()=>{const p=QA.res.filter(x=>x.ok).length,t=['REPORTE QA · Ruleta del equipo','Fecha: '+new Date().toLocaleString('es-MX'),'Versión del archivo: '+document.lastModified,'Navegador: '+navigator.userAgent,'Resultado: '+p+'/'+QA.res.length+' correctas',''];
+ QA.res.forEach(r=>t.push((r.ok?'[OK]   ':'[FALLA]')+' '+r.n+(r.ok?'':' → '+r.m)));t.push('','Errores capturados: '+(QA.err.length||'ninguno'));QA.err.forEach(x=>t.push(' - '+x));const s=t.join('\n');
+ try{navigator.clipboard.writeText(s).then(()=>L('Reporte copiado')).catch(()=>{prompt('Copia el reporte:',s)})}catch(z){prompt('Copia el reporte:',s)}};
+QA.ui=()=>{const s=$('#qastat');if(s)s.innerHTML=QA.on?'<span class="qb on">ACTIVO · '+(QA.mode=='sample'?'datos de ejemplo':'copia de tus datos')+'</span>':'<span class="qb">APAGADO · usando tus datos reales</span>';
+ const r=$('#qares');if(r){const p=QA.res.filter(x=>x.ok).length;r.innerHTML=(QA.busy?'<div class="qs">Ejecutando pruebas…</div>':QA.res.length?`<div class="qs ${p==QA.res.length?'g':'b'}">${p}/${QA.res.length} correctas</div>`:'<div class="mu">Aún no se han ejecutado.</div>')+QA.res.map(x=>`<div class="qr ${x.ok?'ok':'no'}">${x.ok?'✅':'❌'} ${esc(x.n)}${x.ms?` <small>${x.ms} ms</small>`:''}${x.ok?'':`<div class="qm">${esc(x.m)}</div>`}</div>`).join('')}
+ const e=$('#qaerr');if(e)e.innerHTML=QA.err.length?QA.err.map(x=>'<div>'+esc(x)+'</div>').join(''):'<span class="mu">Sin errores capturados.</span>';const c=$('#qaec');if(c)c.textContent=QA.err.length};
+/* estilos */
+const st=document.createElement('style');st.textContent=`
+#qab{position:fixed;top:8px;left:50%;transform:translateX(-50%);z-index:95;background:#b45309;color:#fff;padding:6px 8px 6px 14px;border-radius:99px;font-size:13px;box-shadow:0 8px 24px rgba(0,0,0,.35);display:flex;gap:10px;align-items:center;white-space:nowrap}
+#qab button{background:#fff;color:#7c2d12;border:0;border-radius:99px;padding:4px 10px;font-weight:700;cursor:pointer}
+@media(max-width:600px){#qab{font-size:11px;max-width:94vw;overflow:hidden}}
+#labp{z-index:90!important;width:min(430px,96vw)!important;max-height:calc(100vh - 96px)}
+#labp .qb{display:inline-block;padding:3px 10px;border-radius:99px;font-size:12px;font-weight:700;background:var(--in);color:var(--mu)}
+#labp .qb.on{background:#f59e0b;color:#fff}
+#labp .qp{padding:4px 16px 14px}#labp .qp p{margin:6px 0 8px;font-size:12.5px}
+#labp .qs{font-weight:800;margin:4px 0 8px}#labp .qs.g{color:#16a34a}#labp .qs.b{color:#dc2626}
+#labp .qr{font-size:12.5px;padding:5px 8px;border-radius:8px;margin:3px 0;background:var(--in)}#labp .qr.no{background:rgba(220,38,38,.12)}
+#labp .qr small{opacity:.6;margin-left:4px}#labp .qm{font-size:11.5px;opacity:.85;margin-top:2px;word-break:break-word}
+#labp #qaerr{font-size:11.5px;max-height:120px;overflow:auto;padding:0 16px 12px}
+#labp .labg select{grid-column:1/-1;padding:6px}
+#labp details>summary{padding:10px 16px;cursor:pointer;font-weight:700}`;document.head.appendChild(st);
+/* panel */
+A.lab=()=>{let p=$('#labp');if(p){p.remove();return}const o=$('#cfgov');o&&o.remove();QA.reg=[];
+ const B=(l,fn,lg,q)=>{QA.reg.push({fn,lg:lg||l,q});return`<button class="btn" onclick="QA.do(${QA.reg.length-1})">${l}</button>`},
+  D=(open,t,b)=>`<details ${open?'open':''}><summary>${t}</summary>${b}</details>`,
+  ppl=Object.values(S.rl.teams).flat();
+ p=document.createElement('div');p.id='labp';p.className='labp';
+ p.innerHTML=`<div class="labh"><div><b>🧪 Panel de pruebas QA</b><small>${QA.v} · archivo: ${esc(document.lastModified)}</small></div><button class="btn mini" onclick="A.lab()">Cerrar</button></div>`
+ +D(1,'1 · Modo QA (datos aislados)',`<div class="qp"><div id="qastat"></div><p>Mientras esté activo, <b>nada se guarda en tus datos reales</b>: puedes girar, puntuar, finalizar el Daily y cambiar la configuración sin ensuciar el registro. Al salir o recargar la página, todo vuelve como estaba.</p></div><div class="labg">${B('Entrar con copia de mis datos',()=>QA.enter('copy'))}${B('Entrar con datos de ejemplo',()=>QA.enter('sample'))}${B('Reiniciar datos de prueba',()=>{if(!QA.on)QA.enter(QA.mode);else QA.enter(QA.mode)})}<button class="btn" onclick="QA.exit()">Salir y descartar</button></div>`)
+ +D(1,'2 · Pruebas automáticas',`<div class="labg">${B('▶ Ejecutar todas',()=>QA.runAll(),'Pruebas automáticas')}<button class="btn" onclick="QA.report()">📋 Copiar reporte</button></div><div class="qp" id="qares"></div>`)
+ +D(1,'3 · Reto de atención y robar el punto',`<p class="qp mu">Crea un turno de prueba (sin girar la ruleta) y lanza el reto. Se ejecuta en modo QA.</p><div class="labg">${B('Reto de atención',()=>{attention()},'Reto de atención de prueba',1)}${B('🥷 Reto + «No recordó» (robo)',()=>stealDemo(),'Escenario: robar el punto',1)}${B('Girar ruleta',()=>A.spin(),'Girar ruleta',1)}${B('Finalizar Daily',()=>A.fin(),'Finalizar Daily',1)}<select id="qap">${ppl.map(m=>`<option value="${m.id}">${esc(m.name)}</option>`).join('')}</select>${B('+1 punto',()=>A.rlPts($('#qap').value,1),'+1 punto',1)}${B('−1 punto',()=>A.rlPts($('#qap').value,-1),'−1 punto',1)}</div>`)
+ +D(0,'4 · Temáticas y mascota',`<div class="labg">${[['halloween','🎃 Halloween'],['muertos','💀 Muertos'],['navidad','🎄 Navidad'],['amor','💘 San Valentín'],['patrias','🇲🇽 Patrias'],['primavera','🌸 Primavera'],['verano','🏖️ Verano'],['fiesta','🎂 Cumpleaños'],['none','✖ Quitar']].map(([id,l])=>B(l,()=>DXC.set(id),'Temática: '+l,1)).join('')}${B('Reacción: acierto',()=>A.botReact(1))}${B('Reacción: error',()=>A.botReact(0))}${BDM.map(([i,l,k])=>B(i+' '+l,()=>A[k](),l)).join('')}</div>`)
+ +D(0,'5 · Música, sonidos y voz',`<div class="labg">${Object.entries(TR).map(([k,t])=>B(t.n,()=>CG.mt(k),'Música: '+t.n,1)).join('')}${B('Detener música',()=>{MU.on&&A.music()})}${B('Fanfarria',()=>fanfare())}${B('Sonido de acierto',()=>[659,784,988].forEach((n,k)=>setTimeout(()=>beep(n,.15,.07,'triangle'),k*100)))}${B('Sonido de error',()=>beep(220,.3,.06,'sawtooth'))}${B('Claro / oscuro',()=>A.theme2())}</div><div class="labv"><input id="labt" value="Hola equipo, esta es una prueba de voz"><button class="btn" onclick="A.speak($('#labt').value,1)">Decir texto</button></div>`)
+ +D(0,'6 · Errores detectados (<span id="qaec">0</span>)',`<div id="qaerr"></div><div class="labg">${B('Limpiar errores',()=>{QA.err=[];QA.ui()})}</div>`)
+ +`<div class="labc"><div class="labct">Actividad</div><div id="labl">Sin actividad todavía.</div></div>`;
+ document.body.appendChild(p);QA.ui();L('Panel abierto')};
+TB.lab=()=>`<p class="mu">Panel de pruebas QA: trabaja en un modo aislado que no toca tus datos reales, con pruebas automáticas, escenarios del reto de atención (incluido robar el punto) y reporte para copiar. Atajo: Ctrl + Shift + Q.</p><button class="btn p" onclick="A.lab()">Abrir panel de pruebas</button>`;
+addEventListener('keydown',e=>{if(e.ctrlKey&&e.shiftKey&&(e.key=='Q'||e.key=='q')){e.preventDefault();A.lab()}});
 })();
 
 </script></body></html>
