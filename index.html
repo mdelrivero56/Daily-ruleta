@@ -851,7 +851,7 @@ const DAYS=[
  {n:'Viernes',t:'Cierre y celebración',a:'#d6336c',p:['#e53935','#fb8c00','#b58900','#43a047','#00acc1','#1e88e5','#5e35b1','#d81b60']},
  {n:'Sábado',t:'Modo descanso',a:'#7c4dff',p:['#ff2e97','#00b8d4','#76b900','#ff9100','#7c4dff','#ff5252','#00c853','#2979ff']}];
 const dayInfo=()=>{const i=new Date().getDay(),b=DAYS[i],c=CF();return{n:b.n,t:(c.dayT&&c.dayT[i])||b.t,a:b.a,p:b.p}};
-const JOKES=["¿Qué animal es el más antiguo?||La cebra, porque está en blanco y negro.", "¿Cuál es el colmo de un electricista?||Que su esposa se llame Luz y sus hijos le sigan la corriente.", "¿Qué le dice un techo a otro techo?||Techo de menos.", "¿Qué hace una abeja en el gimnasio?||Zumba.", "¿Cuál es el café más peligroso del mundo?||El ex-preso.", "¿Por qué está triste el libro de matemáticas?||Porque tiene muchos problemas.", "¿Qué le dice un pez a otro pez?||Nada.", "¿Qué le dice una iguana a su hermana gemela?||Iguanita tú.", "¿Qué tiene dientes pero no muerde?||El peine.", "¿Por qué los pájaros vuelan al sur?||Porque caminando tardarían demasiado.", "¿Qué le dice el número uno al diez?||Para ser como yo, sé sincero (sin cero).", "¿Qué es lo que sube y baja pero no se mueve?||La escalera."];
+const JOKES=["¿Qué animal es el más antiguo?||La cebra, porque está en blanco y negro.", "¿Cuál es el colmo de un electricista?||Que su esposa se llame Luz y sus hijos le sigan la corriente.", "¿Qué le dice un techo a otro techo?||Techo de menos.", "¿Qué hace una abeja en el gimnasio?||Zumba.", "¿Cuál es el café más peligroso del mundo?||El ex-preso.", "¿Por qué está triste el libro de matemáticas?||Porque tiene muchos problemas.", "¿Qué le dice un pez a otro pez?||Nada.", "¿Qué le dice una iguana a su hermana gemela?||Iguanita tú.", "¿Qué tiene dientes pero no muerde?||El peine.", "¿Por qué los pájaros vuelan al sur?||Porque caminando tardarían demasiado.", "¿Qué le dice el número uno al diez?||Para ser como yo, sé sincero (sin cero).", "¿Qué es lo que sube y baja pero no se mueve?||La escalera.", "¿Cuántas casas hay en Springfield?||Milhouse (mil casas).", "¿Cómo se despiden los químicos?||Ácido un placer.", "¿Qué le dijo un jardinero a otro?||¡Nos vemos cuando podamos!", "¿Qué hace un perro con un taladro?||Taladrando."];
 const rd=s=>{const p=String(s).split("||");return{q:p[0].trim(),a:(p[1]||"").trim()}};
 const jokeList=()=>{const j=CF().jokes;return j&&j.length?j:JOKES};
 const jokeToday=()=>{const j=jokeList();return j[hash(today())%j.length]};
@@ -981,6 +981,7 @@ TB.rul=c=>`<p class="mu">Comportamiento de la ruleta durante el giro.</p><label 
 /* ===== v6 ===== */
 {const o=A.rlScore;A.rlScore=(id,ok)=>{o(id,ok);if(ok){const m=rlM(id);A.toast('+1 punto para '+(m?m.s||m.name:''))}A.rlRefresh()}}
 (()=>{const c=CF();if(!c.v6){c.jokes=JOKES.slice();c.v6=true;save();A.fpRef()}})();
+(()=>{const c=CF();if(!c.v21j){const have=new Set((c.jokes||[]).map(x=>x.split('||')[0]));JOKES.slice(-4).forEach(j=>{if(!have.has(j.split('||')[0]))c.jokes.push(j)});c.v21j=true;save()}})();
 (()=>{const bg=document.createElement('div');bg.id='bgm';bg.innerHTML='<i></i><i></i><i></i><i></i><u></u>';document.body.prepend(bg);
 addEventListener('pointermove',e=>{bg.style.setProperty('--mx',e.clientX+'px');bg.style.setProperty('--my',e.clientY+'px')},{passive:true});
 document.addEventListener('pointerdown',e=>{const b=e.target.closest&&e.target.closest('.btn,.wc2,.fa');if(!b)return;const r=document.createElement('span'),q=b.getBoundingClientRect();r.className='rpl';r.style.left=e.clientX-q.left+'px';r.style.top=e.clientY-q.top+'px';b.appendChild(r);setTimeout(()=>r.remove(),650)});
@@ -1741,7 +1742,7 @@ window.V19.look=i=>{const b=Object.assign({},BW(),{hat:'none',glasses:'none',out
 const oV9=TB.ves;TB.ves=(c,H)=>{let h=oV9(c,H);return h.replace('<div class="vg">',`<div class="vpre">${LK.map((l,i)=>`<button class="btn" onclick="V19.look(${i})">🎬 ${l[0]}</button>`).join('')}</div><div class="vg">`)};
 /* ---- voz: se carga antes de hablar y también habla al empezar el giro ---- */
 {const o=A.speak;A.speak=function(t,f){try{if(window.speechSynthesis&&!VOICES.length)loadV()}catch(e){}return o.call(this,t,f)};
- const om=A.mas;A.mas=function(e,n){try{if(e=='idle'&&RLBUSY)return}catch(z){}const r=om.apply(this,arguments);if(e=='spin'){const b=$('#mb');b&&A.speak(b.textContent)}return r}}
+ const om=A.mas;A.mas=function(e,n){try{if(e=='idle'&&RLBUSY)return}catch(z){}if(e=='spin'){const m=$('#mas');if(m)m.className='spin';return}return om.apply(this,arguments)}}
 try{DXC.dens((CF().deco&&CF().deco.dens)||6)}catch(e){}
 })();
 
