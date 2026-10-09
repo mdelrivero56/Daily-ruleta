@@ -2033,7 +2033,28 @@ BP=(w,u)=>{const P=oBP(w,u),hc=w.hatc,oc=w.outc,U=k=>`url(#${u}${k})`,cl=`clip-p
   catrinadress:O(`<rect x="44" y="142" width="82" height="62" fill="#1a1624"/><path d="M44 176Q55 168 65 178Q75 168 85 178Q95 168 105 178Q115 168 126 176V204H44Z" fill="#7b2d8e"/>`+PN([[58,154,'#ff5fa2'],[112,158,'#ffd23f'],[84,150,'#ff9a3c']],([x,y,c])=>fl(x,y,c,6))),
   mariachi:O(`<rect x="44" y="142" width="82" height="62" fill="#1b1b26"/><path d="M85 142V196" stroke="#c9ced9" stroke-width="3"/>`+PN([152,164,176,188],y=>`<circle cx="76" cy="${y}" r="3.2" fill="#e6c45a"/><circle cx="94" cy="${y}" r="3.2" fill="#e6c45a"/>`)+`<path d="M44 150Q56 160 66 150M126 150Q114 160 104 150" stroke="#e6c45a" stroke-width="2.4" fill="none"/>`),
   jumpsuit:O(`<rect x="44" y="142" width="82" height="62" fill="${U('f')}"/><path d="M85 142V196" stroke="#fff" stroke-opacity=".7" stroke-width="2.4" stroke-dasharray="3 3"/><rect x="82" y="146" width="6" height="9" rx="2" fill="#e6c45a"/>`)});
+ const dk=parseInt((oc||'#fff').slice(1,3),16)<90;
+ Object.assign(P.hat,{
+  clownwig:PN([[36,54],[28,40],[42,30]],([x,y])=>`<circle cx="${x}" cy="${y}" r="14" fill="#d4231f"/><circle cx="${x-4}" cy="${y-4}" r="4" fill="#fff" opacity=".18"/>`)+PN([[134,54],[142,40],[128,30]],([x,y])=>`<circle cx="${x}" cy="${y}" r="14" fill="#d4231f"/><circle cx="${x-4}" cy="${y-4}" r="4" fill="#fff" opacity=".18"/>`),
+  braids:`<path d="M44 62Q85 30 126 62V48Q85 16 44 48Z" fill="#14121c"/><path d="M40 66Q26 100 36 150M130 66Q144 100 134 150" stroke="#14121c" stroke-width="11" fill="none" stroke-linecap="round"/><path d="M33 112L43 116M32 126L42 130M127 116L137 112M128 130L138 126" stroke="#3a3548" stroke-width="2.4"/><circle cx="36" cy="152" r="5" fill="#c1121f"/><circle cx="134" cy="152" r="5" fill="#c1121f"/>`,
+  fedora:`<ellipse cx="85" cy="50" rx="66" ry="11" fill="#6b4a2e"/><path d="M56 48Q56 16 85 16Q114 16 114 48Z" fill="#7d5a38"/><path d="M56 42Q85 52 114 42V34Q85 44 56 34Z" fill="#8b1e1e"/>`,
+  dollhair:`<path d="M42 66Q36 30 62 22Q70 12 90 20Q116 14 128 40Q134 56 128 68Q118 44 100 42L85 50L68 42Q52 46 42 66Z" fill="#c8481c"/><path d="M58 26L52 40M80 18L78 34M104 20L110 36M122 44L114 56" stroke="#8c2f10" stroke-width="2.4" stroke-linecap="round"/>`,
+  wildhair:`<path d="M44 56L30 20L54 34L58 4L76 30L90 -4L100 30L120 6L124 36L146 22L128 58Q85 36 44 56Z" fill="#cfd3d9" stroke="#8d939e" stroke-width="2" stroke-linejoin="round"/>`,
+  artcap:`<path d="M58 52L85 -6L112 52Z" fill="#14121c"/><path d="M58 52H112" stroke="#fff" stroke-width="3"/><circle cx="85" cy="-8" r="6" fill="#fff"/>`});
+ Object.assign(P.glasses,{
+  hockey:`<path d="M40 62Q40 40 85 40Q130 40 130 62V112Q130 136 85 140Q40 136 40 112Z" fill="#eee8d8" stroke="#b9b09a" stroke-width="2.5"/><ellipse cx="66" cy="80" rx="9" ry="6" fill="#20202a"/><ellipse cx="104" cy="80" rx="9" ry="6" fill="#20202a"/><path d="M62 50Q85 44 108 50M60 58Q85 52 110 58" stroke="#b9b09a" stroke-width="2" fill="none"/>`+PN([[66,104],[78,106],[92,106],[104,104],[72,116],[85,118],[98,116]],([x,y])=>`<circle cx="${x}" cy="${y}" r="2.6" fill="#3a3a44"/>`),
+  ghostmask:`<path d="M46 54Q46 40 85 40Q124 40 124 54V120Q124 140 108 168Q104 150 85 152Q66 150 62 168Q46 140 46 120Z" fill="#f1efe6" stroke="#cfcab8" stroke-width="2"/><path d="M54 74Q60 66 72 70Q82 86 74 104Q60 100 54 74Z" fill="#14121c"/><path d="M116 74Q110 66 98 70Q88 86 96 104Q110 100 116 74Z" fill="#14121c"/><path d="M70 126Q85 136 100 126Q104 150 96 160Q85 168 74 160Q66 150 70 126Z" fill="#14121c"/>`,
+  artface:`<rect x="42" y="50" width="86" height="82" rx="16" fill="#f4f4f4"/><ellipse cx="66" cy="80" rx="14" ry="12" fill="#14121c"/><ellipse cx="104" cy="80" rx="14" ry="12" fill="#14121c"/><circle cx="66" cy="80" r="3.5" fill="#fff"/><circle cx="104" cy="80" r="3.5" fill="#fff"/><path d="M85 90L80 100H90Z" fill="#14121c"/><path d="M54 102Q85 134 116 102" stroke="#14121c" stroke-width="3.4" fill="none" stroke-linecap="round"/><path d="M62 112L62 106M72 119L72 112M85 122V115M98 119L98 112M108 112V106" stroke="#14121c" stroke-width="2.4"/>`});
+ P.neck.whitecollar=`<path d="M56 134L85 150L114 134L108 146L85 160L62 146Z" fill="#fff" stroke="#d0d6e6" stroke-width="1.2"/>`;
+ Object.assign(P.outfit,{
+  stripesweater:O(`<rect x="44" y="142" width="82" height="62" fill="#c1272d"/>`+PN([150,162,174,186],y=>`<rect x="44" y="${y}" width="82" height="6" fill="#2e7d32"/>`)),
+  gothdress:O(`<rect x="44" y="142" width="82" height="62" fill="#14121c"/><path d="M62 142Q85 164 108 142Z" fill="#fff"/><path d="M44 190Q85 180 126 190V204H44Z" fill="#2a2438"/>`+PN([164,174],y=>`<circle cx="85" cy="${y}" r="2.4" fill="#fff"/>`)),
+  pierrot:O(`<rect x="44" y="142" width="82" height="62" fill="${oc}"/>`+PN([156,171,186],y=>`<circle cx="85" cy="${y}" r="6.5" fill="${dk?'#fff':'#ff7a1a'}" stroke="#0003"/>`)),
+  stripesuit:O(`<rect x="44" y="142" width="82" height="62" fill="#f2f2f2"/>`+PN([0,1,2,3,4,5,6],i=>`<rect x="${47+i*12}" y="142" width="6" height="62" fill="#14121c"/>`)),
+  coverall:O(`<rect x="44" y="142" width="82" height="62" fill="#58624a"/><path d="M85 142V196" stroke="#2f3628" stroke-width="2.4"/><rect x="52" y="164" width="22" height="16" rx="2" fill="none" stroke="#2f3628" stroke-width="2"/><rect x="96" y="164" width="22" height="16" rx="2" fill="none" stroke="#2f3628" stroke-width="2"/>`),
+  blackrobe:O(`<rect x="44" y="142" width="82" height="62" fill="#101018"/><path d="M66 142V200M85 142V200M104 142V200" stroke="#2a2a3a" stroke-width="3"/>`)});
  return P};
+
 /* ---- rostro, accesorios de mano y espalda ---- */
 const FXF={
  bolts:`<rect x="24" y="84" width="16" height="8" rx="2" fill="#8b95a8"/><rect x="130" y="84" width="16" height="8" rx="2" fill="#8b95a8"/><path d="M22 80V96M148 80V96" stroke="#6b7488" stroke-width="3"/><path d="M52 58Q62 54 70 60L76 56L82 62L88 58L96 62L104 56L118 60" stroke="#14121c" stroke-width="2.6" fill="none"/>`,
@@ -2056,6 +2077,13 @@ const FXB={
  tail:`<path d="M120 196Q170 200 164 150Q160 140 150 146" stroke="#17151f" stroke-width="9" fill="none" stroke-linecap="round"/>`,
  devtail:`<path d="M120 196Q160 214 158 170" stroke="#c1121f" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M158 170L148 160L168 160Z" fill="#c1121f"/>`,
  fairy:`<path d="M44 150Q-8 108 -4 166Q16 160 44 178Z" fill="#cfe8ff" opacity=".85" stroke="#fff"/><path d="M126 150Q178 108 174 166Q154 160 126 178Z" fill="#cfe8ff" opacity=".85" stroke="#fff"/><path d="M44 170Q14 190 24 214Q40 200 46 188Z" fill="#e8d4ff" opacity=".85"/><path d="M126 170Q156 190 146 214Q130 200 124 188Z" fill="#e8d4ff" opacity=".85"/>`};
+
+FXF.clownpaint=`<path d="M62 88Q56 108 70 118M108 88Q114 108 100 118" stroke="#d4231f" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M58 104Q85 126 112 104" stroke="#d4231f" stroke-width="4.5" fill="none" stroke-linecap="round"/><circle cx="85" cy="94" r="7" fill="#d4231f"/><path d="M56 60Q66 54 78 60M92 60Q104 54 114 60" stroke="#d4231f" stroke-width="3" fill="none"/>`;
+FXF.burn=`<path d="M54 62Q70 56 74 74Q66 84 54 78Z" fill="#a14a2e" opacity=".75"/><path d="M104 96Q122 90 120 110Q108 118 100 108Z" fill="#8c3a22" opacity=".75"/><circle cx="70" cy="108" r="6" fill="#b85a3a" opacity=".6"/><circle cx="108" cy="64" r="5" fill="#a14a2e" opacity=".6"/>`;
+FXF.scars=`<path d="M52 64L84 76L118 62" stroke="#7a1010" stroke-width="3" fill="none"/><path d="M60 60L62 70M72 66L74 76M96 70L98 60M108 64L110 56" stroke="#7a1010" stroke-width="2"/><path d="M100 98L118 116" stroke="#7a1010" stroke-width="3"/><path d="M102 112L110 104M108 118L114 110" stroke="#7a1010" stroke-width="2"/>`;
+FXF.mold=`<circle cx="58" cy="66" r="10" fill="#6aa84f" opacity=".6"/><circle cx="112" cy="104" r="13" fill="#4f8a3c" opacity=".55"/><circle cx="82" cy="112" r="7" fill="#2e5d2a" opacity=".6"/><circle cx="104" cy="62" r="5" fill="#2e5d2a" opacity=".6"/><circle cx="56" cy="102" r="4" fill="#8cc06a" opacity=".7"/>`;
+FXA.claw=`<g transform="translate(150 112)"><rect x="-8" y="14" width="18" height="12" rx="3" fill="#6b4a2e"/><path d="M-5 14L-9 -14M2 14L2 -18M9 14L13 -14" stroke="#cfd6e6" stroke-width="3" stroke-linecap="round"/></g>`;
+FXA.redballoon=`<g><path d="M30 196Q22 130 36 76" stroke="#fff" stroke-opacity=".8" stroke-width="1.4" fill="none"/><ellipse cx="38" cy="56" rx="17" ry="21" fill="#d4231f"/><path d="M33 76L38 82L43 76Z" fill="#a31a17"/><ellipse cx="32" cy="48" rx="4" ry="7" fill="#fff" opacity=".35"/></g>`;
 /* los disfraces anulan el auto-vestido de la temática; las capas nuevas se dibujan al final */
 const oX=BOTX;
 BOTX=(w,c)=>{if(w.costume){w=Object.assign({},w);['hat','glasses','neck','outfit','face'].forEach(k=>{if(!w[k]||w[k]=='none')w[k]='bare'})}
@@ -2105,6 +2133,22 @@ const LKS=[
 ['fiesta','Cumpleañero',{hat:'party',hatc:'#d6336c',outfit:'jersey',outc:'#2b4fb8',acc:'gift',balloon:true}],
 ['fiesta','DJ',{hat:'phones',hatc:'#d6336c',glasses:'sun',outfit:'hoodie',outc:'#262636'}],
 ['fiesta','Payaso',{hair:'afro',hairc:'#ff5c7a',face:'rednose',neck:'ruff',outfit:'jumpsuit',outc:'#7b5cd6'}]];
+
+VOPT.hat.push(['clownwig','Peluca payaso'],['braids','Trenzas'],['fedora','Fedora'],['dollhair','Pelo muñeco'],['wildhair','Pelo salvaje'],['artcap','Gorro payaso']);
+VOPT.glasses.push(['hockey','Máscara hockey'],['ghostmask','Máscara grito'],['artface','Cara payaso']);
+VOPT.neck.push(['whitecollar','Cuello blanco']);
+VOPT.outfit.push(['stripesweater','Suéter rayado'],['gothdress','Vestido gótico'],['pierrot','Traje payaso'],['stripesuit','Traje rayas'],['coverall','Overol'],['blackrobe','Túnica negra']);
+VOPT.face.push(['clownpaint','Pintura payaso'],['burn','Quemaduras'],['scars','Cicatrices'],['mold','Moho']);
+VOPT.acc.push(['claw','Guante garras'],['redballoon','Globo rojo']);
+LKS.push(
+['halloween','Payaso aterrador',{hat:'clownwig',face:'clownpaint',outfit:'pierrot',outc:'#d9dde6',neck:'ruff',acc:'redballoon'}],
+['halloween','Gótica de trenzas',{hat:'braids',outfit:'gothdress',neck:'whitecollar'}],
+['halloween','Suéter rayado',{hat:'fedora',face:'burn',outfit:'stripesweater',acc:'claw'}],
+['halloween','Máscara de hockey',{glasses:'hockey',outfit:'coverall'}],
+['halloween','Muñeco diabólico',{hat:'dollhair',face:'scars',outfit:'overalls',outc:'#2b4fb8'}],
+['halloween','Máscara del grito',{glasses:'ghostmask',outfit:'blackrobe'}],
+['halloween','Rayas del más allá',{hat:'wildhair',face:'mold',outfit:'stripesuit',neck:'bow'}],
+['halloween','Payaso mudo',{hat:'artcap',glasses:'artface',outfit:'pierrot',outc:'#14121c',neck:'ruff'}]);
 const TF=[['all','Todos'],['halloween','🎃 Halloween'],['muertos','💀 Muertos'],['navidad','🎄 Navidad'],['amor','💘 Amor'],['patrias','🇲🇽 Patrias'],['primavera','🌸 Primavera'],['verano','🏖️ Verano'],['fiesta','🎂 Fiesta']];
 let VF=({10:'halloween',11:'muertos',12:'navidad',2:'amor',9:'patrias',3:'primavera',4:'primavera',5:'primavera',6:'verano',7:'verano',8:'verano'})[new Date().getMonth()+1]||'all';
 const lookW=i=>Object.assign({},BASE,LKS[i][2],{costume:LKS[i][1]});
