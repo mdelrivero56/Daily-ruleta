@@ -1829,6 +1829,7 @@ const TESTS=[
  ['Marcador y estadísticas',()=>{ok(typeof rlBoard()=='string','Marcador inválido');ok(typeof statsCard()=='string','Estadísticas inválidas')}],
  ['Mascota se dibuja',()=>{ok(/<svg/.test(BOT()),'BOT() no devolvió SVG');ok($('#bot svg'),'La mascota no está en pantalla')}],
  ['Vestuario: todas las prendas se dibujan',()=>{let n=0;for(const k in VOPT)VOPT[k].forEach(([v])=>{const a=BTH(k,v),b=BOTX(Object.assign({},BW(),{[k]:v}));ok(/<svg/.test(a)&&/<svg/.test(b),'Falla '+k+':'+v);n++});ok(n>30,'Pocas prendas ('+n+')')}],
+ ['Disfraces y accesorios nuevos se dibujan',()=>{ok(window.VX&&VX.list.length>20,'Faltan disfraces');VX.list.forEach((l,i)=>{const s=BOTX(Object.assign({},BW(),VX.w(i)));ok(/<svg/.test(s)&&!/undefined|NaN/.test(s),'Falla el disfraz '+l[1])});['acc','back'].forEach(k=>VOPT[k].forEach(([v])=>ok(/<svg/.test(BTH(k,v)),'Falla '+k+':'+v)))}],
  ['Temáticas: las 8 decoran el sistema',async()=>{for(const id of ['halloween','muertos','navidad','amor','patrias','primavera','verano','fiesta']){DXC.set(id);await wait(30);ok($('#dcr')&&$('#dcr').children.length>2,'Tema sin adornos: '+id);ok(/<svg/.test(BOT()),'Mascota falla con '+id)}DXC.set('none');ok(!$('#dcr').children.length,'No se quitó la decoración')}],
  ['Reto de atención: flujo normal (acierta)',async()=>{const{b}=await startFlow(/rlScore\('[^']+',1\)/);const id=/rlScore\('([^']+)',1\)/.exec(b.getAttribute('onclick'))[1],a=S.rl.score[id]||0;b.click();await wait(80);ok((S.rl.score[id]||0)==a+1,'No sumó el punto')}],
  ['Robar el punto: aparece al fallar',async()=>{const{sp,b}=await startFlow(/rlScore\('[^']+',0\)/);const pk=/rlScore\('([^']+)',0\)/.exec(b.getAttribute('onclick'))[1];b.click();await wait(120);
@@ -1871,13 +1872,18 @@ const st=document.createElement('style');st.textContent=`
 #labp #qaerr{font-size:11.5px;max-height:120px;overflow:auto;padding:0 16px 12px}
 #labp .labg select{grid-column:1/-1;padding:6px}
 #labp details>summary{padding:10px 16px;cursor:pointer;font-weight:700}`;document.head.appendChild(st);
+QA.min=()=>{const p=$('#labp');p&&p.classList.toggle('mini')};
+QA.drag=p=>{const h=p.querySelector('.labh');let sx,sy,ox,oy,on=0;
+ h.addEventListener('pointerdown',e=>{if(e.target.closest('button'))return;const r=p.getBoundingClientRect();sx=e.clientX;sy=e.clientY;ox=r.left;oy=r.top;on=1;try{h.setPointerCapture(e.pointerId)}catch(z){}});
+ h.addEventListener('pointermove',e=>{if(!on)return;p.style.right='auto';p.style.left=Math.max(0,Math.min(innerWidth-80,ox+e.clientX-sx))+'px';p.style.top=Math.max(0,Math.min(innerHeight-60,oy+e.clientY-sy))+'px'});
+ const end=()=>{on=0};h.addEventListener('pointerup',end);h.addEventListener('pointercancel',end)};
 /* panel */
-A.lab=()=>{let p=$('#labp');if(p){p.remove();return}const o=$('#cfgov');o&&o.remove();QA.reg=[];
+A.lab=()=>{let p=$('#labp');if(p){p.remove();return}if(!G.can()){A.toast('Esta acción es solo para administradores.');return}const o=$('#cfgov');o&&o.remove();QA.reg=[];
  const B=(l,fn,lg,q)=>{QA.reg.push({fn,lg:lg||l,q});return`<button class="btn" onclick="QA.do(${QA.reg.length-1})">${l}</button>`},
   D=(open,t,b)=>`<details ${open?'open':''}><summary>${t}</summary>${b}</details>`,
   ppl=Object.values(S.rl.teams).flat();
  p=document.createElement('div');p.id='labp';p.className='labp';
- p.innerHTML=`<div class="labh"><div><b>🧪 Panel de pruebas QA</b><small>${QA.v} · archivo: ${esc(document.lastModified)}</small></div><button class="btn mini" onclick="A.lab()">Cerrar</button></div>`
+ p.innerHTML=`<div class="labh"><div><b>🧪 Panel de pruebas QA</b><small>${QA.v} · archivo: ${esc(document.lastModified)}</small></div><button class="btn mini" onclick="QA.min()" title="Minimizar">–</button><button class="btn mini" onclick="A.lab()">Cerrar</button></div>`
  +D(1,'1 · Modo QA (datos aislados)',`<div class="qp"><div id="qastat"></div><p>Mientras esté activo, <b>nada se guarda en tus datos reales</b>: puedes girar, puntuar, finalizar el Daily y cambiar la configuración sin ensuciar el registro. Al salir o recargar la página, todo vuelve como estaba.</p></div><div class="labg">${B('Entrar con copia de mis datos',()=>QA.enter('copy'))}${B('Entrar con datos de ejemplo',()=>QA.enter('sample'))}${B('Reiniciar datos de prueba',()=>{if(!QA.on)QA.enter(QA.mode);else QA.enter(QA.mode)})}<button class="btn" onclick="QA.exit()">Salir y descartar</button></div>`)
  +D(1,'2 · Pruebas automáticas',`<div class="labg">${B('▶ Ejecutar todas',()=>QA.runAll(),'Pruebas automáticas')}<button class="btn" onclick="QA.report()">📋 Copiar reporte</button></div><div class="qp" id="qares"></div>`)
  +D(1,'3 · Reto de atención y robar el punto',`<p class="qp mu">Crea un turno de prueba (sin girar la ruleta) y lanza el reto. Se ejecuta en modo QA.</p><div class="labg">${B('Reto de atención',()=>{attention()},'Reto de atención de prueba',1)}${B('🥷 Reto + «No recordó» (robo)',()=>stealDemo(),'Escenario: robar el punto',1)}${B('Girar ruleta',()=>A.spin(),'Girar ruleta',1)}${B('Finalizar Daily',()=>A.fin(),'Finalizar Daily',1)}<select id="qap">${ppl.map(m=>`<option value="${m.id}">${esc(m.name)}</option>`).join('')}</select>${B('+1 punto',()=>A.rlPts($('#qap').value,1),'+1 punto',1)}${B('−1 punto',()=>A.rlPts($('#qap').value,-1),'−1 punto',1)}</div>`)
@@ -1885,9 +1891,9 @@ A.lab=()=>{let p=$('#labp');if(p){p.remove();return}const o=$('#cfgov');o&&o.rem
  +D(0,'5 · Música, sonidos y voz',`<div class="labg">${Object.entries(TR).map(([k,t])=>B(t.n,()=>CG.mt(k),'Música: '+t.n,1)).join('')}${B('Detener música',()=>{MU.on&&A.music()})}${B('Fanfarria',()=>fanfare())}${B('Sonido de acierto',()=>[659,784,988].forEach((n,k)=>setTimeout(()=>beep(n,.15,.07,'triangle'),k*100)))}${B('Sonido de error',()=>beep(220,.3,.06,'sawtooth'))}${B('Claro / oscuro',()=>A.theme2())}</div><div class="labv"><input id="labt" value="Hola equipo, esta es una prueba de voz"><button class="btn" onclick="A.speak($('#labt').value,1)">Decir texto</button></div>`)
  +D(0,'6 · Errores detectados (<span id="qaec">0</span>)',`<div id="qaerr"></div><div class="labg">${B('Limpiar errores',()=>{QA.err=[];QA.ui()})}</div>`)
  +`<div class="labc"><div class="labct">Actividad</div><div id="labl">Sin actividad todavía.</div></div>`;
- document.body.appendChild(p);QA.ui();L('Panel abierto')};
-TB.lab=()=>`<p class="mu">Panel de pruebas QA: trabaja en un modo aislado que no toca tus datos reales, con pruebas automáticas, escenarios del reto de atención (incluido robar el punto) y reporte para copiar. Atajo: Ctrl + Shift + Q.</p><button class="btn p" onclick="A.lab()">Abrir panel de pruebas</button>`;
-addEventListener('keydown',e=>{if(e.ctrlKey&&e.shiftKey&&(e.key=='Q'||e.key=='q')){e.preventDefault();A.lab()}});
+ document.body.appendChild(p);QA.drag(p);QA.ui();L('Panel abierto')};
+TB.lab=()=>`<p class="mu">Panel de pruebas QA: trabaja en un modo aislado que no toca tus datos reales, con pruebas automáticas, escenarios del reto de atención (incluido robar el punto) y reporte para copiar. Atajo: Alt + Mayús + P.</p><button class="btn p" onclick="A.lab()">Abrir panel de pruebas</button>`;
+addEventListener('keydown',e=>{if(e.altKey&&e.shiftKey&&e.code=='KeyP'){e.preventDefault();A.lab()}});
 })();
 
 </script><style id="pro">
@@ -1962,4 +1968,159 @@ header.top nav{flex:0 1 auto!important;min-width:0}
 @media (max-width:980px){header.top .dbg{display:none}}
 #fpan,.fpan,[id^=fp]{background:rgba(16,26,48,.94)!important;color:#eef2fb!important;border:1px solid #2b3d66!important;box-shadow:0 18px 40px -12px rgba(0,0,0,.5)!important;backdrop-filter:blur(14px)}
 </style>
+<style id="v20">
+/* v20 · vestuario: el escenario y las prendas nunca se encimas */
+.cfgc{container-type:inline-size;container-name:cfgc}
+.vg{display:grid;grid-template-columns:minmax(0,1fr);gap:18px;align-items:start}
+.vg>.vleft{grid-column:1;grid-row:1;position:relative;z-index:2}
+.vg>.vright{grid-column:1;grid-row:2;min-width:0;position:relative;z-index:1}
+@container cfgc (min-width:640px){.vg{grid-template-columns:minmax(220px,270px) minmax(0,1fr);gap:26px}.vg>.vleft{position:sticky;top:0}.vg>.vright{grid-column:2;grid-row:1}}
+.vstage2{height:400px;isolation:isolate}.vbot{padding-top:48px}.vbot svg{height:272px!important}
+.vitems{grid-template-columns:repeat(auto-fill,minmax(112px,1fr))}
+.vi{height:112px;padding:10px 10px 30px}
+.vi::before{content:attr(title);position:absolute;left:4px;right:4px;bottom:7px;text-align:center;font-size:11px;font-weight:600;color:var(--mu);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vch{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.vch button{border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:99px;padding:6px 12px;font:inherit;font-size:12.5px;font-weight:600;cursor:pointer}
+.vch button.on{background:var(--ac);border-color:var(--ac);color:#0f1f4d}
+.vcos{display:grid;grid-template-columns:repeat(auto-fill,minmax(122px,1fr));gap:12px}
+.vco{position:relative;border:1px solid var(--bd);border-radius:16px;background:linear-gradient(180deg,var(--card),var(--in));padding:26px 6px 10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;color:var(--tx);font:inherit;transition:transform .15s,box-shadow .15s}
+.vco:hover{transform:translateY(-3px);box-shadow:0 12px 22px -14px rgba(0,0,0,.5)}
+.vco.on{border-color:var(--ac);box-shadow:0 0 0 2px var(--ac)}
+.vco svg{height:112px!important;width:auto!important;overflow:visible}
+.vco b{font-size:12.5px}
+/* v20 · panel de pruebas */
+#labp.mini details,#labp.mini .labc{display:none}
+#labp .labh{cursor:grab;user-select:none;gap:8px}#labp .labh>.btn{margin-left:4px}
+#labp{width:min(380px,96vw)!important}
+</style>
+<script id="v20js">
+/* ===== v20: disfraces por temática, prendas nuevas, accesorios y espalda ===== */
+(()=>{
+const sh=shade,PN=(a,f)=>a.map(f).join('');
+const BASE={hat:'none',glasses:'none',neck:'none',outfit:'none',face:'none',hair:'none',acc:'none',back:'none',cape:false,antenna:false,wings:false,halo:false,bag:false,balloon:false,hatc:'#2c3fae',outc:'#d4504a'};
+/* ---- prendas nuevas ---- */
+const oBP=BP;
+BP=(w,u)=>{const P=oBP(w,u),hc=w.hatc,oc=w.outc,U=k=>`url(#${u}${k})`,cl=`clip-path="url(#${u}cb)"`,O=s=>`<g ${cl}>${s}</g>`;
+ const fl=(x,y,c,r)=>`<circle cx="${x}" cy="${y}" r="${r||9}" fill="${c}"/><circle cx="${x}" cy="${y}" r="3" fill="#fff" opacity=".7"/>`;
+ Object.assign(P.hat,{bare:'',
+  vamphair:`<path d="M42 62Q40 22 85 20Q130 22 128 62Q118 40 100 36L85 52L70 36Q52 40 42 62Z" fill="#14121c"/><path d="M60 32Q78 22 96 28" stroke="#fff" stroke-opacity=".25" stroke-width="3" fill="none" stroke-linecap="round"/>`,
+  pumpkin:`<ellipse cx="85" cy="30" rx="44" ry="26" fill="#f08a1c"/><path d="M85 6Q70 30 85 54M64 10Q48 30 64 50M106 10Q122 30 106 50" stroke="#c4600c" stroke-width="3" fill="none"/><path d="M82 8Q80 -4 92 -8" stroke="#3f8f3a" stroke-width="7" fill="none" stroke-linecap="round"/><ellipse cx="70" cy="22" rx="10" ry="6" fill="#fff" opacity=".2"/>`,
+  horns:`<path d="M52 50Q38 26 54 4Q58 32 72 42Z" fill="#c1121f"/><path d="M118 50Q132 26 116 4Q112 32 98 42Z" fill="#c1121f"/><path d="M54 10Q52 24 60 36" stroke="#fff" stroke-opacity=".35" stroke-width="2.5" fill="none"/>`,
+  catears:`<path d="M48 52L50 8L82 40Z" fill="#17151f"/><path d="M122 52L120 8L88 40Z" fill="#17151f"/><path d="M56 40L57 20L72 36Z" fill="#ff8fb3"/><path d="M114 40L113 20L98 36Z" fill="#ff8fb3"/>`,
+  frank:`<path d="M44 56V16H126V56Q108 40 85 44Q62 40 44 56Z" fill="#14121c"/><rect x="44" y="16" width="82" height="6" fill="#fff" opacity=".12"/><path d="M60 22V34M80 22V32M100 22V34" stroke="#000" stroke-opacity=".4" stroke-width="2"/>`,
+  elf:`<path d="M46 50Q56 14 120 -2Q150 -4 152 18Q120 12 124 50Z" fill="#2e9d4f"/><path d="M46 50Q85 38 124 50V40Q85 28 46 40Z" fill="#fff"/><circle cx="152" cy="18" r="8" fill="#f5c542"/>`,
+  antlers:`<g stroke="#7a5230" stroke-width="6" fill="none" stroke-linecap="round"><path d="M56 50Q44 30 48 6M48 22L32 14M50 36L34 34"/><path d="M114 50Q126 30 122 6M122 22L138 14M120 36L136 34"/></g>`,
+  straw:`<ellipse cx="85" cy="50" rx="74" ry="12" fill="#d9b25a"/><path d="M56 48Q56 14 85 14Q114 14 114 48Z" fill="#e8c46e"/><path d="M56 40Q85 50 114 40V32Q85 42 56 32Z" fill="${hc}"/><path d="M30 50Q85 62 140 50" stroke="#b8923a" stroke-width="2" fill="none" stroke-dasharray="4 4"/>`,
+  phones:`<path d="M34 90Q34 22 85 22Q136 22 136 90" stroke="#20202c" stroke-width="9" fill="none" stroke-linecap="round"/><rect x="24" y="76" width="18" height="34" rx="8" fill="${hc}"/><rect x="128" y="76" width="18" height="34" rx="8" fill="${hc}"/>`,
+  catrina:`<ellipse cx="85" cy="50" rx="76" ry="13" fill="#1a1624"/><path d="M52 48Q54 8 85 6Q116 8 118 48Z" fill="#241d33"/><path d="M52 40Q85 52 118 40V32Q85 44 52 32Z" fill="#7b2d8e"/>`+[[44,34,'#ff5fa2'],[62,22,'#ffd23f'],[108,22,'#ff9a3c'],[126,34,'#ff5fa2'],[85,12,'#ff5fa2']].map(([x,y,c])=>fl(x,y,c)).join('')});
+ Object.assign(P.glasses,{bare:'',
+  eyepatch:`<path d="M44 62L126 96" stroke="#14121c" stroke-width="3"/><ellipse cx="102" cy="82" rx="15" ry="13" fill="#14121c"/><ellipse cx="97" cy="77" rx="5" ry="3" fill="#fff" opacity=".2"/>`,
+  mummy:`<g fill="#e9e2cc" stroke="#b9ae90" stroke-width="1.2"><rect x="44" y="54" width="82" height="12" rx="2" transform="rotate(-3 85 60)"/><rect x="44" y="97" width="82" height="9" rx="2" transform="rotate(3 85 100)"/><rect x="44" y="108" width="82" height="10" rx="2" transform="rotate(-2 85 112)"/><rect x="46" y="68" width="14" height="26" rx="2" transform="rotate(14 53 80)"/><rect x="110" y="68" width="14" height="26" rx="2" transform="rotate(-14 117 80)"/></g>`,
+  luchador:`<path fill-rule="evenodd" d="M40 70Q40 40 85 40Q130 40 130 70V108Q130 134 85 138Q40 134 40 108Z M52 80a16 11 0 1 0 32 0a16 11 0 1 0 -32 0Z M86 80a16 11 0 1 0 32 0a16 11 0 1 0 -32 0Z M70 100h30v18h-30Z" fill="${hc}" stroke="#fff" stroke-width="3"/><path d="M85 40V64" stroke="#fff" stroke-width="3"/>`,
+  monocle:`<circle cx="102" cy="80" r="14" fill="rgba(200,225,255,.2)" stroke="#d4af37" stroke-width="3"/><path d="M114 90Q122 120 112 140" stroke="#d4af37" stroke-width="1.6" fill="none"/>`});
+ Object.assign(P.neck,{bare:'',
+  drac:`<path d="M50 134L46 112L72 138Z" fill="#14121c"/><path d="M120 134L124 112L98 138Z" fill="#14121c"/><path d="M53 132L51 118L66 136Z" fill="#c1121f"/><path d="M117 132L119 118L104 136Z" fill="#c1121f"/><rect x="62" y="134" width="46" height="10" rx="4" fill="#14121c"/>`,
+  ruff:PN(Array.from({length:9}),(_,i)=>`<circle cx="${52+i*8.2}" cy="${138+Math.sin(i/8*Math.PI)*6}" r="8" fill="${i%2?'#ff5c7a':'#fff'}" stroke="#d0d6e6" stroke-width=".8"/>`)});
+ Object.assign(P.outfit,{bare:'',
+  skeleton:O(`<rect x="44" y="142" width="82" height="62" fill="#14121c"/><path d="M85 144V190" stroke="#f1ede0" stroke-width="5"/>`+PN([150,160,170,180],y=>`<path d="M85 ${y}Q66 ${y-6} 56 ${y+2}M85 ${y}Q104 ${y-6} 114 ${y+2}" stroke="#f1ede0" stroke-width="4" fill="none" stroke-linecap="round"/>`)),
+  mummy:O(`<rect x="44" y="142" width="82" height="62" fill="#e9e2cc"/>`+PN([148,158,168,178,188],(y,i)=>`<path d="M42 ${y}L128 ${y+(i%2?-5:6)}" stroke="#a89c7c" stroke-width="2.4"/>`)+`<path d="M60 142L108 196" stroke="#a89c7c" stroke-width="2"/>`),
+  pumpkinbody:O(`<rect x="44" y="142" width="82" height="62" fill="#f08a1c"/><path d="M85 142V196M66 142Q56 170 66 196M104 142Q114 170 104 196" stroke="#c4600c" stroke-width="3" fill="none"/><ellipse cx="62" cy="156" rx="6" ry="10" fill="#fff" opacity=".18"/>`),
+  witchdress:O(`<rect x="44" y="142" width="82" height="62" fill="${oc}"/><path d="M44 184Q56 176 66 186Q76 176 85 186Q96 176 106 186Q116 176 126 184V204H44Z" fill="${sh(oc,-.35)}"/><path d="M68 142Q85 158 102 142" fill="#f5c542"/>`+PN([[58,160],[110,166],[80,174]],([x,y])=>`<circle cx="${x}" cy="${y}" r="3" fill="#ffd23f"/>`)),
+  santasuit:O(`<rect x="44" y="142" width="82" height="62" fill="#d4231f"/><rect x="82" y="142" width="6" height="62" fill="#fff"/><rect x="44" y="166" width="82" height="9" fill="#14121c"/><rect x="76" y="164" width="18" height="13" rx="2" fill="#f5c542"/><rect x="82" y="168" width="6" height="5" fill="#d4231f"/><rect x="44" y="142" width="82" height="8" fill="#fff"/>`),
+  elftunic:O(`<rect x="44" y="142" width="82" height="62" fill="#2e9d4f"/><path d="M44 178L52 168L60 178L68 168L76 178L85 168L94 178L102 168L110 178L118 168L126 178V196H44Z" fill="#c1121f"/><rect x="44" y="162" width="82" height="5" fill="#f5c542"/>`),
+  snowman:O(`<rect x="44" y="142" width="82" height="62" fill="#fff"/><rect x="44" y="142" width="82" height="62" fill="${U('sd')}" opacity=".5"/>`+PN([152,166,180],y=>`<circle cx="85" cy="${y}" r="4.2" fill="#20202c"/>`)),
+  catrinadress:O(`<rect x="44" y="142" width="82" height="62" fill="#1a1624"/><path d="M44 176Q55 168 65 178Q75 168 85 178Q95 168 105 178Q115 168 126 176V204H44Z" fill="#7b2d8e"/>`+PN([[58,154,'#ff5fa2'],[112,158,'#ffd23f'],[84,150,'#ff9a3c']],([x,y,c])=>fl(x,y,c,6))),
+  mariachi:O(`<rect x="44" y="142" width="82" height="62" fill="#1b1b26"/><path d="M85 142V196" stroke="#c9ced9" stroke-width="3"/>`+PN([152,164,176,188],y=>`<circle cx="76" cy="${y}" r="3.2" fill="#e6c45a"/><circle cx="94" cy="${y}" r="3.2" fill="#e6c45a"/>`)+`<path d="M44 150Q56 160 66 150M126 150Q114 160 104 150" stroke="#e6c45a" stroke-width="2.4" fill="none"/>`),
+  jumpsuit:O(`<rect x="44" y="142" width="82" height="62" fill="${U('f')}"/><path d="M85 142V196" stroke="#fff" stroke-opacity=".7" stroke-width="2.4" stroke-dasharray="3 3"/><rect x="82" y="146" width="6" height="9" rx="2" fill="#e6c45a"/>`)});
+ return P};
+/* ---- rostro, accesorios de mano y espalda ---- */
+const FXF={
+ bolts:`<rect x="24" y="84" width="16" height="8" rx="2" fill="#8b95a8"/><rect x="130" y="84" width="16" height="8" rx="2" fill="#8b95a8"/><path d="M22 80V96M148 80V96" stroke="#6b7488" stroke-width="3"/><path d="M52 58Q62 54 70 60L76 56L82 62L88 58L96 62L104 56L118 60" stroke="#14121c" stroke-width="2.6" fill="none"/>`,
+ zombie:`<ellipse cx="85" cy="86" rx="40" ry="30" fill="#7fbf5a" opacity=".38"/><path d="M52 62L66 72M60 60L72 70M104 100L118 110M110 98L120 106" stroke="#4d2d2d" stroke-width="2.4"/>`,
+ wolf:`<path d="M74 92Q85 86 96 92Q96 104 85 108Q74 104 74 92Z" fill="#3b2a20"/><ellipse cx="85" cy="92" rx="6" ry="4" fill="#14121c"/><path d="M58 98L36 94M58 104L36 106M112 98L134 94M112 104L134 106" stroke="#3b2a20" stroke-width="2" stroke-linecap="round"/>`,
+ catface:`<path d="M80 94L90 94L85 100Z" fill="#ff8fb3"/><path d="M85 100V106M58 98L36 92M58 104L36 106M112 98L134 92M112 104L134 106" stroke="#14121c" stroke-width="2" stroke-linecap="round" fill="none"/>`,
+ rednose:`<circle cx="85" cy="94" r="10" fill="#e0264f" stroke="#7a1030" stroke-width="2"/><ellipse cx="81" cy="90" rx="3" ry="2" fill="#fff" opacity=".6"/>`,
+ carrot:`<path d="M80 92L112 99L80 106Z" fill="#ff8a1c" stroke="#c4600c" stroke-width="1.4"/><path d="M90 96L96 98M92 101L100 101" stroke="#c4600c" stroke-width="1.2"/>`,
+ whitebeard:`<path d="M44 94Q44 138 85 140Q126 138 126 94Q112 110 85 108Q58 110 44 94Z" fill="#f4f1ea"/><path d="M70 100Q85 92 100 100Q85 106 70 100Z" fill="#fff" stroke="#d8d2c4" stroke-width="1"/>`,
+ skullpaint:`<circle cx="68" cy="80" r="14" fill="#14121c" opacity=".55"/><circle cx="102" cy="80" r="14" fill="#14121c" opacity=".55"/><path d="M85 92L80 100H90Z" fill="#14121c"/><path d="M66 106V116M74 106V117M82 106V118M90 106V118M98 106V117M106 106V116" stroke="#fff" stroke-width="3" stroke-linecap="round"/>`};
+const FXA={
+ ghost:`<path d="M26 40Q26 14 85 14Q144 14 144 40V226Q132 214 122 228Q110 214 98 228Q86 214 74 228Q62 214 50 228Q38 214 26 226Z" fill="#fff" stroke="#cfd7ee" stroke-width="2.4"/><ellipse cx="62" cy="72" rx="11" ry="16" fill="#14121c"/><ellipse cx="108" cy="72" rx="11" ry="16" fill="#14121c"/><ellipse cx="85" cy="108" rx="9" ry="12" fill="#14121c"/>`,
+ broom:`<g transform="rotate(-18 160 150)"><rect x="156" y="70" width="5" height="150" rx="2.5" fill="#8b5a2b"/><path d="M150 214H167L172 244H145Z" fill="#d9b25a"/><path d="M150 226H167" stroke="#8b5a2b" stroke-width="3"/></g>`,
+ fork:`<g transform="rotate(10 26 150)"><rect x="24" y="96" width="4" height="150" rx="2" fill="#7a1010"/><path d="M14 96V76M26 96V70M38 96V76M14 96H38" stroke="#c1121f" stroke-width="4" fill="none" stroke-linecap="round"/></g>`,
+ bucket:`<g transform="translate(2 188)"><path d="M10 6Q26 -16 42 6" stroke="#14121c" stroke-width="3" fill="none"/><path d="M6 8H46L40 38H12Z" fill="#f08a1c"/><circle cx="20" cy="22" r="3" fill="#14121c"/><circle cx="32" cy="22" r="3" fill="#14121c"/><path d="M18 30Q26 34 34 30" stroke="#14121c" stroke-width="2.4" fill="none"/><circle cx="16" cy="6" r="4" fill="#ff5fa2"/><circle cx="30" cy="4" r="4" fill="#3bd16f"/></g>`,
+ candle:`<g transform="translate(14 150)"><rect x="8" y="22" width="12" height="38" rx="3" fill="#fff6dc"/><path d="M14 22V14" stroke="#14121c" stroke-width="2"/><path d="M14 2Q22 12 14 16Q6 12 14 2Z" fill="#ffb02e"/><path d="M14 7Q18 12 14 15Q10 12 14 7Z" fill="#fff3b0"/></g>`,
+ gift:`<g transform="translate(142 120)"><rect x="0" y="12" width="34" height="28" rx="3" fill="#d4231f"/><rect x="14" y="12" width="6" height="28" fill="#f5c542"/><rect x="0" y="22" width="34" height="6" fill="#f5c542"/><path d="M17 12Q8 -2 4 8Q8 14 17 12Q26 14 30 8Q26 -2 17 12Z" fill="#f5c542"/></g>`};
+const FXB={
+ bat:`<path d="M44 150Q-6 100 -10 170Q8 158 20 176Q30 160 44 180Z" fill="#241d33"/><path d="M126 150Q176 100 180 170Q162 158 150 176Q140 160 126 180Z" fill="#241d33"/>`,
+ tail:`<path d="M120 196Q170 200 164 150Q160 140 150 146" stroke="#17151f" stroke-width="9" fill="none" stroke-linecap="round"/>`,
+ devtail:`<path d="M120 196Q160 214 158 170" stroke="#c1121f" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M158 170L148 160L168 160Z" fill="#c1121f"/>`,
+ fairy:`<path d="M44 150Q-8 108 -4 166Q16 160 44 178Z" fill="#cfe8ff" opacity=".85" stroke="#fff"/><path d="M126 150Q178 108 174 166Q154 160 126 178Z" fill="#cfe8ff" opacity=".85" stroke="#fff"/><path d="M44 170Q14 190 24 214Q40 200 46 188Z" fill="#e8d4ff" opacity=".85"/><path d="M126 170Q156 190 146 214Q130 200 124 188Z" fill="#e8d4ff" opacity=".85"/>`};
+/* los disfraces anulan el auto-vestido de la temática; las capas nuevas se dibujan al final */
+const oX=BOTX;
+BOTX=(w,c)=>{if(w.costume){w=Object.assign({},w);['hat','glasses','neck','outfit','face'].forEach(k=>{if(!w[k]||w[k]=='none')w[k]='bare'})}
+ let s=oX(w,c);const bk=FXB[w.back],add=(FXF[w.face]||'')+(FXA[w.acc]||'');
+ if(bk){const i=s.indexOf('</defs>');if(i>=0)s=s.slice(0,i+7)+bk+s.slice(i+7)}
+ const j=s.lastIndexOf('</svg>');return(j<0||!add)?s:s.slice(0,j)+add+s.slice(j)};
+const oT=BTH;
+BTH=(t,k)=>{if(k==='none'||k===false)return oT(t,k);
+ if(t=='face'&&FXF[k]){const w=BW();return`<svg viewBox="22 -10 126 150" style="width:100%;height:100%;overflow:visible" aria-hidden="true"><rect x="38" y="46" width="94" height="92" rx="18" fill="${sh(w.col,.15)}"/><rect x="46" y="54" width="78" height="64" rx="10" fill="#1a2250"/><ellipse cx="68" cy="80" rx="5" ry="7.5" fill="#fff"/><ellipse cx="102" cy="80" rx="5" ry="7.5" fill="#fff"/><path d="M70 100q15 10 30 0" stroke="#fff" stroke-width="3" fill="none"/>${FXF[k]}</svg>`}
+ if(t=='acc'||t=='back'){const w=Object.assign({},BW(),BASE,{costume:'x',[t]:k});return BOTX(w).replace(/width="\d+" height="\d+" style="overflow:visible"/,'style="width:100%;height:100%;overflow:visible"')}
+ return oT(t,k)};
+VOPT.hat.push(['vamphair','Vampiro'],['pumpkin','Calabaza'],['horns','Cuernitos'],['catears','Gato negro'],['frank','Frankenstein'],['elf','Elfo'],['antlers','Cornamenta'],['straw','Paja'],['phones','Audífonos'],['catrina','Catrina']);
+VOPT.glasses.push(['eyepatch','Parche'],['mummy','Vendas'],['luchador','Luchador'],['monocle','Monóculo']);
+VOPT.neck.push(['drac','Cuello vampiro'],['ruff','Gorguera']);
+VOPT.outfit.push(['skeleton','Esqueleto'],['mummy','Momia'],['pumpkinbody','Calabaza'],['witchdress','Vestido bruja'],['santasuit','Traje Santa'],['elftunic','Túnica elfo'],['snowman','Muñeco nieve'],['catrinadress','Vestido catrina'],['mariachi','Mariachi'],['jumpsuit','Mono']);
+VOPT.face.push(['bolts','Tornillos'],['zombie','Zombi'],['wolf','Lobo'],['catface','Gatito'],['rednose','Nariz roja'],['carrot','Zanahoria'],['whitebeard','Barba blanca'],['skullpaint','Calavera']);
+VOPT.acc=[['none','Nada'],['ghost','Sábana'],['broom','Escoba'],['fork','Tridente'],['bucket','Dulces'],['candle','Vela'],['gift','Regalo']];
+VOPT.back=[['none','Nada'],['bat','Alas murciélago'],['tail','Cola de gato'],['devtail','Cola diablo'],['fairy','Alas de hada']];
+VCATS.unshift(['costume','Disfraces']);VCATS.push(['acc','Mano'],['back','Espalda']);VCAT='costume';
+/* ---- disfraces (tema, nombre, ajustes) ---- */
+const LKS=[
+['halloween','Bruja',{hat:'witch',hatc:'#3a1f6e',outfit:'witchdress',outc:'#5b2a8c',acc:'broom'}],
+['halloween','Vampiro',{hat:'vamphair',outfit:'tux',neck:'drac',face:'fangs',cape:true}],
+['halloween','Momia',{glasses:'mummy',outfit:'mummy'}],
+['halloween','Fantasma',{acc:'ghost'}],
+['halloween','Calabaza',{hat:'pumpkin',outfit:'pumpkinbody',acc:'bucket'}],
+['halloween','Esqueleto',{outfit:'skeleton',face:'skullpaint'}],
+['halloween','Frankenstein',{hat:'frank',face:'bolts',outfit:'tux'}],
+['halloween','Hombre lobo',{hat:'ears',hatc:'#7a5c3a',face:'wolf',outfit:'hoodie',outc:'#6b4a2e'}],
+['halloween','Gato negro',{hat:'catears',face:'catface',neck:'bell',back:'tail'}],
+['halloween','Diablillo',{hat:'horns',outfit:'jumpsuit',outc:'#c1121f',back:'devtail',acc:'fork'}],
+['halloween','Zombi',{face:'zombie',outfit:'striped',outc:'#5a6478'}],
+['halloween','Murciélago',{hat:'ears',hatc:'#241d33',outfit:'jumpsuit',outc:'#241d33',back:'bat'}],
+['muertos','Catrina',{hat:'catrina',face:'skull',outfit:'catrinadress',neck:'pearls',acc:'candle'}],
+['muertos','Catrín',{hat:'top',hatc:'#1c1c26',face:'skull',outfit:'tux',neck:'bow',acc:'candle'}],
+['navidad','Santa',{hat:'santa',face:'whitebeard',outfit:'santasuit'}],
+['navidad','Elfo',{hat:'elf',outfit:'elftunic',neck:'bell'}],
+['navidad','Reno',{hat:'antlers',face:'rednose',outfit:'hoodie',outc:'#8b5a2b',neck:'bell'}],
+['navidad','Muñeco de nieve',{hat:'top',hatc:'#1c1c26',face:'carrot',outfit:'snowman',neck:'scarf'}],
+['amor','Cupido',{wings:true,halo:true,glasses:'heart',outfit:'shirt',outc:'#ffffff',neck:'bow'}],
+['patrias','Mariachi',{hat:'charro',hatc:'#2b2b33',face:'mustache',outfit:'mariachi',neck:'bow'}],
+['patrias','Luchador',{glasses:'luchador',hatc:'#d4231f',outfit:'jumpsuit',outc:'#2b4fb8',cape:true}],
+['primavera','Jardinero',{hat:'straw',hatc:'#2e7d6b',outfit:'overalls',outc:'#2b4fb8',face:'freckles'}],
+['primavera','Abeja',{antenna:true,outfit:'striped',outc:'#f5c542',back:'fairy'}],
+['verano','Surfista',{glasses:'sun',outfit:'hawaii',neck:'lei'}],
+['verano','Pirata',{hat:'pirate',glasses:'eyepatch',outfit:'striped',outc:'#2b4fb8',neck:'bandana'}],
+['fiesta','Cumpleañero',{hat:'party',hatc:'#d6336c',outfit:'jersey',outc:'#2b4fb8',acc:'gift',balloon:true}],
+['fiesta','DJ',{hat:'phones',hatc:'#d6336c',glasses:'sun',outfit:'hoodie',outc:'#262636'}],
+['fiesta','Payaso',{hair:'afro',hairc:'#ff5c7a',face:'rednose',neck:'ruff',outfit:'jumpsuit',outc:'#7b5cd6'}]];
+const TF=[['all','Todos'],['halloween','🎃 Halloween'],['muertos','💀 Muertos'],['navidad','🎄 Navidad'],['amor','💘 Amor'],['patrias','🇲🇽 Patrias'],['primavera','🌸 Primavera'],['verano','🏖️ Verano'],['fiesta','🎂 Fiesta']];
+let VF=({10:'halloween',11:'muertos',12:'navidad',2:'amor',9:'patrias',3:'primavera',4:'primavera',5:'primavera',6:'verano',7:'verano',8:'verano'})[new Date().getMonth()+1]||'all';
+const lookW=i=>Object.assign({},BASE,LKS[i][2],{costume:LKS[i][1]});
+const apply=o=>{CF().botw=Object.assign(BW(),o);save();A.botDress();CT()};
+const rd=a=>a[Math.floor(Math.random()*a.length)];
+window.VX={list:LKS,w:lookW,f(t){VF=t;CT()},look(i){if(LKS[i])apply(lookW(i))},off(){apply(Object.assign({},BASE,{costume:''}))},
+ rnd(){const pk=a=>rd(a)[0],cl=()=>rd(WSW);apply(Object.assign({},BASE,{hat:pk(VOPT.hat),hatc:cl(),glasses:pk(VOPT.glasses),outfit:pk(VOPT.outfit),outc:cl(),neck:pk(VOPT.neck),face:Math.random()<.5?pk(VOPT.face):'none',acc:Math.random()<.3?pk(VOPT.acc.filter(x=>x[0]!='ghost')):'none',back:Math.random()<.25?pk(VOPT.back):'none',cape:Math.random()<.2,costume:''}))}};
+/* ---- pestaña Vestuario ---- */
+const oV=TB.ves,IC={costume:'🎭',acc:'🧹',back:'🦇'};
+TB.ves=(c,H)=>{const k=VCAT,mine=!!IC[k];if(mine)VCAT='hat';let h;try{h=oV(c,H)}finally{VCAT=k}
+ h=h.replace('onclick="VRND()"','onclick="VX.rnd()"');
+ for(const id in IC)h=h.replace(new RegExp(`(onclick="VC\\('${id}'\\)"><span class="ci">)[\\s\\S]*?(</span>)`),`$1<i style="font-size:24px;font-style:normal">${IC[id]}</i>$2`);
+ if(!mine)return h;
+ const w=BW();h=h.replace('class="vcat on"','class="vcat "').replace(`class="vcat " onclick="VC('${k}')"`,`class="vcat on" onclick="VC('${k}')"`);
+ const pane=k=='costume'?`<div class="vch">${TF.map(([id,l])=>`<button class="${id==VF?'on':''}" onclick="VX.f('${id}')">${l}</button>`).join('')}</div><div class="vcos">${LKS.map((l,i)=>(VF=='all'||l[0]==VF)?`<button class="vco ${w.costume==l[1]?'on':''}" onclick="VX.look(${i})">${BOTX(Object.assign({},BW(),lookW(i)))}<b>${l[1]}</b></button>`:'').join('')}</div><div class="row" style="margin-top:14px"><button class="btn" onclick="VX.off()">Quitar disfraz</button></div>`
+  :`<div class="vitems">${VOPT[k].map(([v,t])=>`<button class="vi ${(w[k]||'none')==v?'on':''}" title="${t}" aria-label="${t}" onclick="WD('${k}','${v}')">${BTH(k,v)}</button>`).join('')}</div>`;
+ return h.replace(/(<section class="vright"><div class="vcats">[\s\S]*?<\/div>)[\s\S]*?(<\/section>)/,(m,a,b)=>a+pane+b)};
+})();
+</script>
 </body></html>
