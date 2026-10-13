@@ -588,8 +588,35 @@ const uid=()=>Math.random().toString(36).slice(2,9);
 const arr=x=>Array.isArray(x)?x:(x&&typeof x=='object'?Object.values(x):[]);
 const cid=o=>{o=o&&typeof o=='object'?o:{};o.id=String(o.id??'').replace(/[^\w-]/g,'')||uid();return o};
 const fmt=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'),today=()=>fmt(new Date());
-let S;try{S=JSON.parse(localStorage.getItem(K))}catch(e){}S=S||{};
- 
+let S;
+try {
+  S = JSON.parse(localStorage.getItem(K));
+} catch (e) {
+  S = null;
+}
+S = S || {};
+
+async function cargarDatosSupabase() {
+  try {
+    const { data, error } = await db
+      .from('ruleta_datos')
+      .select('datos')
+      .eq('id', K)
+      .maybeSingle();
+
+    if (error) throw error;
+
+    if (data && data.datos) {
+      S = data.datos;
+      localStorage.setItem(K, JSON.stringify(S));
+      location.reload();
+    }
+  } catch (e) {
+    console.error('Error al cargar desde Supabase:', e);
+  }
+}
+
+cargarDatosSupabase();
 const save=()=>{
   try{
     localStorage.setItem(K,JSON.stringify(S));
