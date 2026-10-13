@@ -579,6 +579,9 @@ header.top::before{height:2px;opacity:.7}
 <script> 
 if(matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)document.documentElement.dataset.theme="dark";
 const $=s=>document.querySelector(s),K='ruleta-equipo-v1';
+const SB_URL='https://fxhbedefcklvnkhbmece.supabase.co';
+const SB_KEY='sb_publishable_ZGIJJ7em3Oob4zojDIg3jQ_iqKECuBl';
+const db=supabase.createClient(SB_URL,SB_KEY);
 const esc=t=>String(t??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const DEPTS=['Desarrollo de Software','Autoridad Certificadora','Estrategias Digitales'];
 const uid=()=>Math.random().toString(36).slice(2,9);
@@ -586,7 +589,31 @@ const arr=x=>Array.isArray(x)?x:(x&&typeof x=='object'?Object.values(x):[]);
 const cid=o=>{o=o&&typeof o=='object'?o:{};o.id=String(o.id??'').replace(/[^\w-]/g,'')||uid();return o};
 const fmt=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'),today=()=>fmt(new Date());
 let S;try{S=JSON.parse(localStorage.getItem(K))}catch(e){}S=S||{};
-const save=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(z){}const sv=$('#sv');if(sv)sv.textContent='Autoguardado '+new Date().toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'})};
+ 
+const save=()=>{
+  try{
+    localStorage.setItem(K,JSON.stringify(S));
+  }catch(z){}
+
+  const sv=$('#sv');
+  if(sv)sv.textContent='Autoguardado '+new Date().toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'});
+
+  clearTimeout(window.ruletaSaveTimer);
+  window.ruletaSaveTimer=setTimeout(async()=>{
+    try{
+      const {error}=await db.from('ruleta_datos').upsert({
+        id:K,
+        datos:S,
+        actualizado_en:new Date().toISOString()
+      });
+      if(error)throw error;
+      if(sv)sv.textContent='Guardado en Supabase';
+    }catch(e){
+      console.error('Error al guardar en Supabase:',e);
+      if(sv)sv.textContent='Guardado local; error en Supabase';
+    }
+  },800);
+};
 const R=()=>{RLRES=0;applyCfg();$('#v').innerHTML=ruleta();A.cnt();A.hpi();A.fpRef()};
 const RLC=['#1e3a8a','#c9a227','#2e7d6b','#b4443c','#6b4ea3','#d2762b','#2b8aa6','#7a8a2e'];
 const BULBS=Array.from({length:28},(_,i)=>{const a=i*360/28*Math.PI/180;return`<circle class="bulb" cx="${(150+143*Math.sin(a)).toFixed(1)}" cy="${(150-143*Math.cos(a)).toFixed(1)}" r="2.6"/>`}).join('');
