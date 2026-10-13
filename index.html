@@ -605,15 +605,19 @@ async function cargarDatosSupabase() {
       .eq('id', K)
       .maybeSingle();
 
-    if (error) throw error;
+  
+if (error) throw error;
 
-    if (data && data.datos) {
-      S = data.datos;
-      localStorage.setItem(K, JSON.stringify(S));
-    }
-  } catch (e) {
-    console.error('Error al cargar desde Supabase:', e);
-  }
+if (data && data.datos) {
+  S = data.datos;
+  localStorage.setItem(K, JSON.stringify(S));
+
+  R();
+  hdrRef();
+}
+} catch (e) {
+  console.error('Error al cargar desde Supabase:', e);
+}
 }
 
 cargarDatosSupabase();
