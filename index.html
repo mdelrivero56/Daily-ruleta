@@ -609,7 +609,6 @@ async function cargarDatosSupabase() {
     if (data && data.datos) {
       S = data.datos;
       localStorage.setItem(K, JSON.stringify(S));
-      location.reload();
     }
   } catch (e) {
     console.error('Error al cargar desde Supabase:', e);
